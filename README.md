@@ -4,8 +4,10 @@ This repository contains both, an example docker compose stack for creating a ne
 
 ## Branches
 
-| newproject | For creating a fresh new project with GENTICS PORTAL \| php |
-| demo       | A demo reference application |
+| Branch     |        |
+|------------|--------|
+| newproject | For creating a fresh new project with GENTICS PORTAL  php |
+| demo       | Demo reference application |
 
 ## Creating a new Laravel project with GENTICS PORTAL | php
 
