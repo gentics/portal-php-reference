@@ -1,0 +1,90 @@
+version: "3"
+services:
+  portal:
+    image: gentics-portal-php
+    build:
+      dockerfile: ./portal-files/Dockerfile
+      context: .
+    volumes:
+      - ./portal:/portal
+      - ./portal-files/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
+  # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.3.1
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+      memlock:
+        soft: -1
+        hard: -1
+  mesh:
+    # https://getmesh.io/docs/beta/administration-guide.html#_environment_variables
+    image: gentics/mesh:0.22.2
+    volumes:
+      - mesh-config:/config
+      - mesh-data:/data
+    ulimits:
+      nofile:
+        soft: 20000
+        hard: 40000
+    environment:
+      MESH_ELASTICSEARCH_URL: "http://elasticsearch:9200"
+      MESH_ELASTICSEARCH_START_EMBEDDED: "false"
+  # https://hub.docker.com/r/gentics/cms/
+  cms:
+    image: gentics/cms:5.31
+    restart: on-failure
+    volumes:
+      - ./cms/conf.d/include.conf:/Node/etc/conf.d/include.conf
+      - ./cms/conf.d/include:/Node/etc/conf.d/include
+      - cms-packages:/Node/node/content/packages
+      - cms-dbfiles:/Node/node/content/dbfiles
+      - cms-bundles:/Node/node/system/bundles
+    environment:
+      NODE_DB_USER: root
+      NODE_DB_PASSWORD: ""
+      NODE_DB_HOST: db
+      NODE_USER_PASSWORD: node
+  # https://hub.docker.com/r/gentics/languagetool/
+  languagetool:
+    image: gentics/languagetool
+  # https://hub.docker.com/_/mariadb/
+  db:
+    image: mariadb:10.3
+    command: --sql-mode=""
+    volumes:
+      - ./db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./db/custom.cnf:/etc/mysql/conf.d/custom.cnf
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+      MYSQL_ROOT_PASSWORD: ""
+
+volumes:
+  portal-storage:
+    driver: local
+  portal-bootstrap-cache:
+    driver: local
+  mesh-config:
+    driver: local
+  mesh-data:
+    driver: local
+  elasticsearch-data:
+    driver: local
+  cms-packages:
+    driver: local
+  cms-dbfiles:
+    driver: local
+  cms-bundles:
+    driver: local
+  cms-dbfiles:
+    driver: local
+  db-data:
+    driver: local

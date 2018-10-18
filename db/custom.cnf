@@ -1,0 +1,14 @@
+[mysqld]
+  innodb_flush_log_at_trx_commit = 2
+  character-set-server           = utf8
+  character-set-filesystem       = utf8
+  sql_mode                       = ""
+  innodb                         = FORCE
+  innodb_flush_method            = fsync
+  default-storage-engine         = InnoDB
+  max_allowed_packet             = 256M
+  max_connections                = 400
+
+[client]
+  default-character-set          = utf8
+

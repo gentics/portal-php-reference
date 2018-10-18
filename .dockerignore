@@ -1,0 +1,6 @@
+.docker
+.settings
+.project
+.gitignore
+.git
+docker/*/*/**

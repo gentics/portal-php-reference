@@ -1,0 +1,4 @@
+/.idea
+/.vscode
+/.vagrant
+docker-compose.override.yml
