@@ -1,0 +1,27 @@
+query ($searchQuery: String, $page: Long, $perPage: Int) {
+  content: nodes(page: $page, perPage: $perPage, query: $searchQuery) {
+    elements {
+      path
+      parent {
+        displayName
+      }
+      fields {
+        __typename
+        ... on %contentSchema% {
+          title
+          name
+          content
+          templateName
+          weight
+          price
+          stock
+          image
+          vehicle_description
+        }
+      }
+    }
+    totalCount
+    pageCount
+    currentPage
+  }
+}

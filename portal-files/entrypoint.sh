@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -o errexit
+set -o nounset
 
 # Make some directories writable for www-data
 if [ -d /portal/storage ]; then
@@ -22,24 +23,11 @@ fi
 
 . $envFile
 
-if [ -z ${MESH_URL} ]; then
-	MESH_URL="http://mesh:8080"
-fi
-
 if (( ${#MESH_APIKEY} < 32 )); then
 	waitForMesh.sh $MESH_URL 300
 	MESH_APIKEY=$(mesh-gen-token.sh $MESH_URL)
 	echo "Generated new Mesh API token: $MESH_APIKEY"
-
-	if grep -q "^MESH_APIKEY=.*" $envFile
-	then
-		sed -i "s/MESH_APIKEY=.*/MESH_APIKEY=\"$MESH_APIKEY\"/g" $envFile
-	else
-		echo "" >> $envFile
-		echo "MESH_URL=\"$MESH_URL\"" >> $envFile
-	    echo "MESH_APIKEY=\"$MESH_APIKEY\"" >> $envFile
-	fi
-	
+	sed -i "s/MESH_APIKEY=.*/MESH_APIKEY=\"$MESH_APIKEY\"/g" $envFile
 fi
 
 docker-php-entrypoint $@

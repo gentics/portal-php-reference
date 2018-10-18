@@ -26,7 +26,7 @@ services:
         hard: -1
   mesh:
     # https://getmesh.io/docs/beta/administration-guide.html#_environment_variables
-    image: gentics/mesh:0.22.2
+    image: gentics/mesh:0.22.4
     volumes:
       - mesh-config:/config
       - mesh-data:/data
@@ -44,9 +44,11 @@ services:
     volumes:
       - ./cms/conf.d/include.conf:/Node/etc/conf.d/include.conf
       - ./cms/conf.d/include:/Node/etc/conf.d/include
+      - ./cms/dumps:/Node/etc/dumps
       - cms-packages:/Node/node/content/packages
       - cms-dbfiles:/Node/node/content/dbfiles
       - cms-bundles:/Node/node/system/bundles
+      - ./portal/public/static/demo-assets/files:/Node/node/content/packages/demo-assets/files:ro
     environment:
       NODE_DB_USER: root
       NODE_DB_PASSWORD: ""

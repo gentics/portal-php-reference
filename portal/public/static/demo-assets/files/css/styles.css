@@ -1,0 +1,678 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 95vh;
+    margin-top: 5vh;
+}
+
+h1 {
+    font-size: 45px;    
+    margin-bottom: 15px;
+    font-weight: 450;    
+}
+
+a:hover, a:visited, a:link, a:active > h1 {
+    text-decoration: none;
+    color: black;
+}
+
+.h1-icon {
+    float: left;
+    width: 32px;
+    height: 32px;
+}
+
+#genticsTitle {
+    color: grey;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 32px;
+    margin-bottom: 0;
+}
+
+.text-small {
+    color: #6c757d;
+}
+
+.item-details i {
+    font-size: 16px;
+    margin-right: 5px;
+}
+
+h1 small {
+    font-size: 14px;
+    margin-left: 5px;
+    color: darkgrey;
+}
+
+a > h3 {
+    font-weight: 300;
+    color: #007bff;
+    font-size: 14px;
+    text-decoration: underline;
+}
+
+.searchBox {       
+    margin: 15px auto;
+    font-size: 14px;    
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
+.scrollable-menu::-webkit-scrollbar { 
+    display: none; 
+}
+
+.autocomplete::-webkit-scrollbar { 
+    display: none; 
+}
+
+.searchOl {
+   margin-bottom: 0;
+   margin-top: 7px;
+   font-weight: 500;
+}
+
+.searchLi {
+    margin-left: 30px;
+    list-style-type: none;
+    font-weight: 400;    
+}
+
+.searchLabel {
+    font-weight: 500;
+    margin-top: 15px;
+}
+
+.searchDrops {
+    margin-bottom: 10px;
+}
+
+.dropdown-menu input {
+    margin-left: 5px;
+}
+
+.form-search {
+    position: relative;
+}
+
+.farbes input[type=checkbox] {
+    display: none;    
+}
+
+.farbes input[type=checkbox] + label:before {
+    content: "\2714";    
+    color: transparent;
+    border: 1px solid rgba(25, 25, 25, 0.5);
+    margin-right: 5px;
+    margin-left: 5px;       
+}
+
+#f1:before {
+    background-color: black;
+}
+
+#f2:before {
+    background-color: burlywood;
+}
+
+#f3:before {
+    background-color: beige;
+}
+
+#f4:before {
+    background-color: grey
+}
+
+#f5:before {
+    background-color: lightgrey; 
+}
+
+#f6:before {
+    background-color: blue;  
+}
+
+#f7:before {
+    background-color: teal;  
+}
+
+#f8:before {
+    background-color: turquoise;
+}
+
+#f9:before {
+    background-color: green;
+}
+
+label {
+    margin-bottom: 3px;
+}
+
+.saveBtn {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#dropSearch {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.dropSlider {
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.dropPrice {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 20px;    
+}
+
+.noUi-connect {
+    background: var(--primary);
+}
+
+.sortby {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.sortby button {
+    margin-left: 15px;
+}
+
+#showcase {
+    margin: 0 20px;
+    text-align: center;
+}
+#range {
+    height: 300px;
+    margin: 0 auto 30px;
+}
+#value-span,
+#value-input {
+    width: 50%;
+    float: left;
+    display: block;
+    text-align: center;
+    margin: 0;
+}
+
+.autocomplete {
+    position: absolute;
+    top: 50px;
+    width: 200px;
+    height: 175px;
+    z-index: 1;
+    display: inline-block;    
+    list-style-type: none;
+    overflow-x: hidden;
+}
+
+.autocomplete ul li:hover {
+    background: #e2e2e2;
+    border-color: grey;
+}
+
+.commentdate {
+    margin-left: 10px;
+    font-size: 12px;
+    color: grey;
+}
+
+.simple-nested {
+    padding-left: 10px;
+}
+
+.simple-nested li {
+    margin-bottom: 2em;
+}
+
+.simple-nested li p {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 18px;
+    letter-spacing: 1px;
+    word-spacing: 2px;
+}
+
+.simple-nested .commentreply {
+    margin-left: 30px;
+    background-color: #f7f7f7;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid black;
+}
+
+.jumbotron a {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-reply {
+    -webkit-clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+    clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+    background-color: #007bff;
+    color: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);    
+}
+
+.btn-reply:hover {
+    background-color: black;
+    color: white;
+}
+
+
+.simple-nested li .comment {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.simple-nested i {
+    padding-right: 0;    
+    font-size: 50px;
+}
+
+.simple-nested button {
+    font-size: 12px;
+    padding-right: 2em;
+    font-weight: 500;
+}
+
+.form-control:focus {
+    border-color: grey;
+    box-shadow: none;
+}
+
+footer .footerLink {
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 14px;
+    color: #007bff;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+footer {         
+    bottom: 20px;        
+    width: 100%;          
+    text-align: left;
+    color: black;
+    font-weight: 500;
+    margin-top: 5vh;     
+}
+
+.lieferItem {
+    margin-left: 10px;
+}
+
+.lieferCount {
+    float: right;
+    margin-right: 5px;
+}
+
+.filterItem {
+    margin-left: 5px;
+    padding: 3px;
+    font-size: 13px;
+}
+
+.fa-times {
+    font-size: 12px;
+    margin-right: 5px;
+    margin-left: 1px;
+    padding: 0;
+}
+
+.nav-signedIn {
+    line-height: 30px;
+}
+
+.nav-signedIn > p {
+    font-size: 20px;           
+}
+
+i {
+    font-size: 30px;
+    padding-left: 10px;    
+}
+
+.jumbotron {
+    background-color: #f8f9fa;
+    border-radius: 0;       
+}
+
+.modal-body {
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.modal-content {    
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.rating-stars i {
+    font-size: 20px;
+    padding-left: 0;
+    margin-bottom: 10px;
+}
+
+.bar-container {
+    height: 10px;
+    background-color: blue;
+}
+
+
+
+.modal-title {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.submitBtn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+#resetBtn {
+    float: right;
+    font-size: 12px;
+    text-decoration: underline;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+.btn-lg {
+    font-weight: 100;    
+}
+
+.display-4 {    
+    color: black;          
+}
+
+.btn-dark {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.rating-stars {   
+   direction: rtl;  
+}
+
+.rating-stars .reviews {
+    font-size: 12px;
+}
+
+.rating-stars a {
+    color: #007bff;
+    text-decoration: underline;
+    font-weight: 450;
+}
+
+.item-details p i {
+    font-size: 14px;
+}
+
+.starReviews {    
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    padding-top: 10px;
+    padding-bottom: 5px;
+    background-color: #fdfdff;
+    position: absolute;    
+    border: 1px solid black;
+}
+
+.review-right p {
+    font-size: 14px;
+    text-align: center;
+    font-weight: 450;
+}
+
+.review-left p {
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.progress {
+    margin-top: 3px;
+    margin-left: 0px;
+    padding-left: 0px;    
+    margin-bottom: 5px;
+    font-size: 10px;
+    font-weight: 400;
+}
+
+.review-right i {
+    font-size: 20px;
+}
+
+.reviewBar {
+    width: 50%;
+    height: 10px;
+    background-color: red;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.rating-stars a i {
+    color: lightgrey;
+    transition: 0.3s all;
+}
+
+.rating-stars a i:hover {
+    color: #f1c40f;
+}
+
+.r1:hover ~ a i  {
+    color: #f1c40f;
+}
+
+.r2:hover ~ a i {
+    color: #f1c40f;
+}
+
+.r3:hover ~ a i {
+    color: #f1c40f;
+}
+
+.r4:hover ~ a i {
+    color: #f1c40f;
+}
+
+.r5:hover ~ a i {
+    color: #f1c40f;
+}
+
+.nav-register, .nav-signedIn {
+    float: right;
+}
+
+.navbar-light .navbar-nav .active>.nav-link:hover {
+    color: #007bff;
+}
+
+.nav-register > a {
+    margin-right: 10px;
+}
+
+.img-item {
+    margin-left: 2%;
+    margin-bottom: 2%;
+}
+
+.comments {
+    margin: 0;    
+    padding: 0;
+    margin-bottom: 50px;    
+}
+
+.card {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    background-color: #fff;
+    opacity: 0.8;
+    animation: cardUp 2s ease;
+    line-height: 1;
+}
+
+.card-deck .col-md-4 {
+    margin-bottom: 25px;
+}
+
+.card:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    opacity: 1;     
+}
+
+.card-title > .personal > i {
+    font-size: 15px;
+    margin-right: 5px;
+}
+
+.card-img-top {
+    border-radius: 0;    
+}
+
+.personal {
+    font-size: 15px;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+.darker {
+    background-color: rgb(245, 245, 245);
+}
+
+#userCommentField {
+    height: 250px;
+}
+
+.comment-field {
+    padding: 5px;
+    margin-top: 0;
+    height:400px;
+    width:100%;
+    overflow:auto;
+    margin-bottom: 30px;    
+}
+
+.commentFieldTitle {
+    margin-left: 15px;
+    margin-top: 50px;    
+}
+
+.comment-field::-webkit-scrollbar { 
+    display: none; 
+}
+
+.comment1 img {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 5px;
+    margin-left: 5px;
+    
+}
+
+.comment1 img.right {
+    float: right;
+    margin-left: 5px;
+    margin-right: 0;
+}
+
+.comment1::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.comment-form {
+    padding: 0;    
+}
+
+.item-details > p > i {
+    color: green;    
+}
+
+.item-details .item-about {
+    font-size: 16px;
+    margin-top: 20px;
+    line-height: normal;        
+}
+
+.item-details > p {
+    line-height: 14px;
+    font-size: 14px;
+    margin: 0;
+}
+
+.item-price {
+    letter-spacing: 2px;
+}
+
+.container-main {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.breadcrumb {
+    background-color: white;
+}
+
+.nav-active {
+    font-weight: bold;
+}
+
+.card-deck {
+    margin-bottom: 2rem;
+}
+
+.card-title {
+    text-align: left;
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+}
+
+.card-footer {
+    text-align: right;
+}
+
+.card-footer > small {
+    text-align: right;
+}
+
+.price {
+    display: inline;
+}
+
+.userComment {
+    width: 60%;
+    margin: 1px;
+    margin-bottom: 5px;
+}
+
+span.item-detail {
+    min-width: 1.2em;
+    display: inline-block;
+}
+
+@keyframes cardUp {
+    0% {
+        opacity: 0;        
+    }
+    
+    100% {
+        opacity: 1;
+    }    
+}
+
