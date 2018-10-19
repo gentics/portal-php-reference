@@ -4,8 +4,8 @@ This repository contains both, an example docker compose stack for creating a ne
 
 ## Branches
 
-| Branch     |        |
-|------------|--------|
+| Branch     | Description       |
+|------------|-------------------|
 | newproject | For creating a fresh new project with GENTICS PORTAL  php |
 | demo       | Demo reference application |
 
@@ -21,11 +21,11 @@ This explains how to setup a basic Laravel project with the portal-php package.
 
 If you don't want to install composer locally, you can use it with Docker instead:
 
-```
+```bash
 docker run --rm -ti -v `pwd`:/app composer composer <arguments>
 ```
 
-You might have to replace `pwd` with %cd% in Windows shell.
+You might have to replace `pwd` with `%cd%` in Windows shell.
 
 ### Create a new Laravel project
 
@@ -33,7 +33,7 @@ More information can be found on the Laravel documentation for the Installation.
 
 Clone this GIT repository and change into the directory.
 
-```
+```bash
 composer create-project --prefer-dist laravel/laravel portal
 ```
 
@@ -42,22 +42,19 @@ This will create a new directory called "portal". You can also name it different
 ### Authentication for repo.apa-it.at
 
 Contact Gentics if you haven't received your credentials for repo.apa-it.at yet.
-It's also advised to use the encrypted password here, which can be generated in your Artifactory profile page.
+It's also advised to use the encrypted password here, which can be generated in your Artifactory profile page. Replace &lt;YOURUSERNAME&gt; and &lt;YOURPASSWORD&gt; in the command below.
 
-```
+```bash
 composer config --global --auth http-basic.repo.apa-it.at <YOURUSERNAME> <YOURPASSWORD>
 ```
 
 ### Install Gentics Portal | PHP
 
-Replace &lt;YOURUSERNAME&gt; and &lt;YOURPASSWORD&gt;.
-
-```
+```bash
 cd portal
 composer config repositories.gentics composer "https://repo.apa-it.at/api/composer/php"
 composer require gentics/portal-php:0.1 # Alternatively you can use gentics/portal-php:dev-master to always use the latest dev version
 php artisan vendor:publish --provider="Gentics\PortalPhp\Providers\ServiceProvider"
-
 ```
 
 This adds the repository "gentics" to your projects composer.json, pulls the dependencies and copies some default files from the portal-php package.
@@ -69,22 +66,21 @@ However due do the RFC standard which disallows POST redirects without user inte
 
 We can fix this easily, in `portal/public/.htaccess` find this line (line 12):
 
-```
+```apache
 # Redirect Trailing Slashes If Not A Folder...
 ```
 
 Add this after:
 
-```
+```apache
 RewriteCond %{REQUEST_METHOD}  =GET
-
 ```
 
 
 ### Docker service configuration
 
-Copy the file docker-compose.override.yml.example to docker-compose.override.yml
-You can configure passwords, ports, environment variables and other settings in docker-compose.override.yml
+Copy the file `docker-compose.override.yml.example` to `docker-compose.override.yml`
+You can configure passwords, ports, environment variables and other settings `in docker-compose.override.yml`
 The license key for the cms has to be changed.
 
 Service documentation:
@@ -96,7 +92,7 @@ Service documentation:
 
 ### Run the portal
 
-```
+```bash
 docker-compose up -d
 ```
 
@@ -113,7 +109,7 @@ http://localhost:8080
 
 If you do any changes do the Dockerfile, you have to run
 
-```
+```bash
 docker-compose build
 ```
 
@@ -121,14 +117,14 @@ docker-compose build
 
 In order to use custom error pages (404, 500), you have to extend your Exception handler from the class `\Gentics\PortalPhp\Exceptions\Handler`.
 
-Open portal/app/Exceptions/Handler.php and replace the following line:
+Open `portal/app/Exceptions/Handler.php` and replace the following line:
 
-```
+```php
 class Handler extends ExceptionHandler
 ```
 
 with this:
 
-```
+```php
 class Handler extends \Gentics\PortalPhp\Exceptions\Handler
 ```

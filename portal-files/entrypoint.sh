@@ -22,11 +22,11 @@ fi
 
 . $envFile
 
-if [ -z ${MESH_URL} ]; then
+if [ ${MESH_URL:+non-existing} ]; then
 	MESH_URL="http://mesh:8080"
 fi
 
-if (( ${#MESH_APIKEY} < 32 )); then
+if [[ ${MESH_APIKEY:+non-existing} || (( ${#MESH_APIKEY} < 32 )) ]]; then
 	waitForMesh.sh $MESH_URL 300
 	MESH_APIKEY=$(mesh-gen-token.sh $MESH_URL)
 	echo "Generated new Mesh API token: $MESH_APIKEY"
