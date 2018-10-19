@@ -2,30 +2,30 @@
 
 This repository contains an example docker compose stack for GENTICS PORTAL | php with Gentics Mesh and Gentics CMS.
 
-# Setup
+## Creating a new Laravel project with GENTICS PORTAL | php
 
 ## Authentication for repo.apa-it.at
 
 Contact Gentics if you haven't received your credentials for repo.apa-it.at yet.
-It's also advised to use the encrypted password here, which can be generated in your Artifactory profile page.
+It's also advised to use the encrypted password here, which can be generated in your Artifactory profile page. Replace &lt;YOURUSERNAME&gt; and &lt;YOURPASSWORD&gt; in the command below.
 
-```
+```bash
 composer config --global --auth http-basic.repo.apa-it.at <YOURUSERNAME> <YOURPASSWORD>
 ```
 
 ## Install portal composer dependencies
 
-```
+```bash
 cd portal
 composer install
 ```
 
 # Run
 
-## Docker service configuration
+### Docker service configuration
 
-Copy the file docker-compose.override.yml.example to docker-compose.override.yml
-You can configure passwords, ports, environment variables and other settings in docker-compose.override.yml
+Copy the file `docker-compose.override.yml.example` to `docker-compose.override.yml`
+You can configure passwords, ports, environment variables and other settings `in docker-compose.override.yml`
 The license key for the cms has to be changed.
 
 Service documentation:
@@ -35,9 +35,9 @@ Service documentation:
 * [cms](https://hub.docker.com/r/gentics/cms/)
 * [db](https://hub.docker.com/_/mariadb/)
 
-## Run the portal
+### Run the portal
 
-```
+```bash
 docker-compose up -d
 ```
 

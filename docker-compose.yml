@@ -6,7 +6,7 @@ services:
       dockerfile: ./portal-files/Dockerfile
       context: .
     volumes:
-      - ./portal:/portal
+      - ./portal:/portal:cached
       - ./portal-files/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
   elasticsearch:
