@@ -11,7 +11,8 @@ RUN apt-get update -y \
 	libcurl4-openssl-dev \
 	pkg-config \
 	zlib1g-dev \
-	jq
+	jq \
+	libpcre3-dev
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -20,7 +21,14 @@ RUN docker-php-ext-install \
 	curl \
 	pdo \
 	mbstring \
-	zip
+	zip \
+	opcache
+
+RUN docker-php-ext-enable \
+	opcache
+
+# Add opcache configuration
+ADD portal-files/php-opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
 RUN a2enmod rewrite
 
