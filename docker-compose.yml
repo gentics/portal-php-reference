@@ -26,7 +26,7 @@ services:
         hard: -1
   mesh:
     # https://getmesh.io/docs/beta/administration-guide.html#_environment_variables
-    image: gentics/mesh:0.22.2
+    image: gentics/mesh:0.22.4
     volumes:
       - mesh-config:/config
       - mesh-data:/data
