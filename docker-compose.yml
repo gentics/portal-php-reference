@@ -12,7 +12,7 @@ services:
       - ./portal-files/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
   elasticsearch:
-    image: elasticsearch:6.4.2
+    build: ./elasticsearch
     environment:
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
@@ -28,12 +28,12 @@ services:
         hard: -1
   mesh:
     # https://getmesh.io/docs/beta/administration-guide.html#_environment_variables
-    image: gentics/mesh:0.22.4
+    image: gentics/mesh:0.27.0
     volumes:
       - meshA-config:/config
       - meshA-data:/data
-      - ./mesh-shared/binaryFiles:/data/binaryFiles
-      - ./mesh-shared/keystore:/keystore
+      - mesh-shared-binaries:/uploads
+      - mesh-shared-keystore:/keystore
     ulimits:
       nofile:
         soft: 20000
@@ -45,18 +45,19 @@ services:
       MESH_CLUSTER_ENABLED: "true"
       MESH_CLUSTER_NAME: "mesh-infra-testing-cluster"
       MESH_CLUSTER_VERTX_PORT: "4848"
-      MESH_AUTH_KEYSTORE_PATH: "/keystore/keystore.jceks"
+      MESH_BINARY_DIR: "/uploads"
+      MESH_AUTH_KEYSTORE_PATH: "/keystore/keystore.jks"
       MESH_NODE_NAME: "mesh_a"
       MESH_CLUSTER_INIT: "true"
       JAVA_TOOL_OPTIONS: "-Xms320m -Xmx320m -XX:MaxDirectMemorySize=200m"
   mesh2:
     # https://getmesh.io/docs/beta/administration-guide.html#_environment_variables
-    image: gentics/mesh:0.22.4
+    image: gentics/mesh:0.27.0
     volumes:
       - meshB-config:/config
       - meshB-data:/data
-      - ./mesh-shared/binaryFiles:/data/binaryFiles
-      - ./mesh-shared/keystore:/keystore
+      - mesh-shared-binaries:/uploads
+      - mesh-shared-keystore:/keystore
     ulimits:
       nofile:
         soft: 20000
@@ -68,12 +69,13 @@ services:
       MESH_CLUSTER_ENABLED: "true"
       MESH_CLUSTER_NAME: "mesh-infra-testing-cluster"
       MESH_CLUSTER_VERTX_PORT: "4848"
-      MESH_AUTH_KEYSTORE_PATH: "/keystore/keystore.jceks"
+      MESH_BINARY_DIR: "/uploads"
+      MESH_AUTH_KEYSTORE_PATH: "/keystore/keystore.jks"
       MESH_NODE_NAME: "mesh_b"
       JAVA_TOOL_OPTIONS: "-Xms320m -Xmx320m -XX:MaxDirectMemorySize=200m"
   # https://hub.docker.com/r/gentics/cms/
   cms:
-    image: gentics/cms:5.31
+    image: gentics/cms:5.32
     restart: on-failure
     volumes:
       - ./cms/conf.d/include.conf:/Node/etc/conf.d/include.conf
@@ -108,6 +110,10 @@ volumes:
   portal-storage:
     driver: local
   portal-bootstrap-cache:
+    driver: local
+  mesh-shared-binaries:
+    driver: local
+  mesh-shared-keystore:
     driver: local
   meshA-config:
     driver: local
