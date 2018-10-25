@@ -46,7 +46,8 @@ RUN chmod +x /usr/local/bin/*.sh
 
 # Apache
 RUN rm /etc/apache2/sites-enabled/000-default.conf
-COPY portal-files/vhost.conf /etc/apache2/sites-enabled/000-default.conf
+COPY portal-files/apache2/vhost.conf /etc/apache2/sites-enabled/000-default.conf
+COPY portal-files/apache2/portal.conf /etc/apache2/
 
 ENTRYPOINT ["entrypoint.sh"]
 
