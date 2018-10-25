@@ -1,6 +1,6 @@
 # GENTICS PORTAL | php - Reference implementation
 
-This repository contains an example docker compose stack for GENTICS PORTAL | php with Gentics Mesh and Gentics CMS.
+This repository contains an example docker compose stack for GENTICS PORTAL | php with Gentics Mesh (Cluster mode with Apache Load Balancer) and Gentics CMS.
 
 ## Run reference Laravel project implementation with GENTICS PORTAL | php
 
