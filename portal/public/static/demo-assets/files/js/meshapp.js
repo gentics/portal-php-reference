@@ -18,18 +18,6 @@ if (deck) {
 	});
 }
 
-// //CHANGE STOCK TEXT COLORS ACCORDING TO STOCK LEVEL
-
-// for (var i = 0; i < itemstock.length; i++) {
-// 	if (itemstock[i].textContent == "in stock") {
-// 		itemstock[i].style = "color: green!important;";
-// 	} else if (itemstock[i].textContent == "low stock number") {
-// 		itemstock[i].style = "color: darkorange!important;";
-// 	} else {
-// 		itemstock[i].style = "color: red!important;";
-// 	}
-// }
-
 //BASIC SEARCH
 
 searchfield.addEventListener('keyup', function (e) {
