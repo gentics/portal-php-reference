@@ -31,6 +31,11 @@ RUN docker-php-ext-enable \
 ADD portal-files/php-opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
 RUN a2enmod rewrite
+RUN a2enmod proxy
+RUN a2enmod proxy_http
+RUN a2enmod proxy_balancer
+RUN a2enmod proxy_hcheck
+RUN a2enmod lbmethod_byrequests
 
 # Update certificates 
 RUN update-ca-certificates
@@ -39,7 +44,7 @@ ENV PATH="/root/.composer/vendor/bin:${PATH}"
 
 WORKDIR /portal
 
-# Files that are copied from docker/ have to be reincluded in .dockeringore
+# Files that are copied from docker/ have to be reincluded in .dockerignore
 COPY portal/ /portal
 COPY portal-files/*.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/*.sh
@@ -47,6 +52,7 @@ RUN chmod +x /usr/local/bin/*.sh
 # Apache
 RUN rm /etc/apache2/sites-enabled/000-default.conf
 COPY portal-files/vhost.conf /etc/apache2/sites-enabled/000-default.conf
+COPY portal-files/mesh-cluster.conf /etc/apache2/sites-enabled/001-mesh-cluster.conf
 
 ENTRYPOINT ["entrypoint.sh"]
 

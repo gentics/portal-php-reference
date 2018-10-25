@@ -1,6 +1,6 @@
 # GENTICS PORTAL | php - Reference
 
-This repository contains both, an example docker compose stack for creating a new project with GENTICS PORTAL | php, Gentics Mesh and Gentics CMS and an easy to start demo application showing the most important features of GENTICS PORTAL | php
+This repository contains both, an example docker compose stack for creating a new project with GENTICS PORTAL | php, Gentics Mesh (Cluster mode with Apache Load Balancer) and Gentics CMS and an easy to start demo application showing the most important features of GENTICS PORTAL | php
 
 ## Branches
 
@@ -8,6 +8,9 @@ This repository contains both, an example docker compose stack for creating a ne
 |------------|-------------------|
 | newproject | For creating a fresh new project with GENTICS PORTAL  php |
 | demo       | Demo reference application |
+| newproject-mesh-cluster | For creating a fresh new project with GENTICS PORTAL  php with Mesh Cluster |
+| demo-mesh-cluster       | Demo reference application with Mesh Cluster |
+
 
 ## Creating a new Laravel project with GENTICS PORTAL | php
 
