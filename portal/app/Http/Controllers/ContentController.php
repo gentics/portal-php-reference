@@ -11,13 +11,13 @@ class ContentController extends \Gentics\PortalPhp\Http\Controllers\ContentContr
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View|\Symfony\Component\HttpFoundation\StreamedResponse|void
      * @throws \Throwable
      */
-    public function index(string $path = '/')
+    public function index(string $path = '/', ?string $branch = null)
     {
         // Workaround for bug where the startpage property of the root node folder in the CMS is not being published
         if ($path === '/') {
-            return parent::index('/Home.html');
+            return parent::index('/Home.html', $branch);
         }
 
-        return parent::index($path);
+        return parent::index($path, $branch);
     }
 }
