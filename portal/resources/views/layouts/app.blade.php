@@ -13,10 +13,9 @@
     <body>
 
     <header class="container">
-    {{--
+
         <!-- SIGN IN + REGISTER BUTTONS-->
         @include('auth')
-    --}}
 
         <!-- BRAND ICON + NAME-->
         <svg class="h1-icon" version="1.0" xmlns="http://www.w3.org/2000/svg"

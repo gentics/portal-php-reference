@@ -1,0 +1,65 @@
+---
+defaultMaxDepth: 10
+defaultLanguage: "en"
+updateCheck: true
+vertxOptions:
+  workerPoolSize: 20
+  eventPoolSize: 6
+tempDirectory: "data/tmp"
+pluginDirectory: "plugins"
+nodeName: "Brilliant Magmar"
+httpServer:
+  port: 8080
+  host: "0.0.0.0"
+  corsAllowedOriginPattern: ""
+  corsAllowCredentials: false
+  enableCors: false
+cluster:
+  enabled: false
+  vertxPort: 0
+storage:
+  directory: "data/graphdb"
+  backupDirectory: "data/backup"
+  exportDirectory: "data/export"
+  startServer: false
+  parameters: {}
+search:
+  url: "http://localhost:9200"
+  timeout: 8000
+  startupTimeout: 45
+  startEmbedded: true
+  embeddedArguments: "-Xms1g -Xmx1g -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75\
+    \ -XX:+UseCMSInitiatingOccupancyOnly -XX:+AlwaysPreTouch -client -Xss1m -Djava.awt.headless=true\
+    \ -Dfile.encoding=UTF-8 -Djna.nosys=true -XX:-OmitStackTraceInFastThrow -Dio.netty.noUnsafe=true\
+    \ -Dio.netty.noKeySetOptimization=true -Dio.netty.recycler.maxCapacityPerThread=0\
+    \ -Dlog4j.shutdownHookEnabled=false -Dlog4j2.disable.jmx=true -XX:+HeapDumpOnOutOfMemoryError"
+  bulkLimit: 2000
+  prefix: "mesh-"
+upload:
+  byteLimit: 262144000
+  directory: "data/binaryFiles"
+  tempDirectory: "data/tmp/file-uploads"
+security:
+  tokenExpirationTime: 3600
+  keystorePassword: "352d10a51b68473ead10a51b68873e36"
+  keystorePath: "config/keystore.jceks"
+  algorithm: "HS256"
+  enableAnonymousAccess: true
+  oauth2:
+    enabled: true
+    #mapperScriptPath: "config/keycloak_mapper.js"
+    #mapperScriptDevMode: true
+    config:
+      realm: "master"
+      realmPublicKey: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtfkuMtXqcnZVZ/iiMEH9uwUyG6ITYUFLRIJW8Wose/4GQnOuEWEM1v1q1+qrRrWpq3JOCN2KZiuq6wqey4p0GzVHch430DoKLvebcPOgEaB6cqehnwCH4XuGs+7dmpzb1ZRisRCA8iMBUAMWIkvMjn88VnPYbApMsuwWQ9xriuiUX/0WKDaKGGhjnLkLAikcL2DWpTpztqugye50v3SPP+sEJVC13bG3CRlFaoyw5I5xnRbe8ymVjwe0duxKLkg70bZ20XrEkizcQECjDzkm5m6BbI2rEx9rFkKz1qAPxOxBnh7nVHHsGTdKwhPN0Lc7avUkl1qzqHvlpOhhiu++NQIDAQAB"
+      authServerUrl: "http://keycloak:8080/auth"
+      sslRequired: "external"
+      resource: "reference"
+      publicClient: true
+      credentials:
+        secret: "d97a28da-b558-4193-8d63-55fb5d58c06a"
+      confidentialPort: 0
+image:
+  imageCacheDirectory: "data/binaryImageCache"
+  maxWidth: 2048
+  maxHeight: 2048

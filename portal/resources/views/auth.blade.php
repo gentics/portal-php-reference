@@ -1,4 +1,9 @@
 <section class="nav-register">
+    @auth
+    Welcome {{ Auth::user()->username ?? "" }}!
+    @endauth
+
+    @guest
     <!-- REGISTER BUTTON -->
     <button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModalCenter">
         Register
@@ -56,4 +61,5 @@
             </div>
         </div>
     </div>
+    @endguest
 </section>
