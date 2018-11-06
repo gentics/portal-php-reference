@@ -48,7 +48,8 @@
 		"merge-plugin": {
 			"include": [
 				"composer.override.json"
-			]
+			],
+			"replace": true
 		}
 	},
 	"scripts": {
