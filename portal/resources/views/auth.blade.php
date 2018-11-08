@@ -36,9 +36,11 @@
         </div>
     </div>
     <!-- SIGN IN BUTTON -->
-    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalCenter1">
+    {{--<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalCenter1">
         Sign In
     </button>
+    --}}
+    <a href="{{ route('login', ['returnTo' => url()->full()]) }}" class="btn btn-dark">Sign in</a>
 
     <!-- SIGN IN MODAL -->
     <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
