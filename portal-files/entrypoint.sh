@@ -33,7 +33,11 @@ if [[ ${MESH_APIKEY:+non-existing} || (( ${#MESH_APIKEY} < 32 )) ]]; then
 
 	if grep -q "^MESH_APIKEY=.*" $envFile
 	then
-		sed -i "s/MESH_APIKEY=.*/MESH_APIKEY=\"$MESH_APIKEY\"/g" $envFile
+		# When the .env file is a mount, --in-place of sed doesn't work, because
+		# it creates a temporary file and trys to rename it. So we use a temp file instead.
+		sed_temp_file=$(mktemp /tmp/sed_temp_file.XXXXXX)
+		sed "s/MESH_APIKEY=.*/MESH_APIKEY=\"$MESH_APIKEY\"/g" $envFile > $sed_temp_file
+		cp $sed_temp_file $envFile
 	else
 		echo "" >> $envFile
 		echo "MESH_URL=\"$MESH_URL\"" >> $envFile
