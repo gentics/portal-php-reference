@@ -11,4 +11,9 @@
 |
 */
 
+// custom preview for multichanneling
+Route::any("api/preview/{folderPath?}", 'CmsController@index')->where(['folderPath' => '.*']);
+
+Route::any("/{pathPrefix}/{path}", 'ContentController@index')->where('path' , '.*');
+
 Route::any("/{path}", 'ContentController@index')->where('path', '.*');
