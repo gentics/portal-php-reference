@@ -26,10 +26,12 @@ services:
         hard: -1
   mesh:
     # https://getmesh.io/docs/beta/administration-guide.html#_environment_variables
-    image: gentics/mesh:0.22.4
+    image: gentics/mesh:0.27.2
     volumes:
       - mesh-config:/config
       - mesh-data:/data
+      - ./mesh/mesh.yml:/config/mesh.yml
+      - ./mesh/keycloak_mapper.js:/config/keycloak_mapper.js
     ulimits:
       nofile:
         soft: 20000
@@ -41,7 +43,7 @@ services:
       JAVA_TOOL_OPTIONS: "-Xms320m -Xmx320m -XX:MaxDirectMemorySize=200m"
   # https://hub.docker.com/r/gentics/cms/
   cms:
-    image: gentics/cms:5.31
+    image: gentics/cms:5.32
     restart: on-failure
     volumes:
       - ./cms/conf.d/include.conf:/Node/etc/conf.d/include.conf
@@ -73,7 +75,7 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "true"
       MYSQL_ROOT_PASSWORD: ""
   keycloak:
-    image: jboss/keycloak:latest
+    image: jboss/keycloak:4.6.0.Final
     restart: "no"
     environment:
       DB_VENDOR: MARIADB
@@ -82,10 +84,12 @@ services:
       DB_USER: keycloak
       DB_PASSWORD: L3FAuMMKiNUsCEjS92SjMcQy
       KEYCLOAK_USER: admin
-      JAVA_TOOL_OPTIONS: "-Xms320m -Xmx320m"
+      KEYCLOAK_IMPORT: /tmp/reference_realm-export.json
+      JAVA_TOOL_OPTIONS: "-Xms320m -Xmx320m -Djboss.socket.binding.port-offset=3"
     volumes:
-      - ./keycloak/login.ftl:/opt/jboss/keycloak/themes/base/login/login.ftl
-      - ./keycloak/template.ftl:/opt/jboss/keycloak/themes/base/login/template.ftl
+      #- ./keycloak/login.ftl:/opt/jboss/keycloak/themes/base/login/login.ftl:ro
+      #- ./keycloak/template.ftl:/opt/jboss/keycloak/themes/base/login/template.ftl:ro
+      - ./keycloak/reference_realm-export.json:/tmp/reference_realm-export.json:ro
     depends_on:
       - db
 volumes:

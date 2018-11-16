@@ -1,6 +1,4 @@
 /.idea
 /.vscode
 /.vagrant
-/portal-files/binary/*
-/portal-files/keystore.jceks
 docker-compose.override.yml

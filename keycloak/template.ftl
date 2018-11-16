@@ -3,12 +3,12 @@
 <html lang="en">
 
 <head>
-    <title>🚀 Gentics Portal|Java - Login</title>
+    <title>🚀 Gentics Portal | php - Login</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://localhost:8000/static/reference/files/css/styles.css" media="all" />
+    <link rel="stylesheet" href="http://localhost:8080/static/demo-assets/files/css/styles.css" media="all" />
 </head>
 
 <body>

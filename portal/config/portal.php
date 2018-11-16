@@ -122,6 +122,27 @@ return [
     */
     'defaultLanguage' => 'en',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Authentication
+    |--------------------------------------------------------------------------
+    |
+    | Authentication provides currently Keycloak based OpenID Connect login and
+    | registration. The settings can be downloaded from the Keycloak server and
+    | copy to the proper fields. The redirect option is the callback url after
+    | the authentication process from Keycloak.
+    |
+    */
+    'authentication' => [
+        'keycloak' => [
+            'authUrl' => 'http://keycloak:8083/auth',
+            'realm' => 'reference',
+            'client_id' => 'reference',
+            'client_secret' => 'genticsp-orta-lphp-auth-referencexxx',
+            'redirect' => 'http://localhost:8080/auth/callback',
+        ],
+    ],
+
      /*
     |--------------------------------------------------------------------------
     | Data Provider
