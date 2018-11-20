@@ -1,12 +1,15 @@
 <section class="nav-register">
     @auth
         Welcome {{ Auth::user()->name ?? "" }} ({{ Auth::user()->username ?? "" }})!
-        <a href="{{ route('logout') }}" class="btn btn-light">Sign out</a>
+        <a href="{{ url(config('portal.authentication.keycloak.logoutEndpoint')) }}" class="btn btn-light">Sign out</a>
     @endauth
 
     @guest
     <!-- REGISTER BUTTON WITH REDIRECT -->
-    <a href="{{ route('register', ['returnTo' => url()->full()]) }}" class="btn btn-light">Register</a>
+    <a href="{{ urlWithParams(
+        config('portal.authentication.keycloak.registerEndpoint'),
+        ['returnTo' => url()->full()]
+    ) }}" class="btn btn-light">Register</a>
 
     {{--
     <!-- REGISTER BUTTON -->
@@ -50,7 +53,10 @@
         --}}
 
     <!-- SIGN IN BUTTON WITH REDIRECT -->
-    <a href="{{ route('login', ['returnTo' => url()->full()]) }}" class="btn btn-dark">Sign in</a>
+    <a href="{{ urlWithParams(
+        config('portal.authentication.keycloak.loginEndpoint'),
+        ['returnTo' => url()->full()]
+    ) }}" class="btn btn-dark">Sign in</a>
 
         {{--
         <!-- SIGN IN MODAL -->

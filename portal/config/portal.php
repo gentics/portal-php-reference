@@ -132,14 +132,20 @@ return [
     | copy to the proper fields. The redirect option is the callback url after
     | the authentication process from Keycloak.
     |
+    | The loginEndpoint, logoutEndpoint and registerEndpoint can be used for
+    | links in pages to specify urls for login/logout/register actions.
+    |
     */
     'authentication' => [
         'keycloak' => [
-            'authUrl' => 'http://keycloak:8083/auth',
+            'authUrl' => 'http://localhost:8083/auth',
             'realm' => 'reference',
             'client_id' => 'reference',
             'client_secret' => 'genticsp-orta-lphp-auth-referencexxx',
             'redirect' => 'http://localhost:8080/auth/callback',
+            'logoutEndpoint' => '/auth/logout',
+            'loginEndpoint' => '/auth/redirect',
+            'registerEndpoint' => '/auth/register'
         ],
     ],
 
