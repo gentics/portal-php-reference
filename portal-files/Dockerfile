@@ -30,7 +30,7 @@ RUN docker-php-ext-enable \
 # Add opcache configuration
 ADD portal-files/php-opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
-RUN a2enmod rewrite
+RUN a2enmod rewrite proxy proxy_http
 
 # Update certificates 
 RUN update-ca-certificates
@@ -47,6 +47,7 @@ RUN chmod +x /usr/local/bin/*.sh
 # Apache
 RUN rm /etc/apache2/sites-enabled/000-default.conf
 COPY portal-files/vhost.conf /etc/apache2/sites-enabled/000-default.conf
+COPY portal-files/keycloak-proxy.conf /etc/apache2/sites-enabled/001-keycloak.conf
 
 ENTRYPOINT ["entrypoint.sh"]
 

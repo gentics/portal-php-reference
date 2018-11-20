@@ -51,7 +51,7 @@ security:
     mapperScriptDevMode: true
     config:
       realm: "reference"
-      authServerUrl: "http://keycloak:8083/auth"
+      authServerUrl: "http://keycloak:8080/auth"
       sslRequired: "external"
       resource: "reference"
       publicClient: true
