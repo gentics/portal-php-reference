@@ -23,12 +23,29 @@ fi
 
 . $envFile
 
-if (( ${#MESH_APIKEY} < 32 )); then
+if [ ${MESH_URL:+non-existing} ]; then
+	MESH_URL="http://mesh:8080"
+fi
+
+if [[ ${MESH_APIKEY:+non-existing} || (( ${#MESH_APIKEY} < 32 )) ]]; then
 	waitForMesh.sh $MESH_URL 300
 	MESH_APIKEY=$(mesh-gen-token.sh $MESH_URL)
 	echo "Generated new Mesh API token: $MESH_APIKEY"
-	sed -i "s/MESH_APIKEY=.*/MESH_APIKEY=\"$MESH_APIKEY\"/g" $envFile
-	echo "Setup Portal defaults..."
+
+	if grep -q "^MESH_APIKEY=.*" $envFile
+	then
+		# When the .env file is a mount, --in-place of sed doesn't work, because
+		# it creates a temporary file and trys to rename it. So we use a temp file instead.
+		sed_temp_file=$(mktemp /tmp/sed_temp_file.XXXXXX)
+		sed "s/MESH_APIKEY=.*/MESH_APIKEY=\"$MESH_APIKEY\"/g" $envFile > $sed_temp_file
+		cp $sed_temp_file $envFile
+	else
+		echo "" >> $envFile
+		echo "MESH_URL=\"$MESH_URL\"" >> $envFile
+	    echo "MESH_APIKEY=\"$MESH_APIKEY\"" >> $envFile
+	fi
+  
+  echo "Setup Portal defaults..."
 	meshSetup.sh $MESH_URL "$MESH_APIKEY"
 fi
 

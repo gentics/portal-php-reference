@@ -7,10 +7,11 @@ services:
       context: .
     volumes:
       - ./portal:/portal:cached
-      - ./portal-files/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
+      - ./portal-files/apache2/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
+      - ./portal-files/apache2/portal.conf:/etc/apache2/sites-enabled/portal.conf
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
   elasticsearch:
-    image: elasticsearch:6.4.2
+    build: ./elasticsearch
     environment:
       - discovery.type=single-node
       - bootstrap.memory_lock=true
