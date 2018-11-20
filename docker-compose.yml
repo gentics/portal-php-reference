@@ -88,8 +88,8 @@ services:
       KEYCLOAK_IMPORT: /tmp/reference_realm-export.json
       JAVA_TOOL_OPTIONS: "-Xms320m -Xmx320m"
     volumes:
-      #- ./keycloak/login.ftl:/opt/jboss/keycloak/themes/base/login/login.ftl:ro
-      #- ./keycloak/template.ftl:/opt/jboss/keycloak/themes/base/login/template.ftl:ro
+      # - ./keycloak/login.ftl:/opt/jboss/keycloak/themes/base/login/login.ftl:ro
+      # - ./keycloak/template.ftl:/opt/jboss/keycloak/themes/base/login/template.ftl:ro
       - ./keycloak/reference_realm-export.json:/tmp/reference_realm-export.json:ro
     depends_on:
       - db
