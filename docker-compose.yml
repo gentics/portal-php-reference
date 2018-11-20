@@ -85,7 +85,7 @@ services:
       DB_PASSWORD: L3FAuMMKiNUsCEjS92SjMcQy
       KEYCLOAK_USER: admin
       KEYCLOAK_IMPORT: /tmp/reference_realm-export.json
-      JAVA_TOOL_OPTIONS: "-Xms320m -Xmx320m -Djboss.socket.binding.port-offset=3"
+      JAVA_TOOL_OPTIONS: "-Xms320m -Xmx320m"
     volumes:
       #- ./keycloak/login.ftl:/opt/jboss/keycloak/themes/base/login/login.ftl:ro
       #- ./keycloak/template.ftl:/opt/jboss/keycloak/themes/base/login/template.ftl:ro

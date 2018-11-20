@@ -28,6 +28,8 @@ if (( ${#MESH_APIKEY} < 32 )); then
 	MESH_APIKEY=$(mesh-gen-token.sh $MESH_URL)
 	echo "Generated new Mesh API token: $MESH_APIKEY"
 	sed -i "s/MESH_APIKEY=.*/MESH_APIKEY=\"$MESH_APIKEY\"/g" $envFile
+	echo "Setup Portal defaults..."
+	meshSetup.sh $MESH_URL "$MESH_APIKEY"
 fi
 
 docker-php-entrypoint $@
