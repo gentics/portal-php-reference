@@ -132,6 +132,15 @@ return [
     | copy to the proper fields. The redirect option is the callback url after
     | the authentication process from Keycloak.
     |
+    | For settings, in Keycloak go to your Realm > Clients > Installation and
+    | select Keycloak OIDC JSON then copy the following JSON details to this
+    | configuration by the JSON name -> Config name order
+    |
+    | auth-server-url → authUrl
+    | realm → realm
+    | resource → client_id
+    | credentials.secret → client_secret
+    |
     | The loginEndpoint, logoutEndpoint and registerEndpoint can be used for
     | links in pages to specify urls for login/logout/register actions.
     |
