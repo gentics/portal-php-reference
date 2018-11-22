@@ -1,3 +1,4 @@
+// TODO: Get rid of keycloak_mapper.js - This will be deprecated in the future in Mesh
 function extractRoles(principle) {
     return ["reference_role"]; // extractGroups(principle);
 }
