@@ -27,10 +27,12 @@ services:
         hard: -1
   mesh:
     # https://getmesh.io/docs/beta/administration-guide.html#_environment_variables
-    image: gentics/mesh:0.27.0
+    image: gentics/mesh:0.27.2
     volumes:
       - mesh-config:/config
       - mesh-data:/data
+      - ./mesh/mesh.yml:/config/mesh.yml
+      - ./mesh/keycloak_mapper.js:/config/keycloak_mapper.js
     ulimits:
       nofile:
         soft: 20000
@@ -38,6 +40,10 @@ services:
     environment:
       MESH_ELASTICSEARCH_URL: "http://elasticsearch:9200"
       MESH_ELASTICSEARCH_START_EMBEDDED: "false"
+      MESH_UPDATECHECK: "false"
+      JAVA_TOOL_OPTIONS: "-Xms320m -Xmx320m -XX:MaxDirectMemorySize=200m"
+    # TODO: Remove this workaround when Mesh can handle Keycloak wait/timeout
+    command: ["sh", "-c", "c=0;rc=-1; until [ \"$$rc\" = \"0\" ]; do wget -O/dev/null -T 3 keycloak:8080/auth/realms/reference/ 2>/dev/null; rc=$$?; if [ \"$$rc\" != \"0\" ]; then let 'c++'; echo 'Waiting for Keycloak #'$$c'...'; sleep 5; fi; done; exec java -jar mesh.jar"]
   # https://hub.docker.com/r/gentics/cms/
   cms:
     image: gentics/cms:5.32
@@ -58,6 +64,8 @@ services:
   # https://hub.docker.com/r/gentics/languagetool/
   languagetool:
     image: gentics/languagetool
+    environment:
+      JAVA_TOOL_OPTIONS: "-Xms128m -Xmx128m"
   # https://hub.docker.com/_/mariadb/
   db:
     image: mariadb:10.3
@@ -69,7 +77,25 @@ services:
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "true"
       MYSQL_ROOT_PASSWORD: ""
-
+  keycloak:
+    image: jboss/keycloak:4.6.0.Final
+    restart: "no"
+    environment:
+      DB_VENDOR: MARIADB
+      DB_ADDR: db
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: L3FAuMMKiNUsCEjS92SjMcQy
+      KEYCLOAK_USER: admin
+      KEYCLOAK_IMPORT: /tmp/reference_realm-export.json
+      JAVA_TOOL_OPTIONS: "-Xms320m -Xmx320m"
+    volumes:
+      # TODO: Customize login styles
+      # - ./keycloak/login.ftl:/opt/jboss/keycloak/themes/base/login/login.ftl:ro
+      # - ./keycloak/template.ftl:/opt/jboss/keycloak/themes/base/login/template.ftl:ro
+      - ./keycloak/reference_realm-export.json:/tmp/reference_realm-export.json:ro
+    depends_on:
+      - db
 volumes:
   portal-storage:
     driver: local

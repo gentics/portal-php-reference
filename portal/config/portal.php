@@ -17,6 +17,13 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Start Page used by Portal to redirect or link to home.
+    |--------------------------------------------------------------------------
+    */
+    'startPage' => '/Home.html',
+
+    /*
+    |--------------------------------------------------------------------------
     | Target Mesh project for queries
     |--------------------------------------------------------------------------
     |
@@ -121,6 +128,42 @@ return [
     |
     */
     'defaultLanguage' => 'en',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Authentication
+    |--------------------------------------------------------------------------
+    |
+    | Authentication provides currently Keycloak based OpenID Connect login and
+    | registration. The settings can be downloaded from the Keycloak server and
+    | copy to the proper fields. The redirect option is the callback url after
+    | the authentication process from Keycloak.
+    |
+    | For settings, in Keycloak go to your Realm > Clients > Installation and
+    | select Keycloak OIDC JSON then copy the following JSON details to this
+    | configuration by the JSON name -> Config name order
+    |
+    | auth-server-url → authUrl
+    | realm → realm
+    | resource → client_id
+    | credentials.secret → client_secret
+    |
+    | The loginEndpoint, logoutEndpoint and registerEndpoint can be used for
+    | links in pages to specify urls for login/logout/register actions.
+    |
+    */
+    'authentication' => [
+        'keycloak' => [
+            'authUrl' => 'http://localhost:8083/auth',
+            'realm' => 'reference',
+            'client_id' => 'reference',
+            'client_secret' => 'genticsp-orta-lphp-auth-referencexxx',
+            'redirect' => 'http://localhost:8080/auth/callback',
+            'logoutEndpoint' => '/auth/logout',
+            'loginEndpoint' => '/auth/redirect',
+            'registerEndpoint' => '/auth/register'
+        ],
+    ],
 
      /*
     |--------------------------------------------------------------------------

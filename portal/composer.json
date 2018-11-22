@@ -1,6 +1,6 @@
 {
-	"name": "laravel/laravel",
-	"description": "The Laravel Framework.",
+	"name": "gentics/portal-php-reference",
+	"description": "Gentics Portal | php Reference Implementation",
 	"keywords": ["framework", "laravel"],
 	"license": "MIT",
 	"type": "project",

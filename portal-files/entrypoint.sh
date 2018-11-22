@@ -44,7 +44,9 @@ if [[ ${MESH_APIKEY:+non-existing} || (( ${#MESH_APIKEY} < 32 )) ]]; then
 		echo "MESH_URL=\"$MESH_URL\"" >> $envFile
 	    echo "MESH_APIKEY=\"$MESH_APIKEY\"" >> $envFile
 	fi
-	
+
+	echo "Setup Portal defaults..."
+	meshSetup.sh $MESH_URL "$MESH_APIKEY"
 fi
 
 docker-php-entrypoint $@

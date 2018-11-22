@@ -80,3 +80,52 @@ if (! function_exists('isCmsPreview')) {
         return false;
     }
 }
+
+if (! function_exists('build_url'))
+{
+    /**
+     * @param array $parts
+     * @return string
+     */
+    function build_url(array $parts)
+    {
+        $scheme   = isset($parts['scheme']) ? ($parts['scheme'] . '://') : '';
+
+        $host     = ($parts['host'] ?? '');
+        $port     = isset($parts['port']) ? (':' . $parts['port']) : '';
+
+        $user     = ($parts['user'] ?? '');
+
+        $pass     = isset($parts['pass']) ? (':' . $parts['pass'])  : '';
+        $pass     = ($user || $pass) ? "$pass@" : '';
+
+        $path     = ($parts['path'] ?? '');
+        $query    = isset($parts['query']) ? ('?' . $parts['query']) : '';
+        $fragment = isset($parts['fragment']) ? ('#' . $parts['fragment']) : '';
+
+        return implode('', [$scheme, $user, $pass, $host, $port, $path, $query, $fragment]);
+    }
+}
+
+if (! function_exists('urlWithParams')) {
+    /**
+     * @param string $url
+     * @param array $params
+     * @return string
+     */
+    function urlWithParams(string $url, array $params = [])
+    {
+        $parsed = parse_url($url);
+        $query = '';
+
+        if (!empty($parsed['query'])) {
+
+            $query = $parsed['query'] . '&';
+        }
+
+        $query .= http_build_query($params);
+        $parsed['query'] = $query;
+
+        return build_url($parsed);
+    }
+}
