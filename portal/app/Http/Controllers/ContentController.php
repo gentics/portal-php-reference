@@ -15,7 +15,7 @@ class ContentController extends \Gentics\PortalPhp\Http\Controllers\ContentContr
     {
         // Workaround for bug where the startpage property of the root node folder in the CMS is not being published
         if ($path === '/') {
-            return parent::index('/Home.html');
+            return parent::index(config('portal.startPage'));
         }
 
         return parent::index($path);
