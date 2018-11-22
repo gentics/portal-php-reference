@@ -10,7 +10,7 @@ services:
       MESH_AUTH_KEYSTORE_PASS: "changemeplease"
   keycloak:
     ports:
-      - '8083:8083'
+      - '8083:8080'
     environment:
       KEYCLOAK_PASSWORD: "changemeplease"
   cms:
