@@ -1,0 +1,40 @@
+FROM php:7.1-stretch
+
+ARG USER_NAME="jenkins"
+ARG GIT_USER_NAME="Jenkins"
+ARG GIT_USER_EMAIL="entwicklung@gentics.com"
+
+# Install Debian packages
+RUN apt-get update -y \
+	&& apt-get install -y \
+	openssl \
+	zip \
+	unzip \
+	git \
+	libssl-dev \
+	libcurl4-openssl-dev \
+	pkg-config \
+	zlib1g-dev
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Install PHP extensions
+RUN docker-php-ext-install \
+	curl \
+	pdo \
+	mbstring \
+	zip
+
+# Update certificates 
+RUN update-ca-certificates
+
+ENV PATH="/root/.composer/vendor/bin:${PATH}"
+
+RUN git config --system user.name "${GIT_USER_NAME}"
+RUN git config --system user.email "${GIT_USER_EMAIL}"
+
+# Add user
+# The ID / GID 10000 is used by the jenkinsci/slave Dockerfile and has to match here, because Jenkins
+# does the SCM checkout in the jnlp container for some reasons.
+RUN groupadd --system --gid 10000 ${USER_NAME} && useradd --create-home --no-log-init --uid 10000 --gid ${USER_NAME} ${USER_NAME}
+USER ${USER_NAME}
