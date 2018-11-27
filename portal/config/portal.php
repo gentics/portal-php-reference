@@ -151,8 +151,14 @@ return [
     | The loginEndpoint, logoutEndpoint and registerEndpoint can be used for
     | links in pages to specify urls for login/logout/register actions.
     |
+    | alwaysUseAdminClient:
+    | If you want to disable user authentication, you can always use the admin
+    | token. This is enabled in the default configuration but disabled by
+    | default if not set for security reasons.
+    |
     */
     'authentication' => [
+        'alwaysUseAdminClient' => false,
         'keycloak' => [
             'authUrl' => 'http://localhost:8083/auth',
             'realm' => 'reference',
