@@ -3,3 +3,4 @@
 /.vagrant
 .DS_Store
 docker-compose.override.yml
+portal/auth.json

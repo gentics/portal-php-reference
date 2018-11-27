@@ -8,7 +8,7 @@ services:
     volumes:
       - ./portal:/portal:cached
       - ./portal-files/apache2/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
-      - ./portal-files/apache2/portal.conf:/etc/apache2/sites-enabled/portal.conf
+      - ./portal-files/apache2/portal.conf:/etc/apache2/portal.conf
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
   elasticsearch:
     build: ./elasticsearch
