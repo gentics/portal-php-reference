@@ -36,6 +36,7 @@ Service documentation:
 ### Run the portal
 
 ```bash
+docker login repo.apa-it.at
 docker-compose up -d
 ```
 
