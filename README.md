@@ -93,6 +93,7 @@ Service documentation:
 ### Run the portal
 
 ```bash
+docker login repo.apa-it.at
 docker-compose up -d
 ```
 
@@ -110,7 +111,6 @@ http://localhost:8080
 If you do any changes do the Dockerfile, you have to run
 
 ```bash
-docker login repo.apa-it.at
 docker-compose build
 ```
 
