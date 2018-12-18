@@ -3,16 +3,18 @@ FROM php:7.2-apache-stretch
 # Install Debian packagess
 RUN apt-get update -y \
 	&& apt-get install -y \
-	openssl \
-	zip \
-	unzip \
-	git \
-	libssl-dev \
-	libcurl4-openssl-dev \
-	pkg-config \
-	zlib1g-dev \
-	jq \
-	libpcre3-dev
+		openssl \
+		zip \
+		unzip \
+		git \
+		libssl-dev \
+		libcurl4-openssl-dev \
+		pkg-config \
+		zlib1g-dev \
+		jq \
+		libpcre3-dev \
+		libgmp-dev \
+	&& rm -rf /var/lib/apt/lists/*
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -22,7 +24,8 @@ RUN docker-php-ext-install \
 	pdo \
 	mbstring \
 	zip \
-	opcache
+	opcache \
+	gmp
 
 RUN docker-php-ext-enable \
 	opcache
