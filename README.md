@@ -53,7 +53,7 @@ composer config --global --auth http-basic.repo.apa-it.at <YOURUSERNAME> <YOURPA
 ```bash
 cd portal
 composer config repositories.gentics composer "https://repo.apa-it.at/api/composer/php"
-composer require gentics/portal-php:^0.2.0
+composer require gentics/portal-php:^0.2.0 --ignore-platform-reqs
 php artisan vendor:publish --provider="Gentics\PortalPhp\Providers\ServiceProvider"
 ```
 
