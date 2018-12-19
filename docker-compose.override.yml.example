@@ -3,6 +3,10 @@ services:
   portal:
     ports:
       - '8080:80'
+    volumes:
+      - ./portal:/portal:cached
+      - ./portal-files/apache2/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
+      - ./portal-files/apache2/portal.conf:/etc/apache2/sites-enabled/portal.conf
   mesh:
     ports:
       - '8081:8080'
