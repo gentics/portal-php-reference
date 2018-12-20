@@ -40,7 +40,7 @@ services:
       MESH_ELASTICSEARCH_START_EMBEDDED: "false"
   # https://hub.docker.com/r/gentics/cms/
   cms:
-    image: gentics/cms:5.32
+    image: docker.apa-it.at/gentics/cms:5.32
     restart: on-failure
     volumes:
       - cms-node:/Node/node
