@@ -43,7 +43,7 @@ This file contains the environment settings for the Laravel framework.
 ### Run the portal
 
 ```bash
-docker login repo.apa-it.at
+docker login docker.apa-it.at
 docker-compose up -d
 ```
 
