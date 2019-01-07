@@ -5,13 +5,13 @@ services:
     build:
       dockerfile: ./portal-files/Dockerfile
       context: .
-    volumes:
-      - ./portal:/portal:cached
-      - ./portal-files/apache2/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
-      - ./portal-files/apache2/portal.conf:/etc/apache2/sites-enabled/portal.conf
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
   elasticsearch:
-    build: ./elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.5.3
+    command: >
+      bash -c "[ ! -d /usr/share/elasticsearch/plugins/ingest-attachment ] \
+        && bin/elasticsearch-plugin install -b ingest-attachment
+      /usr/local/bin/docker-entrypoint.sh eswrapper"
     environment:
       - discovery.type=single-node
       - bootstrap.memory_lock=true
@@ -46,16 +46,14 @@ services:
     command: ["sh", "-c", "c=0;rc=-1; until [ \"$$rc\" = \"0\" ]; do wget -O/dev/null -T 3 keycloak:8080/auth/realms/reference/ 2>/dev/null; rc=$$?; if [ \"$$rc\" != \"0\" ]; then let 'c++'; echo 'Waiting for Keycloak #'$$c'...'; sleep 5; fi; done; exec java -jar mesh.jar"]
   # https://hub.docker.com/r/gentics/cms/
   cms:
-    image: gentics/cms:5.32
+    image: docker.apa-it.at/gentics/cms:5.32
     restart: on-failure
     volumes:
-      - ./cms/conf.d/include.conf:/Node/etc/conf.d/include.conf
-      - ./cms/conf.d/include:/Node/etc/conf.d/include
-      - ./cms/dumps:/Node/etc/dumps
-      - cms-packages:/Node/node/content/packages
+      - cms-node:/Node/node
       - cms-dbfiles:/Node/node/content/dbfiles
       - cms-bundles:/Node/node/system/bundles
-      - ./portal/public/static/demo-assets/files:/Node/node/content/packages/demo-assets/files:ro
+      - ./cms/conf.d/include.conf:/Node/etc/conf.d/include.conf
+      - ./cms/conf.d/include:/Node/etc/conf.d/include
     environment:
       NODE_DB_USER: root
       NODE_DB_PASSWORD: ""
@@ -71,9 +69,9 @@ services:
     image: mariadb:10.3
     command: --sql-mode=""
     volumes:
+      - db-data:/var/lib/mysql
       - ./db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
       - ./db/custom.cnf:/etc/mysql/conf.d/custom.cnf
-      - db-data:/var/lib/mysql
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "true"
       MYSQL_ROOT_PASSWORD: ""
@@ -107,13 +105,11 @@ volumes:
     driver: local
   elasticsearch-data:
     driver: local
-  cms-packages:
+  cms-node:
     driver: local
   cms-dbfiles:
     driver: local
   cms-bundles:
-    driver: local
-  cms-dbfiles:
     driver: local
   db-data:
     driver: local

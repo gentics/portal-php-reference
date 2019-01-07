@@ -3,6 +3,10 @@ services:
   portal:
     ports:
       - '8080:80'
+    volumes:
+      - ./portal:/portal:cached
+      - ./portal-files/apache2/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
+      - ./portal-files/apache2/portal.conf:/etc/apache2/sites-enabled/portal.conf
   mesh:
     ports:
       - '8081:8080'
@@ -18,3 +22,6 @@ services:
       - '8082:80'
     environment:
       LICENSEKEY: TH1S-15N0-T4V4-L1DK-3YKT-HXBY-D34D-B33F
+    volumes:
+      - ./cms/dumps:/Node/etc/dumps
+      - ./portal/public/static/demo-assets/files:/Node/node/content/packages/demo-assets/files:ro
