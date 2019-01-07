@@ -18,6 +18,7 @@ composer config --global --auth http-basic.repo.apa-it.at <YOURUSERNAME> <YOURPA
 ```bash
 cd portal
 composer install
+cd ..
 ```
 
 ### Docker service configuration
@@ -27,7 +28,7 @@ composer install
 You can configure passwords, ports, environment variables and other settings `in docker-compose.override.yml`
 The license key for the cms has to be changed.
 
-#### Copy `.env.example` to `.env`
+#### Copy `portal/.env.example` to `portal/.env`
 
 This file contains the environment settings for the Laravel framework.
 
