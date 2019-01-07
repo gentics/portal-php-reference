@@ -17,7 +17,7 @@ composer config --global --auth http-basic.repo.apa-it.at <YOURUSERNAME> <YOURPA
 
 ```bash
 cd portal
-composer install
+composer install --ignore-platform-reqs
 cd ..
 ```
 
