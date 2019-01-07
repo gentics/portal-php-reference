@@ -22,11 +22,17 @@ composer install
 
 ### Docker service configuration
 
-Copy the file `docker-compose.override.yml.example` to `docker-compose.override.yml`
+#### Copy `docker-compose.override.yml.example` to `docker-compose.override.yml`
+
 You can configure passwords, ports, environment variables and other settings `in docker-compose.override.yml`
 The license key for the cms has to be changed.
 
-Service documentation:
+#### Copy .env.example to .env
+
+This file contains the environment settings for the Laravel framework.
+
+
+#### Service documentation
 
 * [mesh](https://getmesh.io/docs/beta/administration-guide.html#_environment_variables)
 * [elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html)
