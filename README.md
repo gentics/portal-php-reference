@@ -27,7 +27,7 @@ composer install
 You can configure passwords, ports, environment variables and other settings `in docker-compose.override.yml`
 The license key for the cms has to be changed.
 
-#### Copy .env.example to .env
+#### Copy `.env.example` to `.env`
 
 This file contains the environment settings for the Laravel framework.
 
