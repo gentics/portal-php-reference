@@ -14,19 +14,12 @@
                 @endif
             @endforeach
         @endif
+        <li class="breadcrumb-item active" aria-current="page">
         @if($folder['node']['fields']['startpage']['path'] != ($node['node']['path'] ?? ""))
-            <li class="breadcrumb-item">
-                <a href="{{ $folder['node']['path'] ?? "#" }}">
-                    {{ $folder['node']['fields']['name'] ?? "" }}
-                </a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">
-                {{ $node['fields']['name'] ?? "" }}
-            </li>
+            {{ $node['fields']['name'] ?? "" }}
         @else
-            <li class="breadcrumb-item active" aria-current="page">
-                {{ $folder['node']['fields']['name'] ?? "" }}
-            </li>
+            {{ $folder['node']['fields']['name'] ?? "" }}
         @endif
+        </li>
     </ol>
 </nav>
