@@ -52,6 +52,7 @@ services:
       - cms-node:/Node/node
       - cms-dbfiles:/Node/node/content/dbfiles
       - cms-bundles:/Node/node/system/bundles
+      - ./cms/packages/:/Node/node/content/packages/
       - ./cms/conf.d/include.conf:/Node/etc/conf.d/include.conf
       - ./cms/conf.d/include:/Node/etc/conf.d/include
     environment:
