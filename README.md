@@ -25,7 +25,7 @@ cd ..
 
 #### Copy `docker-compose.override.yml.example` to `docker-compose.override.yml`
 
-You can configure passwords, ports, environment variables and other settings `in docker-compose.override.yml`
+You can configure passwords, ports, environment variables and other settings in `docker-compose.override.yml`
 The license key for the cms has to be changed.
 
 #### Copy `portal/.env.example` to `portal/.env`
@@ -53,8 +53,18 @@ This will build the portal docker image and run the docker service
 
 * You can view the container status with `docker-compose ps`
 * To view the logs of a specific container, use `docker-compose logs -f name`. e.g.: `docker-compose logs -f portal`
-* Log in to http://localhost:8082 with `node` `node` and wait until the publish run has finished and has published all objects into Mesh.
+* Log in to http://localhost:8082 with `node`/`node` and wait until the publish run has finished and has published all objects into Mesh.
 
 ### Open the reference project in the browser
 
 * http://localhost:8080
+* on first use, register yourself a new user
+
+## Next Steps
+
+1. Visit the "Automobiles" Section of the [portal](http://localhost:8080), check out the different cars and their metadata
+2. For one of the cars, find the corresponding page in the [Mesh-UI](http://localhost:8081/)
+3. Keep going by finding the corresponding page in the [Gentics CMS](http://localhost:8080/). Notice that in the CMS preview of the page, the navigation and breadcrumbs are not consistent with the portal, whereas the content of the page is rendered identically.
+4. Using the WYSIWYG editor, modify the price, and expand the description of the car with some HTML elements.
+5. Notice that saving the page does not have an effect on the portal. After publishing, the content in the portal is updated.
+6. Find out which CMS template is used for cars, and what the template name is. Look up that template in your IDE, make a change. Notice that saved changes are immediately available in the portal.
