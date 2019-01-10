@@ -10,7 +10,7 @@ Contact Gentics if you haven't received your credentials for repo.apa-it.at yet.
 It's also advised to use the encrypted password here, which can be generated in your Artifactory profile page. Replace &lt;YOURUSERNAME&gt; and &lt;YOURPASSWORD&gt; in the command below.
 
 ```bash
-composer config --global --auth http-basic.repo.apa-it.at <YOURUSERNAME> <YOURPASSWORD>
+composer config --global --auth http-basic.repo.apa-it.at
 ```
 
 ### Install portal composer dependencies
