@@ -26,9 +26,10 @@ if [[ $MESH_URL == "" ]]; then
 	MESH_URL="http://mesh:8080"
 fi
 
-if [[ ${MESH_APIKEY:+non-existing} || (( ${#MESH_APIKEY} < 32 )) ]]; then
+if [[ $MESH_APIKEY == "" ]] || (( ${#MESH_APIKEY} < 32 )); then
 	echo "MESH_URL: $MESH_URL"
 	waitForMesh.sh $MESH_URL 300
+	echo "Generating new Mesh API key..."
 	MESH_APIKEY=$(mesh-gen-token.sh $MESH_URL)
 	echo "Generated new Mesh API token: $MESH_APIKEY"
 
