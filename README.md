@@ -7,7 +7,7 @@ This repository contains an example docker compose stack for GENTICS PORTAL | ph
 **Important: When using Windows, you must configure your GIT client to not convert line endings to windows line endings BEFORE cloning this GIT repository.**
 
 ```
-git config --global color.core.autocrlf input
+git config --global core.autocrlf input
 ```
 
 ### Authentication for repo.apa-it.at
