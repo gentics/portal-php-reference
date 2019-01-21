@@ -16,7 +16,7 @@ This explains how to setup a basic Laravel project with the portal-php package.
 **Important: When using Windows, you must configure your GIT client to not convert line endings to windows line endings BEFORE cloning this GIT repository.**
 
 ```
-git config --global color.core.autocrlf input
+git config --global core.autocrlf input
 ```
 
 ### Prerequisites
