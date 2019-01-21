@@ -4,6 +4,12 @@ This repository contains an example docker compose stack for GENTICS PORTAL | ph
 
 ## Run reference Laravel project implementation with GENTICS PORTAL | php
 
+**Important: When using Windows, you must configure your GIT client to not convert line endings to windows line endings BEFORE cloning this GIT repository.**
+
+```
+git config --global color.core.autocrlf input
+```
+
 ### Authentication for repo.apa-it.at
 
 Contact Gentics if you haven't received your credentials for repo.apa-it.at yet.
