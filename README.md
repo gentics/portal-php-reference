@@ -13,6 +13,12 @@ This repository contains both, an example docker compose stack for creating a ne
 
 This explains how to setup a basic Laravel project with the portal-php package.
 
+**Important: When using Windows, you must configure your GIT client to not convert line endings to windows line endings BEFORE cloning this GIT repository.**
+
+```
+git config --global color.core.autocrlf input
+```
+
 ### Prerequisites
 
 * [docker](https://docs.docker.com/install/) - Latest version
