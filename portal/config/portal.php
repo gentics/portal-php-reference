@@ -34,6 +34,36 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Use Mesh Content branches
+    |--------------------------------------------------------------------------
+    |
+    | Set enabled to true, to use Mesh branches (Gentics CMS Multichannelling).
+    | When this is enabled, the hostname and the path prefix of the incoming
+    | client request is matched to the branch list of the Mesh project and
+    | the correct branch to use for API requests will be chosen automatically.
+    | See:
+    | * https://getmesh.io/docs/features/#_content_branches
+    | * https://www.gentics.com/Content.Node/guides/mesh_cr_implementation_branches.html
+    |
+    | matchHttpHost:         Whether to match the hostname of the incoming
+    |                        request with the branch host
+    | matchPageDirectory:    Whether to match the request path with the
+    |                        page directory prefixes of the Mesh branches
+    | implementationVersion: The implementation version to use, set null to
+    |                        not use. This allows you to seamlessly migrate
+    |                        your project to a newer version without downtime
+    |                        by increasing the field in the CR Administration
+    |                        of your CMS.
+    */
+    'branches' => [
+        'enabled'               => true,
+        'matchHttpHost'         => true,
+        'matchPageDirectory'    => true,
+        'implementationVersion' => null,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Default schema names used for fetching objects from the Mesh API
     |--------------------------------------------------------------------------
     */
