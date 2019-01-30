@@ -51,6 +51,12 @@ Make sure your auth.json contains the following configuration:
 
 Replace `MYUSERNAME` and `MYPASSWORD`. It's also advised to use the encrypted password here, which can be generated in your Artifactory profile page.
 
+Log in into the docker registry and use the same credentials like above:
+
+```
+docker login repo.apa-it.at
+```
+
 ## Running the demo
 
 See: https://github.com/gentics/portal-php-reference/blob/demo/README.demo.md
@@ -106,26 +112,47 @@ Copy the file `docker-compose.override.yml.example` to `docker-compose.override.
 You can configure passwords, ports, environment variables and other settings `in docker-compose.override.yml`
 The license key for the cms has to be changed.
 
-Service documentation:
+### Running the portal
+
+#### Copy `docker-compose.override.yml.example` to `docker-compose.override.yml`
+
+You can configure passwords, ports, environment variables and other settings `in docker-compose.override.yml`
+The license key for the cms has to be changed.
+
+#### Copy `portal/.env.example` to `portal/.env`
+
+This file contains the environment settings for the Laravel framework.
+
+Run:
+
+```bash
+docker-compose up -d
+```
+
+* You can view the container status with `docker-compose ps`
+* To view the logs of a specific container, use `docker-compose logs -f name`. e.g.: `docker-compose logs -f portal`
+* You can read [this page here](https://github.com/gentics/cms-compose/wiki/Common-problems-&-FAQ) if you encounter any problems.
+
+#### Open the reference project in the browser
+
+##### Portal application
+
+http://localhost:8080 - If asked for authentication, register a new account (Keycloak)
+
+##### Mesh
+
+http://localhost:8081 - Use admin admin as login
+
+##### CMS
+
+http://localhost:8082 - Use node node as login
+
+## Service documentation:
 
 * [mesh](https://getmesh.io/docs/beta/administration-guide.html#_environment_variables)
 * [elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html)
 * [cms](https://hub.docker.com/r/gentics/cms/)
 * [db](https://hub.docker.com/_/mariadb/)
-
-### Run the portal
-
-```bash
-docker login repo.apa-it.at
-docker-compose up -d
-```
-
-This will build the portal docker image and run the docker service.
-
-### Open the reference project in the browser
-
-http://localhost:8080
-
 
 ## Howto
 
