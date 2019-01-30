@@ -14,7 +14,7 @@ cd ..
 
 ### Running the portal
 
-Read the section ["Running the portal" in the README](README.md#run-the-portal).
+Read the section ["Running the portal" in the README](README.md#running-the-portal).
 
 ### Wait for the CMS publish run to be complete
 
