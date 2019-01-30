@@ -63,8 +63,8 @@
 			"Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
 			"@php artisan package:discover"
 		],
-		"post-install-cmd": "./vendor/bin/cghooks add --ignore-lock",
-		"post-update-cmd": "./vendor/bin/cghooks update",
+		"post-install-cmd": "\"./vendor/bin/cghooks\" add --ignore-lock",
+		"post-update-cmd": "\"./vendor/bin/cghooks\" update",
 		"pre-commit": [
 			"@test"
 		],
