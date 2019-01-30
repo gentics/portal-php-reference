@@ -1,23 +1,8 @@
-# GENTICS PORTAL | php - Reference implementation
+# GENTICS PORTAL | php - Demo
 
-This repository contains an example docker compose stack for GENTICS PORTAL | php with Gentics Mesh and Gentics CMS.
+## Run the GENTICS PORTAL | php demo
 
-## Run reference Laravel project implementation with GENTICS PORTAL | php
-
-**Important: When using Windows, you must configure your GIT client to not convert line endings to windows line endings BEFORE cloning this GIT repository.**
-
-```
-git config --global core.autocrlf input
-```
-
-### Authentication for repo.apa-it.at
-
-Contact Gentics if you haven't received your credentials for repo.apa-it.at yet.
-It's also advised to use the encrypted password here, which can be generated in your Artifactory profile page. Replace &lt;YOURUSERNAME&gt; and &lt;YOURPASSWORD&gt; in the command below.
-
-```bash
-composer config --global --auth http-basic.repo.apa-it.at
-```
+Read the section "[Installing requirements](README.md#requirements)" first and make sure you have installed and configured everything correctly.
 
 ### Install portal composer dependencies
 
