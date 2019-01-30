@@ -4,14 +4,18 @@ This repository contains both, an example docker compose stack for creating a ne
 
 ## Branches
 
-| Branch     | Description       |
-|------------|-------------------|
-| newproject | For creating a fresh new project with GENTICS PORTAL  php |
-| demo       | Demo reference application |
+| Branch     | Description       |  Documentation |
+|------------|-------------------| ---------------|
+| newproject | For creating a fresh new project with GENTICS PORTAL  php | [Link](#creating-a-new-laravel-project-with-gentics-portal--php) |
+| demo       | Demo reference application | [Link](https://github.com/gentics/portal-php-reference/blob/demo/README.demo.md) |
 
-## Creating a new Laravel project with GENTICS PORTAL | php
+## Requirements
 
-This explains how to setup a basic Laravel project with the portal-php package.
+* [GIT](https://git-scm.com/download/linux)
+* [Docker](https://docs.docker.com/install/) - Latest version
+* [Docker-compose](https://docs.docker.com/compose/install/) - Latest version
+* [PHP](http://php.net/downloads.php) - Any version >= 7.1.3
+* [Composer](https://getcomposer.org/doc/00-intro.md)
 
 **Important: When using Windows, you must configure your GIT client to not convert line endings to windows line endings BEFORE cloning this GIT repository.**
 
@@ -19,19 +23,41 @@ This explains how to setup a basic Laravel project with the portal-php package.
 git config --global core.autocrlf input
 ```
 
-### Prerequisites
+Read the section ["Installing the requirements"](#installing-the-requirements) for more specific details on how to install and configure the required tools.
+If you encounter any errors, you maybe find a solution on [this page here](https://github.com/gentics/cms-compose/wiki/Common-problems-&-FAQ).
 
-* [docker](https://docs.docker.com/install/) - Latest version
-* [docker-compose](https://docs.docker.com/compose/install/) - Latest version
-* [composer](https://getcomposer.org/doc/00-intro.md) (Optional)
+### Authentication for repo.apa-it.at
 
-If you don't want to install composer locally, you can use it with Docker instead:
+Contact Gentics if you haven't received your credentials for repo.apa-it.at yet.
+
+Open the composer file auth.json. You can also edit `%USERPROFILE%\AppData\Roaming\Composer\auth.json` or `~/.composer/auth.json` instead.
 
 ```bash
-docker run --rm -ti -v `pwd`:/app composer composer <arguments>
+composer config --global --auth --editor
 ```
 
-You might have to replace `pwd` with `%cd%` in Windows shell.
+Make sure your auth.json contains the following configuration:
+
+```
+{
+    "http-basic": {
+        "repo.apa-it.at": {
+            "username": "MYUSERNAME",
+            "password": "MYPASSWORD"
+        }
+    }
+}
+```
+
+Replace `MYUSERNAME` and `MYPASSWORD`. It's also advised to use the encrypted password here, which can be generated in your Artifactory profile page.
+
+## Running the demo
+
+See: https://github.com/gentics/portal-php-reference/blob/demo/README.demo.md
+
+## Creating a new Laravel project with GENTICS PORTAL | php
+
+This explains how to setup a basic Laravel project with the portal-php package.
 
 ### Create a new Laravel project
 
@@ -44,15 +70,6 @@ composer create-project --prefer-dist laravel/laravel portal
 ```
 
 This will create a new directory called "portal". You can also name it differently, but then you have to change the path in the docker-compose configuration, entrypoint.sh and the apache2 vhost.
-
-### Authentication for repo.apa-it.at
-
-Contact Gentics if you haven't received your credentials for repo.apa-it.at yet.
-It's also advised to use the encrypted password here, which can be generated in your Artifactory profile page. Replace &lt;YOURUSERNAME&gt; and &lt;YOURPASSWORD&gt; in the command below.
-
-```bash
-composer config --global --auth http-basic.repo.apa-it.at
-```
 
 ### Install Gentics Portal | PHP
 
@@ -79,7 +96,7 @@ We can fix this easily, in `portal/public/.htaccess` find this line (line 12):
 Add this after:
 
 ```apache
-RewriteCond %{REQUEST_METHOD}  =GET
+RewriteCond %{REQUEST_METHOD} =GET
 ```
 
 
@@ -112,9 +129,36 @@ http://localhost:8080
 
 ## Howto
 
+### Installing the requirements
+
+#### GIT
+
+##### Windows
+
+Install the GIT client from https://git-scm.com/downloads
+
+Make sure to enable "Checkout as-is, commit Unix-style" when the installer asks you.
+
+##### Linux / Mac ####
+
+Install the package "git" with the packet manager.
+
+#### Docker
+
+#### Windows / Mac ####
+
+* Use Docker with HyperV if avilable
+* We recommend to increase the memory to at least 4 GB or better 6GB and set the available CPU to all CPU cores in the Docker settings
+
+#### PHP
+
+Check if PHP 7.1.3 or higher is already installed by running `php -version`
+
+If your operating system has a packet manager with PHP 7.1.3 or higher, install the package, otherwise download PHP from http://at2.php.net/downloads.php (PHP 7.3 "VC15 x64 Non Thread Safe" for Windows).
+
 ### Building the Dockerfile
 
-If you do any changes do the Dockerfile, you have to run
+If you do any changes do the Dockerfile or files in `portal-files`, you have to run
 
 ```bash
 docker-compose build
