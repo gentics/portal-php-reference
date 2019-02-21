@@ -2,11 +2,13 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+
 /**
  * Class Handler
  * @package App\Exceptions
  */
-class Handler extends \Gentics\PortalPhp\Exceptions\Handler
+class Handler extends ExceptionHandler
 {
     /**
      * A list of the exception types that are not reported.
