@@ -96,6 +96,7 @@ fragment content on %contentSchema% {
 	image
 	vehicle_description
     tagsData(linkType: SHORT)
+    addredirecttag(linkType: SHORT)
 }
 
 fragment navigation on Node {

@@ -46,7 +46,7 @@ services:
     command: ["sh", "-c", "c=0;rc=-1; until [ \"$$rc\" = \"0\" ]; do wget -O/dev/null -T 3 keycloak:8080/auth/realms/reference/ 2>/dev/null; rc=$$?; if [ \"$$rc\" != \"0\" ]; then let 'c++'; echo 'Waiting for Keycloak #'$$c'...'; sleep 5; fi; done; exec java -jar mesh.jar"]
   # https://hub.docker.com/r/gentics/cms/
   cms:
-    image: docker.apa-it.at/gentics/cms:5.32
+    image: docker.apa-it.at/gentics/cms:5.33
     restart: on-failure
     volumes:
       - cms-node:/Node/node

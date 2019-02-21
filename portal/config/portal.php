@@ -224,6 +224,7 @@ return [
         // DataProvider Mesh paths
         'meshData' => [
             'config' => 'settings/Configuration.html',
+            'redirects' => 'settings/Redirects.html',
         ],
 
         // JSON containing keys, which should be decoded
@@ -288,6 +289,51 @@ return [
                     ],
                 ],
             ],
+        ],
+    ],
+
+    /*
+   |--------------------------------------------------------------------------
+   | Redirects
+   |--------------------------------------------------------------------------
+   |
+   | This is an opt-in feature, only enabled when the configuration exists.
+   |
+   | The Redirects feature tries to redirect the visitor to a predefined page
+   | from an old page if a 404 error occurs.
+   |
+   | The redirect map can be fetched from either a DataProvider or a page. For
+   | pages, the source can be reloaded on every request or can be cached for a
+   | a specified amount of minutes. The dataProvider source takes care of this
+   | with its own cache rules.
+   |
+   | It is possible to configure the global value for the redirect statuses to
+   | either Permanent or Temporary.
+   |
+   | The redirect maps have to be parsed by a RedirectHelper class, if no class
+   | is provided, then a built in class will be used. A helperClass can receive
+   | settings as an array. The custom helper class must implement the
+   | RedirectHelper interface.
+   */
+   'redirects' => [
+        // Load Once cache time in minutes
+        'loadOnceCacheTime' => 5,
+
+        // Global setting for Permanent 301 or Temporary 303 code redirects
+        'permanentRedirects' => false,
+
+        // Redirects source
+        'source' => 'dataProvider:redirects',
+
+        // Load once or load every time (if non-DataProvider source used)
+        'reload' => false,
+
+        // Helper class to process the custom redirects map
+        'helperClass' => \Gentics\PortalPhp\Features\Redirect\BasicRedirectHelper::class,
+
+        // Helper settings to pass
+        'helperConfig' => [
+            'fieldName' => 'addredirecttag',
         ],
     ],
 ];
