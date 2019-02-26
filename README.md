@@ -190,19 +190,3 @@ If you do any changes do the Dockerfile or files in `portal-files`, you have to 
 ```bash
 docker-compose build
 ```
-
-### Custom error pages
-
-In order to use custom error pages (404, 500), you have to extend your Exception handler from the class `\Gentics\PortalPhp\Exceptions\Handler`.
-
-Open `portal/app/Exceptions/Handler.php` and replace the following line:
-
-```php
-class Handler extends ExceptionHandler
-```
-
-with this:
-
-```php
-class Handler extends \Gentics\PortalPhp\Exceptions\Handler
-```
