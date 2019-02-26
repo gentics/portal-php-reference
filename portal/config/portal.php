@@ -201,7 +201,7 @@ return [
         ],
     ],
 
-     /*
+    /*
     |--------------------------------------------------------------------------
     | Data Provider
     |--------------------------------------------------------------------------
@@ -216,7 +216,6 @@ return [
     | be expanded as arrays automatically.
     |
     */
-
     'dataProvider' => [
         // Fetched data to be cached in minutes
         'cacheTime' => 1,
@@ -224,6 +223,7 @@ return [
         // DataProvider Mesh paths
         'meshData' => [
             'config' => 'settings/Configuration.html',
+            'redirects' => 'settings/Redirects.html',
         ],
 
         // JSON containing keys, which should be decoded
@@ -288,6 +288,58 @@ return [
                     ],
                 ],
             ],
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Redirects
+    |--------------------------------------------------------------------------
+    |
+    | This is an opt-in feature, which can be enabled with the 'enabled' flag.
+    |
+    | The Redirects feature tries to redirect the visitor to a predefined page
+    | from an old page if a 404 error occurs.
+    |
+    | The redirect map can be fetched from either a DataProvider or a CMS page.
+    | For pages, the source can be reloaded on every request or can be cached
+    | for aa specified amount of minutes. The DataProvider source takes care of
+    | this with its own cache rules. To use a DataProvider you need to prefix
+    | the name of the DataProvider with 'dataProvider:' and the name of the
+    | DataProvider. For CMS Pages you have to use the path to that page.
+    | The format of the DataProvider or CMS page depends on the helperClass to
+    | be used.
+    |
+    | It is possible to configure the global value for the redirect statuses to
+    | either Permanent or Temporary.
+    |
+    | The redirect maps have to be parsed by a RedirectHelper class, if no class
+    | is provided, then a built in class will be used. A helperClass can receive
+    | settings as an array. The custom helper class must implement the
+    | RedirectHelper interface.
+    */
+    'redirects' => [
+        // To enable redirects this should be true
+        'enabled' => true,
+
+        // Load Once cache time in minutes
+        'loadOnceCacheTime' => 5,
+
+        // Global setting for Permanent 301 or Temporary 303 code redirects
+        'permanentRedirects' => false,
+
+        // Redirects source CMS Page with path or DataProvider with dataProvider:<name>
+        'source' => 'dataProvider:redirects',
+
+        // Load once or load every time (if non-DataProvider source used)
+        'reload' => false,
+
+        // Helper class to process the custom redirects map
+        'helperClass' => \Gentics\PortalPhp\Features\Redirect\BasicRedirectHelper::class,
+
+        // Helper settings to pass
+        'helperConfig' => [
+            'fieldName' => 'addredirecttag',
         ],
     ],
 ];
