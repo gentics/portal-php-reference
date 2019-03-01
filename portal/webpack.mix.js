@@ -11,5 +11,19 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
+let publicAssetsRoot = 'public/static/demo-assets/files';
+let resourcesRoot = 'resources/assets/';
+
+mix.options({
+	processCssUrls: false,
+});
+
+mix.ts(resourcesRoot + '/js/app.ts', publicAssetsRoot + '/js')
+	.sass(resourcesRoot + '/scss/styles.scss', publicAssetsRoot + '/css');
+
+mix.copyDirectory(resourcesRoot + '/img', publicAssetsRoot + '/img');
+mix.copyDirectory('node_modules/@fortawesome/fontawesome-free/webfonts', publicAssetsRoot + '/fonts');
+
+if (mix.inProduction()) {
+	mix.version();
+}
