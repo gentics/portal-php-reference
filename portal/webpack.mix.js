@@ -25,7 +25,7 @@ mix.copyDirectory(resourcesRoot + '/img', publicAssetsRoot + '/img');
 mix.copyDirectory('node_modules/@fortawesome/fontawesome-free/webfonts', publicAssetsRoot + '/fonts');
 
 // Generate source maps on development build
-if(!mix.inProduction()) {
+if (!mix.inProduction()) {
 	mix.sourceMaps();
 }
 

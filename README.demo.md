@@ -22,7 +22,7 @@ Read the section ["Running the portal" in the README](README.md#running-the-port
 
 ### Changing the assets
 
-We are using CSS and JavaScript pre-processor to generate the Gentics Portal | php reference assets, and its already
+We are using CSS and JavaScript pre-processor to generate the GENTICS PORTAL | php reference assets, and its already
 ships with pre-built assets, but changes in these files will be lost on next build.
 
 Laravel Mix is used to generate the assets inside the **./portal/public/static/demo-assets/files/** folder, and the
@@ -33,3 +33,8 @@ If you would like to change the assets, please check the [Laravel Mix documentat
 * [Prerequisite steps](https://laravel.com/docs/5.7/mix#installation)
 * [Build steps](https://laravel.com/docs/5.7/mix#running-mix)
 
+### Commercial Mesh Plugins
+
+Some Gentics Mesh plugins are not available for free, but we built some examples with these also (eg.: Ratings with the
+Likes plugin). Please refer to these plugins at [Gentics Mesh documentations](https://getmesh.io/docs/plugins/#_commercial_plugins).
+Not installing these plugins should not cause any problems, just the missing feature will not displayed.
