@@ -43,6 +43,7 @@
 
 		toggleDetails()
 		{
+			// Workaround: to prevent closing before its opened
 			setTimeout(() => {
 				this.$emit("toggle:rating-details", true);
 			});

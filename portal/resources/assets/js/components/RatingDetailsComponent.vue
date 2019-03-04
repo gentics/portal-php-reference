@@ -6,8 +6,8 @@
 					 :title="getRatePercentage(rate) + '%'">{{ rate.rate }} star</div>
 			</div>
 		</div>
-		<div class="review-right col-lg-6 col-sm-12">
-			<p class="mb-0 mt-3">{{ posted !== null ? `You rated this for ${posted} stars` : 'Leave your rating' }}</p>
+		<div class="review-right col-lg-6 col-sm-12" :class="{ 'rate-saving': updatingRate }">
+			<p class="mb-0 mt-3">{{ currentRate !== null ? `You rated this for ${currentRate} stars` : 'Leave your rating' }}</p>
 			<div class="rating-stars text-center pt-3">
 				<a v-for="(rate, i) in ratesReversed" :class="['r' + (i + 1), { 'active': isStarActive(rate) }]" @click="setRate(rate)">
 					<i class="fas fa-star"></i>
@@ -35,6 +35,22 @@
 		ratingCount = 0;
 		avgRating = 0;
 
+		clickedRate = 0;
+		updatingRate = false;
+
+		get currentRate() {
+			if (this.updatingRate) {
+				return this.clickedRate;
+			} else {
+				return this.posted;
+			}
+		}
+
+		get ratesReversed()
+		{
+			return this.rates.slice().reverse();
+		}
+
 		@Watch('rates')
 		onRatesChanged(rates: any[])
 		{
@@ -50,6 +66,8 @@
 
 			this.ratingCount = rateCount;
 			this.avgRating = rateSum / rateCount;
+
+			this.updatingRate = false;
 		}
 
 		getRatePercentage(rate: any)
@@ -58,18 +76,15 @@
 			return !isNaN(percentage) ? percentage : 0;
 		}
 
-		get ratesReversed()
-		{
-			return this.rates.slice().reverse();
-		}
-
 		isStarActive(rate: any)
 		{
-			return Number(this.posted) >= rate.rate;
+			return Number(this.currentRate) >= rate.rate;
 		}
 
 		setRate(rate: any)
 		{
+			this.updatingRate = true;
+			this.clickedRate = Number(rate.rate);
 			this.$emit("post:rating", Number(rate.rate));
 		}
 
