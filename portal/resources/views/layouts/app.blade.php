@@ -48,10 +48,8 @@
         </footer>
     </div>
 
-    {{-- @if(!isCmsPreview()) --}}
-        <script src="{{ mix('/static/demo-assets/files/js/app.js') }}"></script>
-        @stack('scripts')
-    {{-- @endif --}}
+    <script src="{{ mix('/static/demo-assets/files/js/app.js') }}"></script>
+    @stack('scripts')
 
 </body>
 </html>
