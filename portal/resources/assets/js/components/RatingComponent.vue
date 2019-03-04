@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div v-if="(!rates || rates.length === 0) && backendError" class="feature-need-action">
+		<div v-if="(!rates || rates.length === 0) && !ratingActive" class="feature-need-action">
 			To activate ratings, you need to install and configure the <b>Likes Plugin</b> for Gentics Mesh.
 		</div>
 		<div :class="{ 'invisible': (!rates || rates.length === 0) }">
@@ -31,7 +31,7 @@
 		posted: any;
 
 		detailsVisible = false;
-		backendError = false;
+		ratingActive = true;
 
 		toggleRatingDetails(value: boolean)
 		{
@@ -52,6 +52,8 @@
 
 					const data = response.data;
 					const ratings = data.statistics.ratings;
+
+					this.ratingActive = data.configuration ? data.configuration.active : false;
 					this.posted = data.posted ? data.posted.rating : null;
 
 					for ( let i in ratings ) {
@@ -63,7 +65,7 @@
 				})
 				.catch((err: any) => {
 					if ( err.response.status >= 400 ) {
-						this.backendError = true;
+						this.ratingActive = false;
 					}
 				});
 		}
