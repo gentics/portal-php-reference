@@ -31,6 +31,7 @@ services:
     volumes:
       - mesh-config:/config
       - mesh-data:/data
+      - ./mesh/plugins/:/plugins/
       - ./mesh/mesh.yml:/config/mesh.yml
       - ./mesh/keycloak_mapper.js:/config/keycloak_mapper.js
     ulimits:
