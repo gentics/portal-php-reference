@@ -114,14 +114,12 @@ i {
 }
 
 .rating-stars {
+	unicode-bidi: bidi-override;
 	direction: rtl;
 }
 
-.rating-stars .reviews {
+.ratings a.reviews {
 	font-size: 12px;
-}
-
-.rating-stars a {
 	color: #007bff;
 	text-decoration: underline;
 	font-weight: 450;
@@ -131,6 +129,10 @@ i {
 	font-size: 20px;
 	padding-left: 0;
 	margin-bottom: 10px;
+}
+
+.rating-stars > i {
+	cursor: pointer;
 }
 
 .bar-container {
@@ -211,28 +213,9 @@ i {
 	transition: 0.3s all;
 }
 
-.rating-stars a i:hover,
-.rating-stars a.active i {
-	color: #f1c40f;
-}
-
-.r1:hover~a i {
-	color: #f1c40f;
-}
-
-.r2:hover~a i {
-	color: #f1c40f;
-}
-
-.r3:hover~a i {
-	color: #f1c40f;
-}
-
-.r4:hover~a i {
-	color: #f1c40f;
-}
-
-.r5:hover~a i {
+.rating-stars a.active i,
+.rating-stars a:hover i,
+.rating-stars a:hover ~ a i {
 	color: #f1c40f;
 }
 

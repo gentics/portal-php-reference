@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="ratings">
 		<div v-if="(!rates || rates.length === 0) && !ratingActive" class="feature-need-action">
 			To activate ratings, you need to install and configure the <b>Likes Plugin</b> for Gentics Mesh.
 		</div>

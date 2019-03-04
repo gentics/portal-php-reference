@@ -7,8 +7,10 @@ new Legacy();
 import Vue from "vue";
 import RatingComponent from "./components/RatingComponent.vue";
 
+// Components
 Vue.component('rating', RatingComponent);
 
+// Start Vue
 new Vue({
 	el: '#app'
 });

@@ -1,12 +1,16 @@
 <template>
-	<div class="rating-stars text-left">
-		<a class="reviews" href="#" @click="toggleDetails">{{ ratingCount }}</a>
-		<i v-for="rate in ratesReversed" :class="getRateClass(rate)"></i>
+	<div>
+		<div class="rating-stars text-left d-inline-block">
+			<i v-for="rate in ratesReversed" :class="getRateClass(rate)" @click="toggleDetails"></i>
+		</div>
+		<a class="reviews" href="#" @click="toggleDetails">{{ ratingCount }} {{ ratingCount | pluralize('en', ['rating', 'ratings']) }}</a>
 	</div>
 </template>
 
 <script lang="ts">
 	import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+	import VueFilterPluralize from 'vue-filter-pluralize';
+	Vue.use(VueFilterPluralize);
 
 	@Component
 	export default class RatingStarsComponent extends Vue {
