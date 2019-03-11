@@ -1,4 +1,4 @@
-query ($searchQuery: String, $page: Long, $perPage: Int) {
+query ($searchQuery: String, $page: Long, $perPage: Long) {
   content: nodes(page: $page, perPage: $perPage, query: $searchQuery) {
     elements {
       path

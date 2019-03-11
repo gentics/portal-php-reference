@@ -1,0 +1,9 @@
+fragment pages on Node {
+    pages: children(lang: ["en", "de"]) {
+        elements {
+            path
+            uuid
+            ...contentInfo
+        }
+    }
+}
