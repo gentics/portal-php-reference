@@ -67,7 +67,7 @@ This explains how to setup a basic Laravel project with the portal-php package.
 
 ### Create a new Laravel project
 
-More information can be found on the Laravel documentation for the Installation.
+More information can be found on the [Laravel documentation](https://laravel.com/docs/)  for the installation.
 
 Clone this GIT repository and change into the directory.
 
@@ -90,7 +90,7 @@ This adds the repository "gentics" to your projects composer.json, pulls the dep
 
 ### .htaccess
 
-POST requests from the CMS to the CmsController do not work by default because the stock Laravel .htaccess redirects all requests that have a trailing slash in order to remove it.
+POST requests from Gentics CMS to the CmsController do not work by default because the stock Laravel .htaccess redirects all requests that have a trailing slash in order to remove it.
 However due do the RFC standard which disallows POST redirects without user interaction, this means that the POST data is lost.
 
 We can fix this easily, in `portal/public/.htaccess` find this line (line 12):
@@ -110,7 +110,7 @@ RewriteCond %{REQUEST_METHOD} =GET
 
 Copy the file `docker-compose.override.yml.example` to `docker-compose.override.yml`
 You can configure passwords, ports, environment variables and other settings `in docker-compose.override.yml`
-The license key for the cms has to be changed.
+The license key for Gentics CMS has to be changed.
 
 ### Running the portal
 
@@ -139,13 +139,13 @@ docker-compose up -d
 
 http://localhost:8080 - If asked for authentication, register a new account (Keycloak)
 
-##### Mesh
+##### Gentics Mesh
 
-http://localhost:8081 - Use admin admin as login
+http://localhost:8081 - Use admin/admin as login
 
-##### CMS
+##### Gentics CMS
 
-http://localhost:8082 - Use node node as login
+http://localhost:8082 - Use node/node as login
 
 ## Service documentation:
 
@@ -172,7 +172,7 @@ Install the package "git" with the packet manager.
 
 #### Docker
 
-#### Windows / Mac ####
+##### Windows / Mac #####
 
 * Use Docker with HyperV if avilable
 * We recommend to increase the memory to at least 4 GB or better 6GB and set the available CPU to all CPU cores in the Docker settings
