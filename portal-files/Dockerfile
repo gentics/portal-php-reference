@@ -30,6 +30,9 @@ RUN docker-php-ext-install \
 RUN docker-php-ext-enable \
 	opcache
 
+# Install xdebug, but don't enable it by default
+RUN echo yes | pecl install xdebug
+
 # Add opcache configuration
 ADD portal-files/php-opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 

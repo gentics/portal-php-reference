@@ -7,6 +7,8 @@ services:
       - ./portal:/portal:cached
       - ./portal-files/apache2/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
       - ./portal-files/apache2/portal.conf:/etc/apache2/sites-enabled/portal.conf
+    environment:
+      XDEBUG_ENABLED: "true"
   mesh:
     ports:
       - '8081:8080'
