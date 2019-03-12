@@ -1,0 +1,20 @@
+fragment navigation_breadcrumb on Node {
+	node(lang: "en") {
+		schema {
+			name
+		}
+		path
+		language
+		fields {
+			... on %folderSchema% {
+				name
+				navhidden
+				navsortorder
+				startpage(lang: ["en", "de"]) {
+					uuid
+					path
+				}
+			}
+		}
+	}
+}

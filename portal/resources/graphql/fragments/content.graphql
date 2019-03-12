@@ -1,0 +1,14 @@
+fragment content on %contentSchema% {
+	name
+	description(linkType: SHORT)
+	templateName
+	title
+	content
+	weight
+	price
+	stock
+	image
+	vehicle_description
+	tagsData(linkType: SHORT)
+	addredirecttag(linkType: SHORT)
+}

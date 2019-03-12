@@ -14,6 +14,8 @@ RUN apt-get update -y \
 		jq \
 		libpcre3-dev \
 		libgmp-dev \
+		libicu-dev \
+		g++ \
 	&& rm -rf /var/lib/apt/lists/*
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -25,7 +27,8 @@ RUN docker-php-ext-install \
 	mbstring \
 	zip \
 	opcache \
-	gmp
+	gmp \
+	intl
 
 RUN docker-php-ext-enable \
 	opcache
