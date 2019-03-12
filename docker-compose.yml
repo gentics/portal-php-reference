@@ -5,6 +5,8 @@ services:
     build:
       dockerfile: ./portal-files/Dockerfile
       context: .
+    environment:
+      XDEBUG_ENABLED: "false"
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.5.3
