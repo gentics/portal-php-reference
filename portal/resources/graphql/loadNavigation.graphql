@@ -1,0 +1,43 @@
+query {
+	project {
+		uuid
+		rootNode {
+			children(lang: ["en", "de"] perPage:2147483647) {
+				elements {
+					uuid
+					...navigation
+					children(lang: ["en", "de"] perPage:2147483647) {
+						elements {
+							uuid
+							...navigation
+							children(lang: ["en", "de"] perPage:2147483647) {
+								elements {
+									uuid
+									...navigation
+									children(lang: ["en", "de"] perPage:2147483647) {
+										elements {
+											uuid
+											...navigation
+											children(lang: ["en", "de"] perPage:2147483647) {
+												elements {
+													uuid
+													...navigation
+													children(lang: ["en", "de"] perPage:2147483647) {
+														elements {
+															uuid
+															...navigation
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
