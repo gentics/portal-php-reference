@@ -31,8 +31,12 @@ services:
     # https://getmesh.io/docs/beta/administration-guide.html#_environment_variables
     image: gentics/mesh:0.31.1
     volumes:
+      - mesh-data:/mesh/data
       - mesh-config:/config
-      - mesh-data:/data
+      - mesh-graphdb:/graphdb
+      - mesh-uploads:/uploads
+      - mesh-keystore:/keystore
+      - mesh-backups:/backups
       - ./mesh/plugins/:/plugins/
       - ./mesh/mesh.yml:/config/mesh.yml
       - ./mesh/keycloak_mapper.js:/config/keycloak_mapper.js
@@ -106,6 +110,14 @@ volumes:
   mesh-config:
     driver: local
   mesh-data:
+    driver: local
+  mesh-graphdb:
+    driver: local
+  mesh-uploads:
+    driver: local
+  mesh-keystore:
+    driver: local
+  mesh-backups:
     driver: local
   elasticsearch-data:
     driver: local
