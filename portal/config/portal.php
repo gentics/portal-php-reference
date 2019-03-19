@@ -62,6 +62,29 @@ return [
         'implementationVersion' => null,
     ],
 
+     /*
+    |--------------------------------------------------------------------------
+    | Mesh Data Cache options
+    |--------------------------------------------------------------------------
+    |
+    | Set Mesh GraphQL request options, like cacheTime.
+    |
+    | navigation:
+    |   cacheTime:          Navigation cache time in seconds
+    |
+    | user:
+    |   cacheTime:          User data cache time in seconds
+    |
+    */
+    'cache' => [
+        'navigation' => [
+            'cacheTime' => 15
+        ],
+        'user' => [
+            'cacheTime' => 15
+        ],
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Default schema names used for fetching objects from the Mesh API
@@ -110,6 +133,10 @@ return [
     |
     */
     'exceptionHandler' => [
+        'httpCodes' => [
+            // 404 => 'errors/404.html',
+            // 403 => 'errors/403.html',
+        ],
         'default' => 'errors/',
     ],
 
@@ -208,7 +235,7 @@ return [
     |
     | Data Provider fetches and caches global settings of the portal from Mesh.
     |
-    | cacheTime: Specifies the time in minutes until the last fetched values
+    | cacheTime: Specifies the time in seconds until the last fetched values
     | should be used without updating.
     | meshData: An associative array, which tells the source of the Data Provider
     | values assigned to keys. Example: 'config' => 'settings/Config.html'
@@ -217,8 +244,8 @@ return [
     |
     */
     'dataProvider' => [
-        // Fetched data to be cached in minutes
-        'cacheTime' => 1,
+        // Fetched data to be cached in seconds
+        'cacheTime' => 60,
 
         // DataProvider Mesh paths
         'meshData' => [
@@ -303,7 +330,7 @@ return [
     |
     | The redirect map can be fetched from either a DataProvider or a CMS page.
     | For pages, the source can be reloaded on every request or can be cached
-    | for aa specified amount of minutes. The DataProvider source takes care of
+    | for a specified amount of seconds. The DataProvider source takes care of
     | this with its own cache rules. To use a DataProvider you need to prefix
     | the name of the DataProvider with 'dataProvider:' and the name of the
     | DataProvider. For CMS Pages you have to use the path to that page.
@@ -322,8 +349,8 @@ return [
         // To enable redirects this should be true
         'enabled' => true,
 
-        // Load Once cache time in minutes
-        'loadOnceCacheTime' => 5,
+        // Load Once cache time in seconds
+        'loadOnceCacheTime' => 300,
 
         // Global setting for Permanent 301 or Temporary 303 code redirects
         'permanentRedirects' => false,
