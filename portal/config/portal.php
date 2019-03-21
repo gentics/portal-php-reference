@@ -165,13 +165,22 @@ return [
     | HTTP headers white list for binary webroot requests
     |--------------------------------------------------------------------------
     |
-    | HTTP headers listed here will be passed through to the client
+    | HTTP headers listed here will be passed through to the client or the server
+    | Supports wildcards * and ?. The matching is not case sensitive.
     |
     */
     'webrootHttpHeaderWhiteList' => [
-        'ETag',
-        'Content-Type',
-        'Content-Length',
+        'request' => [
+            'Cache-Control',
+            'If-*',
+        ],
+        'response' => [
+            'Content-*',
+            'ETag',
+            'Last-Modified',
+            'Expires',
+            'Cache-Control',
+        ]
     ],
 
     /*
