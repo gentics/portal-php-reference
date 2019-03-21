@@ -175,7 +175,8 @@ return [
             'If-*',
         ],
         'response' => [
-            'Content-*',
+            'Content-Length',
+            'Content-Type',
             'ETag',
             'Last-Modified',
             'Expires',
