@@ -69,6 +69,9 @@ return [
     |
     | Set Mesh GraphQL request options, like cacheTime.
     |
+    | errorPage:
+    |   cacheTime:          Error Pages cache time in seconds
+    |
     | navigation:
     |   cacheTime:          Navigation cache time in seconds
     |
@@ -77,6 +80,9 @@ return [
     |
     */
     'cache' => [
+        'errorPage' => [
+            'cacheTime' => 300
+        ],
         'navigation' => [
             'cacheTime' => 15
         ],
