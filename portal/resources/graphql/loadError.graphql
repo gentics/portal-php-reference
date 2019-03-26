@@ -1,0 +1,15 @@
+query ($path: String) {
+    node(path: $path) {
+        language
+        languages {
+            path
+            language
+        }
+        schema {
+            name
+        }
+        fields {
+            ...content
+        }
+    }
+}

@@ -169,9 +169,16 @@ return [
     |
     */
     'webrootHttpHeaderWhiteList' => [
-        'ETag',
-        'Content-Type',
-        'Content-Length',
+        'request' => [
+            'Cache-Control',
+            'If-*',
+        ],
+        'response' => [
+            'Content-*',
+            'ETag',
+            'Last-Modified',
+            'Expires',
+        ]
     ],
 
     /*
