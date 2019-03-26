@@ -171,7 +171,8 @@ return [
     | HTTP headers white list for binary webroot requests
     |--------------------------------------------------------------------------
     |
-    | HTTP headers listed here will be passed through to the client
+    | HTTP headers listed here will be passed through to the client or the server
+    | Supports wildcards * and ?. The matching is not case sensitive.
     |
     */
     'webrootHttpHeaderWhiteList' => [
@@ -180,10 +181,12 @@ return [
             'If-*',
         ],
         'response' => [
-            'Content-*',
+            'Content-Length',
+            'Content-Type',
             'ETag',
             'Last-Modified',
             'Expires',
+            'Cache-Control',
         ]
     ],
 
