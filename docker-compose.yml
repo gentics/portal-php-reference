@@ -31,8 +31,8 @@ services:
     # https://getmesh.io/docs/beta/administration-guide.html#_environment_variables
     image: gentics/mesh:0.31.1
     volumes:
+      - mesh-data:/mesh/data
       - mesh-config:/config
-      - mesh-data:/data
       - ./mesh/plugins/:/plugins/
       - ./mesh/mesh.yml:/config/mesh.yml
       - ./mesh/keycloak_mapper.js:/config/keycloak_mapper.js
@@ -41,6 +41,10 @@ services:
         soft: 20000
         hard: 40000
     environment:
+      MESH_BINARY_DIR: "/mesh/data/uploads"
+      MESH_GRAPH_DB_DIRECTORY: "/mesh/data/graphdb"
+      MESH_AUTH_KEYSTORE_PATH: "/config/keystore.jceks"
+      MESH_GRAPH_BACKUP_DIRECTORY: "/mesh/data/backups"
       MESH_ELASTICSEARCH_URL: "http://elasticsearch:9200"
       MESH_ELASTICSEARCH_START_EMBEDDED: "false"
       MESH_UPDATECHECK: "false"

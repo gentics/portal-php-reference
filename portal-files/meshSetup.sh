@@ -14,8 +14,6 @@ MESH_APIKEY=""
 
 REFERENCE_ROLE="reference_role"
 REFERENCE_GROUP="reference_group"
-REFERENCE_PROJECT="Portal_PHP_Reference"
-WAITFORPROJECT=600
 
 function usage() {
 	echo "Usage: $0 URL APIKEY"
@@ -76,42 +74,6 @@ if [[ "$#" -eq 2 ]] ; then
     if [ ! -z "$ROLEUUID" ] && [ ! -z "$GROUPUUID" ]; then
        echo "MeshSetup: Assign ${REFERENCE_ROLE} to ${REFERENCE_GROUP}"
        GROUPROLE=$(meshPOST "/api/v1/groups/${GROUPUUID}/roles/${ROLEUUID}" "")
-    fi
-  fi
-
-  PROJECTUUID=""
-
-  if [ ! -z "$ROLEUUID" ]; then
-    WAITCOUNT=0
-    PROJECT=""
-    until [ ! -z "$PROJECT" ] && [ "$WAITFORPROJECT" -gt "$WAITCOUNT" ]; do
-      echo "MeshSetup: Wait ${REFERENCE_PROJECT} project ($WAITCOUNT/$WAITFORPROJECT)"
-      PROJECT=$(meshGET /api/v1/projects | jq -r '.data[] | [(.uuid), .name] | @tsv' | grep "$REFERENCE_PROJECT")
-      ((WAITCOUNT++))
-      sleep 1
-    done
-
-    if [ ! -z "$PROJECT" ]; then
-      echo "MeshSetup: Assign permissions on ${REFERENCE_PROJECT} project to ${REFERENCE_ROLE}"
-      PROJECTUUID=$(echo $PROJECT | awk '{ print $1 }')
-      PROJECTPERM=$(meshPOST "/api/v1/roles/${ROLEUUID}/permissions/projects/${PROJECTUUID}" "{\"permissions\":{\"create\":false,\"read\":true,\"update\":false,\"delete\":false,\"publish\":false,\"readPublished\":false},\"recursive\":false}")
-    fi
-  fi
-
-  if [ ! -z "$ROLEUUID" ] && [ ! -z "$PROJECTUUID" ]; then
-    WAITCOUNT=0
-    NODE=""
-    until [ ! -z "$NODE" ] && [ "$WAITFORPROJECT" -gt "$WAITCOUNT" ]; do
-      echo "MeshSetup: Wait ${REFERENCE_PROJECT} node ($WAITCOUNT/$WAITFORPROJECT)"
-      NODE=$(meshGET /api/v1/projects | jq -r '.data[] | [(.rootNode.uuid), .rootNode.projectName] | @tsv' | grep "$REFERENCE_PROJECT")
-      ((WAITCOUNT++))
-      sleep 1
-    done
-
-    if [ ! -z "$NODE" ]; then
-      echo "MeshSetup: Assign permissions on ${REFERENCE_PROJECT} node to ${REFERENCE_ROLE}"
-      NODEUUID=$(echo $NODE | awk '{ print $1 }')
-      NODEPERM=$(meshPOST "/api/v1/roles/${ROLEUUID}/permissions/projects/${PROJECTUUID}/nodes/${NODEUUID}" "{\"permissions\":{\"create\":false,\"read\":true,\"update\":false,\"delete\":false,\"publish\":false,\"readPublished\":true},\"recursive\":true}")
     fi
   fi
 fi
