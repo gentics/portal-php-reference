@@ -1,5 +1,8 @@
 <?php
 
+use Gentics\PortalPhp\PortalPhp;
+use Gentics\PortalPhp\RenderMode;
+
 if (! function_exists('sortByNavSortOrder')) {
     /**
      * Sorts navigation by navsortorder field
@@ -65,15 +68,14 @@ if (! function_exists('isCmsPreview')) {
     /**
      * Tells if the current state is CMS Preview or not by the actual controller name
      * @return bool
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     function isCmsPreview()
     {
-        $action = app('request')->route()->getAction();
-        $controller = class_basename($action['controller']);
+        $portalPhp = app()->make(PortalPhp::class);
+        $renderMode = $portalPhp->renderMode();
 
-        list($controller, $action) = explode('@', $controller);
-
-        if ($controller == 'CmsController') {
+        if ($renderMode === RenderMode::PREVIEW || $renderMode === RenderMode::EDIT) {
             return true;
         }
 

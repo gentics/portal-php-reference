@@ -4,7 +4,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                @foreach(sortByNavSortOrder($project['rootNode']['children']['elements'] ?? []) as $elem)
+                @foreach(sortByNavSortOrder($rootNode['children']['elements'] ?? []) as $elem)
                     @include('navelement', ['node' => $node, 'elem' => $elem])
                 @endforeach
             </ul>
