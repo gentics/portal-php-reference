@@ -6,3 +6,26 @@
 
 // Legacy CSS TODO: Convert to SCSS
 @import "legacy";
+
+
+body {
+	&.portal-mode-edit {
+		svg {
+			path {
+				&.gtx-logo-dot {
+					fill: #c34343;
+				}
+			}
+		}
+	}
+
+	&.portal-mode-preview {
+		svg {
+			path {
+				&.gtx-logo-dot {
+					fill: #ffaa6e;
+				}
+			}
+		}
+	}
+}

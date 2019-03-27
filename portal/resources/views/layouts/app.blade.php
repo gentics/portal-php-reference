@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ mix('/static/demo-assets/files/css/styles.css') }}"> @stack('styles')
 </head>
 
-<body>
+<body class="portal-mode-{{ renderMode() }}">
     <div id="app">
         <header class="container">
             <!-- SIGN IN + REGISTER BUTTONS-->
@@ -43,8 +43,19 @@
             @yield('content')
         </main>
 
+        {{-- The Portal Mode is only displayed in debug mode! --}}
         <footer class="container">
-            <a href="https://www.gentics.com" class="footerLink">www.gentics.com</a>|<a href="https://getmesh.io/docs/beta/" class="footerLink">Documentation</a>
+            <a href="https://www.gentics.com" class="footerLink">www.gentics.com</a>|<a href="https://getmesh.io/docs/beta/" class="footerLink">Documentation</a>@if(config('app.debug') === true)
+|<span class="footerLink">Portal Mode:
+@renderMode('publish')
+Publish
+@elserenderMode('preview')
+Preview
+@elserenderMode('edit')
+Edit
+@endrenderMode
+</span>
+@endif
         </footer>
     </div>
 
