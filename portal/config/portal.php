@@ -179,14 +179,18 @@ return [
         'request' => [
             'Cache-Control',
             'If-*',
+            'Range',
         ],
         'response' => [
+            'Accept-Ranges',
+            'Cache-Control',
             'Content-Length',
+            'Content-Range',
             'Content-Type',
             'ETag',
-            'Last-Modified',
             'Expires',
-            'Cache-Control',
+            'Last-Modified',
+            'Transfer-Encoding',
         ]
     ],
 
