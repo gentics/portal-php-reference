@@ -53,6 +53,8 @@ Publish
 Preview
 @elserenderMode('edit')
 Edit
+@elserenderMode('live')
+Live Preview
 @endrenderMode
 </span>
 @endif
