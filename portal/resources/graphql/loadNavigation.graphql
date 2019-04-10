@@ -1,43 +1,34 @@
-query {
-	project {
-		uuid
-		rootNode {
-			children(lang: ["en", "de"] perPage:2147483647) {
-				elements {
-					uuid
-					...navigation
-					children(lang: ["en", "de"] perPage:2147483647) {
-						elements {
-							uuid
-							...navigation
-							children(lang: ["en", "de"] perPage:2147483647) {
-								elements {
-									uuid
-									...navigation
-									children(lang: ["en", "de"] perPage:2147483647) {
-										elements {
-											uuid
-											...navigation
-											children(lang: ["en", "de"] perPage:2147483647) {
-												elements {
-													uuid
-													...navigation
-													children(lang: ["en", "de"] perPage:2147483647) {
-														elements {
-															uuid
-															...navigation
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+{
+  rootNode {
+    children(lang: ["de", "en"], filter: {schema: {or: [{is: %folderSchema%}, {is: %contentSchema%}]}}) {
+      elements {
+        ...navigation
+        children(lang: ["de", "en"], filter: {schema: {or: [{is: %folderSchema%}, {is: %contentSchema%}]}}) {
+          elements {
+            ...navigation
+            children(lang: ["de", "en"], filter: {schema: {or: [{is: %folderSchema%}, {is: %contentSchema%}]}}) {
+              elements {
+                ...navigation
+                children(lang: ["de", "en"], filter: {schema: {or: [{is: %folderSchema%}, {is: %contentSchema%}]}}) {
+                  elements {
+                    ...navigation
+                    children(lang: ["de", "en"], filter: {schema: {or: [{is: %folderSchema%}, {is: %contentSchema%}]}}) {
+                      elements {
+                        ...navigation
+                        children(lang: ["de", "en"], filter: {schema: {or: [{is: %folderSchema%}, {is: %contentSchema%}]}}) {
+                          elements {
+                            ...navigation
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

@@ -28,10 +28,10 @@ ships with pre-built assets, but changes in these files will be lost on next bui
 Laravel Mix is used to generate the assets inside the **./portal/public/static/demo-assets/files/** folder, and the
 source files are in the **./portal/resources/assets/** folder. See [webpack.mix.js](portal/webpack.mix.js) for more.
 
-If you would like to change the assets, please check the [Laravel Mix documentations](https://laravel.com/docs/5.7/mix):
+If you would like to change the assets, please check the [Laravel Mix documentations](https://laravel.com/docs/5.8/mix):
 
-* [Prerequisite steps](https://laravel.com/docs/5.7/mix#installation)
-* [Build steps](https://laravel.com/docs/5.7/mix#running-mix)
+* [Prerequisite steps](https://laravel.com/docs/5.8/mix#installation)
+* [Build steps](https://laravel.com/docs/5.8/mix#running-mix)
 
 ### Commercial Mesh Plugins
 
