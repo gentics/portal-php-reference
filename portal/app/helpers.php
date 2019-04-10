@@ -2,20 +2,17 @@
 
 use Gentics\PortalPhp\PortalPhp;
 use Gentics\PortalPhp\RenderMode;
+use Gentics\PortalPhp\Features\Helpers\Helper;
 
 if (! function_exists('sortByNavSortOrder')) {
     /**
      * Sorts navigation by navsortorder field
-     * @param $elements
+     * @param array $elements
      * @return mixed
      */
-    function sortByNavSortOrder($elements)
+    function sortByNavSortOrder(array $elements)
     {
-        usort($elements, function ($a, $b) {
-            return (intval($a['fields']['navsortorder'] ?? 0)) <=> (intval($b['fields']['navsortorder'] ?? 0));
-        });
-
-        return $elements;
+        return Helper::sortByNavSortOrder($elements);
     }
 }
 
@@ -52,6 +49,7 @@ if (! function_exists('gisImage')) {
      * @param string $height
      * @param string $mode
      * @param $path
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @return string
      */
     function gisImage(string $width, string $height, string $mode, $path = null)
