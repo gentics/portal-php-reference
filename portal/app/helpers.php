@@ -7,7 +7,7 @@ use Gentics\PortalPhp\Features\Helpers\Helper;
 if (! function_exists('sortByNavSortOrder')) {
     /**
      * Sorts navigation by navsortorder field
-     * @param array $elements
+     * @param array $elements Elements of rootNode children
      * @return mixed
      */
     function sortByNavSortOrder(array $elements)
