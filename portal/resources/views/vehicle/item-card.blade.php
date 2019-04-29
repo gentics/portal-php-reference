@@ -14,7 +14,7 @@
             <p class="price">${{ @number_format($car['fields']['price'] ?? 0, 0, ',', '.') ?? 0 }}</p>
             @if($car['fields']['stock'] > 3)
                 <small class="text-muted float-right">in stock</small>
-            @elseif($car['fields']['stock'] > 1)
+            @elseif($car['fields']['stock'] > 0)
                 <small class="text-muted float-right">low stock number</small>
             @else
                 <small class="text-muted float-right">not in stock</small>

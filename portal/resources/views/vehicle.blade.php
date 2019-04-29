@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
 @include('common.breadcrumb')
+
 <div class="float-right">
     <a href="{!! $node['fields']['image'] ?? " /static/demo-assets/files/img/image-placeholder.png " !!}">
         <img class="img-thumbnail  img-item" src="{!! $node['fields']['image'] ?? "/static/demo-assets/files/img/image-placeholder.png"  !!}" alt="{{ $node['fields']['name'] }}">
@@ -20,7 +21,7 @@
     <h6 class="item-price">$<span class="item-detail" style="min-width:1.2em;display:inline-block">{!! @number_format($node['fields']['price'] ?? 0, 0, ',', '.') ?? $node['fields']['price'] ?? 0 !!}</span></h6>
     <p>Weight: <span class="item-detail" style="min-width:1.2em;display:inline-block">{!! $node['fields']['weight'] ?? 0 !!}</span></p>
     <p>Stock Level: <span class="item-detail" style="min-width:1.2em;display:inline-block">{!! $node['fields']['stock'] ?? 0 !!}</span>
-        @if($node['fields']['stock'] > 1)
+        @if($node['fields']['stock'] > 0)
             <i class="fas fa-check"></i>
         @else
             <i class="fas fa-times text-danger"></i>
