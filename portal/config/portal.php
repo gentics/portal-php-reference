@@ -196,6 +196,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | HTTP headers that will always be set for webroot requests
+    |--------------------------------------------------------------------------
+    |
+    | No matter what response headers Mesh sends, the below list of headers will
+    | always be set. Since Laravel sets cache-control to private if no cache-control
+    | header is set, it's recommended to set cache-control here.
+    |
+    */
+    'webrootHttpHeaders' => [
+        'cache-control' => 'max-age=604800, public'
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Default language
     |--------------------------------------------------------------------------
     |
