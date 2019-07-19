@@ -2,3 +2,4 @@
 /.vscode
 /.vagrant
 docker-compose.override.yml
+/portal
