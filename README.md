@@ -49,7 +49,7 @@ Make sure your auth.json contains the following configuration:
 }
 ```
 
-Replace `MYUSERNAME` and `MYPASSWORD`. It's also advised to use the encrypted password here, which can be generated in your Artifactory profile page.
+Replace `MYUSERNAME` and `MYPASSWORD`. Use the API key as password, which can be generated/retrieved in the Artifactory profile page.
 
 Log in into the docker registry and use the same credentials like above:
 

@@ -9,7 +9,7 @@ services:
       XDEBUG_ENABLED: "false"
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.5.3
+    image: docker.apa-it.at/elasticsearch/elasticsearch-oss:6.8.1
     command: >
       bash -c "[ ! -d /usr/share/elasticsearch/plugins/ingest-attachment ] \
         && bin/elasticsearch-plugin install -b ingest-attachment
