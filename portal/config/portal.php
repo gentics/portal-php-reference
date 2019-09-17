@@ -228,14 +228,13 @@ return [
     | The loginEndpoint, logoutEndpoint and registerEndpoint can be used for
     | links in pages to specify urls for login/logout/register actions.
     |
-    | alwaysUseAdminClient:
-    | If you want to disable user authentication, you can always use the admin
-    | token. This is enabled in the default configuration but disabled by
-    | default if not set for security reasons.
+    | ** You can disable the authentication completely by commenting out the
+    | ** authentication section of the configuration.
+    |
+    | In this case, the general API key will be used for all Mesh request.
     |
     */
-    'authentication' => [
-        'alwaysUseAdminClient' => false,
+    /*'authentication' => [
         'keycloak' => [
             'authUrl' => 'http://localhost:8083/auth',
             'realm' => 'reference',
@@ -246,7 +245,7 @@ return [
             'loginEndpoint' => '/auth/redirect',
             'registerEndpoint' => '/auth/register'
         ],
-    ],
+    ],*/
 
     /*
     |--------------------------------------------------------------------------
@@ -276,65 +275,6 @@ return [
         // JSON containing keys, which should be decoded
         'expandJsonKeys' => [
             'tagsData'
-        ],
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Elastic Search
-    |--------------------------------------------------------------------------
-    |
-    | The perPage option specifies the search results page length, and after
-    | that limit, pagination will applied.
-    |
-    | The filterKeys provides a way to define queryParams to be assigned with
-    | different Elastic Search queries. The {searchQuery} placeholder will be
-    | replaced with the according query parameter's value.
-    |
-    */
-    'elasticSearch' => [
-        // Results per page
-        'perPage' => 25,
-
-        // Filter keys are used as search filter variables
-        'filterKeys' => [
-            // Default filter key
-            'q' => [
-                'query' => [
-                    'bool' => [
-                        'must' => [
-                            [
-                                'multi_match' => [
-                                    'query' => '{searchQuery}',
-                                    'type' => 'phrase',
-                                    'fields' => [
-                                        'fields.name',
-                                        'fields.vehicle_description',
-                                    ],
-                                ],
-                            ],
-                            [
-                                'term' => [
-                                    'fields.templateName.raw' => 'vehicle',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-            'category' => [
-                'query' => [
-                    'bool' => [
-                        'must' => [
-                            [
-                                'term' => [
-                                    'parent.displayName.raw' => '{searchQuery}',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
         ],
     ],
 

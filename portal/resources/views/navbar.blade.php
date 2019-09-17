@@ -9,7 +9,8 @@
                 @endforeach
             </ul>
             <form action="{{ route('search') }}" method="get" class="form-inline my-2 my-lg-0">
-                <input class="form-control form-search mr-sm-2" type="search" name="q" placeholder="Search" aria-label="Search" value="{{ $search['query']['q'] ?? "" }}">
+                <input class="form-control form-search mr-sm-2" type="search" name="q" list="autocompleteresults" id="searchInput" autocomplete="off" placeholder="Search" aria-label="Search" value="{{ $search['query']['q'] ?? "" }}">
+                <datalist id="autocompleteresults"></datalist>
             </form>
         </div>
     </nav>

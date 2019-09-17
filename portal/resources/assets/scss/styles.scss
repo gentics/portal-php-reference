@@ -28,4 +28,14 @@ body {
 			}
 		}
 	}
+
+	.didyoumean {
+		font-weight: 600;
+
+		a {
+			color: #007bff;
+			margin-left: 5px;
+			font-style: italic;
+		}
+	}
 }

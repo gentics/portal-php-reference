@@ -11,6 +11,6 @@ import RatingComponent from "./components/RatingComponent.vue";
 Vue.component('rating', RatingComponent);
 
 // Start Vue
-new Vue({
+/*new Vue({
 	el: '#app'
-});
+});*/
