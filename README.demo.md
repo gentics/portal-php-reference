@@ -35,15 +35,15 @@ If you would like to change the assets, please check the [Laravel Mix documentat
 
 ### Commercial Mesh Plugins
 
-## Required for some demos
+#### Required for some demos
 
-# Reference Authentication plugin
+##### Reference Authentication plugin
 This plugin is required if you would like to map roles and groups to your users, but without that, the Authentication can be tested with Keycloak.
 
-# Search plugin
+##### Search plugin
 This plugin is required for the Search functionality as the portal calls the Search plugin endpoints to get the results.
 
-# Other plugins
+##### Other plugins
 Some Gentics Mesh plugins are not available for free, but we built some examples with these also (eg.: Ratings with the
 Likes plugin). Please refer to these plugins at [Gentics Mesh documentations](https://getmesh.io/docs/plugins/#_commercial_plugins).
 Not installing these plugins should not cause any problems, just the missing feature will not displayed.
