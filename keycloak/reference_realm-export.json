@@ -38,13 +38,6 @@
   "roles": {
     "realm": [
       {
-        "id": "ae5857fe-9ce7-401a-bc3a-ac4f947e4fa9",
-        "name": "reference_role",
-        "composite": false,
-        "clientRole": false,
-        "containerId": "reference"
-      },
-      {
         "id": "a78f1971-0e79-465d-8bf5-d2b1f51c188f",
         "name": "uma_authorization",
         "description": "${role_uma_authorization}",
@@ -62,7 +55,16 @@
       }
     ],
     "client": {
-      "reference": [],
+      "reference": [
+        {
+          "id": "50cd660c-3bf5-4332-9345-8fa88b8b9829",
+          "name": "reference_role",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "55e6a739-b8ed-4216-80b4-6193b62140f6",
+          "attributes": {}
+        }
+      ],
       "realm-management": [
         {
           "id": "154d7ad5-7c35-47bf-8f9e-3e349e0d0b72",
@@ -312,18 +314,25 @@
   },
   "groups": [
     {
-      "id": "7d54cf00-3221-463b-872a-6b4b8aff5337",
+      "id": "712ecf6e-d240-402f-9451-f2622a630440",
       "name": "reference_group",
       "path": "/reference_group",
       "attributes": {},
       "realmRoles": [],
-      "clientRoles": {},
+      "clientRoles": {
+        "reference": [
+          "reference_role"
+        ]
+      },
       "subGroups": []
     }
   ],
   "defaultRoles": [
     "offline_access",
     "uma_authorization"
+  ],
+  "defaultGroups": [
+    "/reference_group"
   ],
   "requiredCredentials": [
     "password"
@@ -633,6 +642,9 @@
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
       "secret": "genticsp-orta-lphp-auth-referencexxx",
+      "defaultRoles": [
+        "reference_role"
+      ],
       "redirectUris": [
         "http://localhost:8080/auth/callback"
       ],
@@ -669,14 +681,32 @@
       "nodeReRegistrationTimeout": -1,
       "protocolMappers": [
         {
-          "id": "f4a61fa2-0ce9-4ee0-aaae-994d893501d3",
-          "name": "roles",
+          "id": "9c9e5a81-5050-4f10-a34e-a1c251b78842",
+          "name": "client_role",
           "protocol": "openid-connect",
-          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "protocolMapper": "oidc-usermodel-client-role-mapper",
           "consentRequired": false,
           "config": {
+            "multivalued": "true",
+            "userinfo.token.claim": "true",
             "id.token.claim": "true",
             "access.token.claim": "true",
+            "claim.name": "roles",
+            "jsonType.label": "String",
+            "usermodel.clientRoleMapping.clientId": "reference"
+          }
+        },
+        {
+          "id": "01176f5e-f3d4-483c-aa59-71a0c2b3d94d",
+          "name": "client_group",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-group-membership-mapper",
+          "consentRequired": false,
+          "config": {
+            "full.path": "false",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "groups",
             "userinfo.token.claim": "true"
           }
         }

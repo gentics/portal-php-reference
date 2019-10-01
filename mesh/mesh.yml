@@ -47,8 +47,6 @@ security:
   enableAnonymousAccess: true
   oauth2:
     enabled: true
-    mapperScriptPath: "config/keycloak_mapper.js"
-    mapperScriptDevMode: true
     config:
       realm: "reference"
       authServerUrl: "http://keycloak:8080/auth"

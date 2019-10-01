@@ -29,13 +29,12 @@ services:
         hard: -1
   mesh:
     # https://getmesh.io/docs/beta/administration-guide.html#_environment_variables
-    image: gentics/mesh:0.31.2
+    image: gentics/mesh:0.40.3
     volumes:
       - mesh-data:/mesh/data
       - mesh-config:/config
       - ./mesh/plugins/:/plugins/
       - ./mesh/mesh.yml:/config/mesh.yml
-      - ./mesh/keycloak_mapper.js:/config/keycloak_mapper.js
     ulimits:
       nofile:
         soft: 20000

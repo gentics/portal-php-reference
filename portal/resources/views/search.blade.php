@@ -37,11 +37,17 @@
             </div>--}}
         </div>
 
+        @if(!empty($search['didYouMean']))
+        <div class="didyoumean row">
+            Did you mean: <a href="?q={{ $search['didYouMean'] }}">{{ $search['didYouMean'] }}</a>
+        </div>
+        @endif
+
         <div class="all-cards">
             <div class="card-deck">
                 @foreach($search['results'] as $car)
-                    @if($car['fields'] && ($car['fields']['templateName'] ?? "") == 'vehicle')
-                        @include('vehicle.item-card', ['car' => $car])
+                    @if($car['raw']['fields'])
+                        @include('vehicle.item-card', [ 'car' => Helper::normalizeSearchHit($car) ])
                     @endif
                 @endforeach
             </div>
