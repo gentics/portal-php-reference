@@ -8,7 +8,7 @@
         </a>
         <div class="card-body">
 
-            <p class="card-text">{{ str_limit(strip_tags($car['fields']['vehicle_description']) ?? "", $limit = 60, $end = '...') }}</p>
+            <p class="card-text">{{ Illuminate\Support\Str::limit(strip_tags($car['fields']['vehicle_description']) ?? "", $limit = 60, $end = '...') }}</p>
         </div>
         <div class="card-footer text-left">
             <p class="price">${{ @number_format($car['fields']['price'] ?? 0, 0, ',', '.') ?? 0 }}</p>

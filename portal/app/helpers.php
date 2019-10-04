@@ -58,7 +58,8 @@ if (! function_exists('gisImage')) {
             return $path;
         }
 
-        return url('/GenticsImageStore', ['width' => $width, 'height' => $height, 'mode' => $mode]) . parse_url($path, PHP_URL_PATH);
+        return url('/GenticsImageStore', ['width' => $width, 'height' => $height, 'mode' => $mode])
+            . parse_url($path, PHP_URL_PATH);
     }
 }
 
@@ -81,8 +82,7 @@ if (! function_exists('isCmsPreview')) {
     }
 }
 
-if (! function_exists('build_url'))
-{
+if (! function_exists('build_url')) {
     /**
      * @param array $parts
      * @return string
@@ -119,7 +119,6 @@ if (! function_exists('urlWithParams')) {
         $query = '';
 
         if (!empty($parsed['query'])) {
-
             $query = $parsed['query'] . '&';
         }
 
