@@ -16,3 +16,4 @@ composer.lock
 composer.override.json
 .reports
 .phplint-cache
+cghooks.lock
