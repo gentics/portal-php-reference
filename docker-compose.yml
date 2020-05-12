@@ -1,5 +1,6 @@
 version: "3"
 services:
+
   portal:
     image: gentics-portal-php
     build:
@@ -7,9 +8,10 @@ services:
       context: .
     environment:
       XDEBUG_ENABLED: "false"
+
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
   elasticsearch:
-    image: docker.apa-it.at/elasticsearch/elasticsearch-oss:6.8.1
+    image: docker.apa-it.at/elasticsearch/elasticsearch-oss:6.8.8
     command: >
       bash -c "[ ! -d /usr/share/elasticsearch/plugins/ingest-attachment ] \
         && bin/elasticsearch-plugin install -b ingest-attachment
@@ -27,9 +29,11 @@ services:
       memlock:
         soft: -1
         hard: -1
+
+  # https://hub.docker.com/r/gentics/mesh/
   mesh:
     # https://getmesh.io/docs/beta/administration-guide.html#_environment_variables
-    image: gentics/mesh:0.27.0
+    image: gentics/mesh:1.5.1
     volumes:
       - mesh-config:/config
       - mesh-data:/data
@@ -40,15 +44,17 @@ services:
     environment:
       MESH_ELASTICSEARCH_URL: "http://elasticsearch:9200"
       MESH_ELASTICSEARCH_START_EMBEDDED: "false"
+      MESH_UPDATECHECK: "false"
+      JAVA_TOOL_OPTIONS: "-Xms320m -Xmx320m -XX:MaxDirectMemorySize=200m"
+
   # https://hub.docker.com/r/gentics/cms/
   cms:
-    image: docker.apa-it.at/gentics/cms:5.34
+    image: docker.apa-it.at/gentics/cms:5.36
     restart: on-failure
     volumes:
       - cms-node:/Node/node
       - cms-dbfiles:/Node/node/content/dbfiles
       - cms-bundles:/Node/node/system/bundles
-      - ./cms/dumps:/Node/etc/dumps
       - ./cms/conf.d/include.conf:/Node/etc/conf.d/include.conf
       - ./cms/conf.d/include:/Node/etc/conf.d/include
     environment:
@@ -56,9 +62,7 @@ services:
       NODE_DB_PASSWORD: ""
       NODE_DB_HOST: db
       NODE_USER_PASSWORD: node
-  # https://hub.docker.com/r/gentics/languagetool/
-  languagetool:
-    image: gentics/languagetool
+
   # https://hub.docker.com/_/mariadb/
   db:
     image: mariadb:10.3
@@ -70,6 +74,27 @@ services:
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "true"
       MYSQL_ROOT_PASSWORD: ""
+
+  # Optional: Language tool
+  # Remove comments if you need language tool
+  # Docs: https://hub.docker.com/r/gentics/languagetool/
+  #languagetool:
+  #  image: gentics/languagetool
+
+  # Optional: Keycloak
+  # Remove comments if you need keycloak
+  # Docs: https://hub.docker.com/r/jboss/keycloak/
+  #keycloak:
+  #  image: jboss/keycloak:4.6.0.Final
+  #  restart: "no"
+  #  environment:
+  #    DB_VENDOR: MARIADB
+  #    DB_ADDR: db
+  #    DB_DATABASE: keycloak
+  #    DB_USER: root
+  #    JAVA_TOOL_OPTIONS: "-Xms320m -Xmx320m"
+  #  depends_on:
+  #    - db
 
 volumes:
   portal-storage:

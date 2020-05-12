@@ -1,21 +1,33 @@
 version: "3"
 services:
+
   portal:
     ports:
       - '8080:80'
     volumes:
       - ./portal:/portal:cached
+      - ./portal-files/apache2/portal.conf.d:/etc/apache2/portal.conf.d
       - ./portal-files/apache2/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
       - ./portal-files/apache2/portal.conf:/etc/apache2/sites-enabled/portal.conf
     environment:
       XDEBUG_ENABLED: "true"
+
   mesh:
     ports:
       - '8081:8080'
     environment:
       MESH_AUTH_KEYSTORE_PASS: "changemeplease"
+
   cms:
     ports:
       - '8082:80'
     environment:
       LICENSEKEY: TH1S-15N0-T4V4-L1DK-3YKT-HXBY-D34D-B33F
+
+  # Optional: Keycloak
+  # Remove comments if you need keycloak
+  #keycloak:
+  #  ports:
+  #    - '8083:8080'
+  #  environment:
+  #    KEYCLOAK_PASSWORD: "changemeplease"
