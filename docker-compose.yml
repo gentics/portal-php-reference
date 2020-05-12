@@ -80,6 +80,8 @@ services:
   # Docs: https://hub.docker.com/r/gentics/languagetool/
   #languagetool:
   #  image: gentics/languagetool
+  #  environment:
+  #    JAVA_TOOL_OPTIONS: "-Xms128m -Xmx128m"
 
   # Optional: Keycloak
   # Remove comments if you need keycloak
