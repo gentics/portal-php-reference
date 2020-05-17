@@ -72,7 +72,7 @@ More information can be found on the Laravel documentation for the Installation.
 Clone this GIT repository and change into the directory.
 
 ```bash
-composer create-project --prefer-dist laravel/laravel portal
+composer create-project --prefer-dist laravel/laravel:^6 portal
 ```
 
 This will create a new directory called "portal". You can also name it differently, but then you have to change the path in the docker-compose configuration, entrypoint.sh and the apache2 vhost.
@@ -82,7 +82,7 @@ This will create a new directory called "portal". You can also name it different
 ```bash
 cd portal
 composer config repositories.gentics composer "https://repo.apa-it.at/api/composer/php"
-composer require gentics/portal-php:^0.2.0 --ignore-platform-reqs
+composer require gentics/portal-php:^1.2.0 --ignore-platform-reqs
 php artisan vendor:publish --provider="Gentics\PortalPhp\Providers\ServiceProvider"
 ```
 

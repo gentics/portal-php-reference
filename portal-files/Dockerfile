@@ -1,20 +1,18 @@
-FROM php:7.2-apache-stretch
+FROM php:7.4-apache-buster
 
 # Install Debian packagess
 RUN apt-get update -y \
 	&& apt-get install -y \
-		openssl \
 		zip \
 		unzip \
 		git \
-		libssl-dev \
-		libcurl4-openssl-dev \
 		pkg-config \
 		zlib1g-dev \
 		jq \
 		libpcre3-dev \
 		libgmp-dev \
 		libicu-dev \
+		libzip-dev \
 		g++ \
 	&& rm -rf /var/lib/apt/lists/*
 
@@ -22,9 +20,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Install PHP extensions
 RUN docker-php-ext-install \
-	curl \
-	pdo \
-	mbstring \
 	zip \
 	opcache \
 	gmp \
@@ -39,7 +34,7 @@ RUN echo yes | pecl install xdebug
 # Add opcache configuration
 ADD portal-files/php-opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
-RUN a2enmod rewrite proxy proxy_http
+RUN a2enmod rewrite headers proxy proxy_http
 
 # Update certificates 
 RUN update-ca-certificates
@@ -58,6 +53,7 @@ RUN rm /etc/apache2/sites-enabled/000-default.conf
 COPY portal-files/apache2/vhost.conf /etc/apache2/sites-enabled/000-default.conf
 COPY portal-files/apache2/keycloak-proxy.conf /etc/apache2/sites-enabled/001-keycloak.conf
 COPY portal-files/apache2/portal.conf /etc/apache2/
+COPY portal-files/apache2/portal.conf.d/*.conf /etc/apache2/portal.conf.d/
 
 # Create stdout pipe for Laravel log file
 RUN rm -f /portal/storage/logs/laravel.log && \

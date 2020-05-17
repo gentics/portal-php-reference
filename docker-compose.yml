@@ -1,5 +1,6 @@
 version: "3"
 services:
+
   portal:
     image: gentics-portal-php
     build:
@@ -7,9 +8,10 @@ services:
       context: .
     environment:
       XDEBUG_ENABLED: "false"
+
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
   elasticsearch:
-    image: docker.apa-it.at/elasticsearch/elasticsearch-oss:6.8.1
+    image: docker.apa-it.at/elasticsearch/elasticsearch-oss:6.8.8
     command: >
       bash -c "[ ! -d /usr/share/elasticsearch/plugins/ingest-attachment ] \
         && bin/elasticsearch-plugin install -b ingest-attachment
@@ -27,9 +29,11 @@ services:
       memlock:
         soft: -1
         hard: -1
+
+  # https://hub.docker.com/r/gentics/mesh/
   mesh:
     # https://getmesh.io/docs/beta/administration-guide.html#_environment_variables
-    image: gentics/mesh:0.40.3
+    image: gentics/mesh:1.5.1
     volumes:
       - mesh-data:/mesh/data
       - mesh-config:/config
@@ -48,11 +52,10 @@ services:
       MESH_ELASTICSEARCH_START_EMBEDDED: "false"
       MESH_UPDATECHECK: "false"
       JAVA_TOOL_OPTIONS: "-Xms320m -Xmx320m -XX:MaxDirectMemorySize=200m"
-    # TODO: Remove this workaround when Mesh can handle Keycloak wait/timeout
-    command: ["sh", "-c", "c=0;rc=-1; until [ \"$$rc\" = \"0\" ]; do wget -O/dev/null -T 3 keycloak:8080/auth/realms/reference/ 2>/dev/null; rc=$$?; if [ \"$$rc\" != \"0\" ]; then let 'c++'; echo 'Waiting for Keycloak #'$$c'...'; sleep 5; fi; done; exec java -jar mesh.jar"]
+
   # https://hub.docker.com/r/gentics/cms/
   cms:
-    image: docker.apa-it.at/gentics/cms:5.34
+    image: docker.apa-it.at/gentics/cms:5.36
     restart: on-failure
     volumes:
       - cms-node:/Node/node
@@ -66,11 +69,7 @@ services:
       NODE_DB_PASSWORD: ""
       NODE_DB_HOST: db
       NODE_USER_PASSWORD: node
-  # https://hub.docker.com/r/gentics/languagetool/
-  languagetool:
-    image: gentics/languagetool
-    environment:
-      JAVA_TOOL_OPTIONS: "-Xms128m -Xmx128m"
+
   # https://hub.docker.com/_/mariadb/
   db:
     image: mariadb:10.3
@@ -82,6 +81,14 @@ services:
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "true"
       MYSQL_ROOT_PASSWORD: ""
+
+  # Docs: https://hub.docker.com/r/gentics/languagetool/
+  languagetool:
+    image: gentics/languagetool
+    environment:
+      JAVA_TOOL_OPTIONS: "-Xms128m -Xmx128m"
+
+  # Docs: https://hub.docker.com/r/jboss/keycloak/
   keycloak:
     image: jboss/keycloak:4.6.0.Final
     restart: "no"
@@ -101,6 +108,7 @@ services:
       - ./keycloak/reference_realm-export.json:/tmp/reference_realm-export.json:ro
     depends_on:
       - db
+
 volumes:
   portal-storage:
     driver: local
