@@ -11,6 +11,7 @@ services:
       - ./portal-files/apache2/portal.conf:/etc/apache2/sites-enabled/portal.conf
     environment:
       XDEBUG_ENABLED: "true"
+      #AUTOGENERATE_MESH_API_KEY: "false"
 
   mesh:
     ports:
