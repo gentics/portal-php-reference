@@ -76,27 +76,25 @@ services:
       MYSQL_ROOT_PASSWORD: ""
 
   # Optional: Language tool
-  # Remove comments if you need language tool
   # Docs: https://hub.docker.com/r/gentics/languagetool/
-  #languagetool:
-  #  image: gentics/languagetool
-  #  environment:
-  #    JAVA_TOOL_OPTIONS: "-Xms128m -Xmx128m"
+  languagetool:
+    image: gentics/languagetool
+    environment:
+      JAVA_TOOL_OPTIONS: "-Xms128m -Xmx128m"
 
   # Optional: Keycloak
-  # Remove comments if you need keycloak
   # Docs: https://hub.docker.com/r/jboss/keycloak/
-  #keycloak:
-  #  image: jboss/keycloak:4.6.0.Final
-  #  restart: "no"
-  #  environment:
-  #    DB_VENDOR: MARIADB
-  #    DB_ADDR: db
-  #    DB_DATABASE: keycloak
-  #    DB_USER: root
-  #    JAVA_TOOL_OPTIONS: "-Xms320m -Xmx320m"
-  #  depends_on:
-  #    - db
+  keycloak:
+    image: jboss/keycloak:4.6.0.Final
+    restart: "no"
+    environment:
+      DB_VENDOR: MARIADB
+      DB_ADDR: db
+      DB_DATABASE: keycloak
+      DB_USER: root
+      JAVA_TOOL_OPTIONS: "-Xms320m -Xmx320m"
+    depends_on:
+      - db
 
 volumes:
   portal-storage:
