@@ -2,15 +2,19 @@
 
 set -o errexit
 
-# Make some directories writable for www-data
-if [ -d /portal/storage ]; then
-	chgrp -R www-data /portal/storage
-	chmod -R g+w /portal/storage
-fi
+if [[ $SKIP_ENTRYPOINT_CHMOD != "true" ]]; then
 
-if [ -d /portal/bootstrap/cache ]; then
-	chgrp -R www-data /portal/bootstrap/cache
-	chmod -R g+w /portal/bootstrap/cache
+    # Make some directories writable for www-data
+    if [ -d /portal/storage ]; then
+    	chgrp -R www-data /portal/storage
+    	chmod -R g+w /portal/storage
+    fi
+    
+    if [ -d /portal/bootstrap/cache ]; then
+    	chgrp -R www-data /portal/bootstrap/cache
+    	chmod -R g+w /portal/bootstrap/cache
+    fi
+
 fi
 
 # Generate API key for Mesh
@@ -47,6 +51,7 @@ if [[ $AUTOGENERATE_MESH_API_KEY != "false" ]]; then
 			echo "MESH_URL=\"$MESH_URL\"" >> $envFile
 			echo "MESH_APIKEY=\"$MESH_APIKEY\"" >> $envFile
 		fi
+	fi
 
 else
 	echo "Skipping Mesh API Key auto-generation"
