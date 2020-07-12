@@ -6,9 +6,10 @@ services:
       - '8080:80'
     volumes:
       - ./portal:/portal:cached
-      - ./portal-files/apache2/portal.conf.d:/etc/apache2/portal.conf.d
-      - ./portal-files/apache2/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
-      - ./portal-files/apache2/portal.conf:/etc/apache2/sites-enabled/portal.conf
+      # Uncomment these volumes when you would like to override these paths
+      # - ./portal-files/apache2/portal.conf.d:/etc/apache2/portal.conf.d
+      # - ./portal-files/apache2/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
+      # - ./portal-files/apache2/portal.conf:/etc/apache2/sites-enabled/portal.conf
     environment:
       XDEBUG_ENABLED: "true"
       #AUTOGENERATE_MESH_API_KEY: "false"
@@ -25,10 +26,16 @@ services:
     environment:
       LICENSEKEY: TH1S-15N0-T4V4-L1DK-3YKT-HXBY-D34D-B33F
 
+  # Optional: Language Tool
+  # To enable, please comment out the entrypoint line!
+  languagetool:
+    entrypoint: /bin/true # Disable service startup
+
   # Optional: Keycloak
-  # Remove comments if you need keycloak
-  #keycloak:
-  #  ports:
-  #    - '8083:8080'
-  #  environment:
-  #    KEYCLOAK_PASSWORD: "changemeplease"
+  # To enable, please comment out the entrypoint line!
+  keycloak:
+    ports:
+      - '8083:8080'
+    environment:
+      KEYCLOAK_PASSWORD: "changemeplease"
+    entrypoint: /bin/true # Disable service startup
