@@ -61,7 +61,6 @@ services:
       - cms-node:/Node/node
       - cms-dbfiles:/Node/node/content/dbfiles
       - cms-bundles:/Node/node/system/bundles
-      - ./cms/dumps:/Node/etc/dumps
       - ./cms/conf.d/include.conf:/Node/etc/conf.d/include.conf
       - ./cms/conf.d/include:/Node/etc/conf.d/include
     environment:
@@ -82,12 +81,14 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "true"
       MYSQL_ROOT_PASSWORD: ""
 
+  # Optional: Language tool
   # Docs: https://hub.docker.com/r/gentics/languagetool/
   languagetool:
     image: gentics/languagetool
     environment:
       JAVA_TOOL_OPTIONS: "-Xms128m -Xmx128m"
 
+  # Optional: Keycloak
   # Docs: https://hub.docker.com/r/jboss/keycloak/
   keycloak:
     image: jboss/keycloak:4.6.0.Final
@@ -96,16 +97,8 @@ services:
       DB_VENDOR: MARIADB
       DB_ADDR: db
       DB_DATABASE: keycloak
-      DB_USER: keycloak
-      DB_PASSWORD: L3FAuMMKiNUsCEjS92SjMcQy
-      KEYCLOAK_USER: admin
-      KEYCLOAK_IMPORT: /tmp/reference_realm-export.json
+      DB_USER: root
       JAVA_TOOL_OPTIONS: "-Xms320m -Xmx320m"
-    volumes:
-      # TODO: Customize login styles
-      # - ./keycloak/login.ftl:/opt/jboss/keycloak/themes/base/login/login.ftl:ro
-      # - ./keycloak/template.ftl:/opt/jboss/keycloak/themes/base/login/template.ftl:ro
-      - ./keycloak/reference_realm-export.json:/tmp/reference_realm-export.json:ro
     depends_on:
       - db
 

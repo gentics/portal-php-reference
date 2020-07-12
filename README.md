@@ -133,6 +133,10 @@ docker-compose up -d
 * To view the logs of a specific container, use `docker-compose logs -f name`. e.g.: `docker-compose logs -f portal`
 * You can read [this page here](https://github.com/gentics/cms-compose/wiki/Common-problems-&-FAQ) if you encounter any problems.
 
+#### Disable automatic Mesh API Key generation
+
+Set `AUTOGENERATE_MESH_API_KEY` environment variable to false for the portal.
+
 #### Open the reference project in the browser
 
 ##### Portal application

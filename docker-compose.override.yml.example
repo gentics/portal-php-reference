@@ -6,11 +6,13 @@ services:
       - '8080:80'
     volumes:
       - ./portal:/portal:cached
-      - ./portal-files/apache2/portal.conf.d:/etc/apache2/portal.conf.d
-      - ./portal-files/apache2/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
-      - ./portal-files/apache2/portal.conf:/etc/apache2/sites-enabled/portal.conf
+      # Uncomment these volumes when you would like to override these paths
+      # - ./portal-files/apache2/portal.conf.d:/etc/apache2/portal.conf.d
+      # - ./portal-files/apache2/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
+      # - ./portal-files/apache2/portal.conf:/etc/apache2/sites-enabled/portal.conf
     environment:
       XDEBUG_ENABLED: "true"
+      #AUTOGENERATE_MESH_API_KEY: "false"
 
   mesh:
     ports:
@@ -27,8 +29,22 @@ services:
       - ./cms/dumps:/Node/etc/dumps
       - ./portal/public/static/demo-assets/files:/Node/node/content/packages/demo-assets/files:ro
   
+  # Optional: Language Tool
+  # To enable, please comment out the entrypoint line!
+  languagetool:
+    entrypoint: /bin/true # Disable service startup
+
+  # Optional: Keycloak
+  # To enable, please comment out the entrypoint line!
   keycloak:
     ports:
       - '8083:8080'
     environment:
+      DB_USER: keycloak
+      DB_PASSWORD: L3FAuMMKiNUsCEjS92SjMcQy
+      KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: "changemeplease"
+      KEYCLOAK_IMPORT: /tmp/reference_realm-export.json
+    volumes:
+      - ./keycloak/reference_realm-export.json:/tmp/reference_realm-export.json:ro
+    entrypoint: /bin/true # Disable service startup
