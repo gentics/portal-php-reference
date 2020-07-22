@@ -27,7 +27,7 @@ search:
   url: "http://localhost:9200"
   timeout: 8000
   startupTimeout: 300
-  startEmbedded: true
+  startEmbedded: false
   embeddedArguments: "-Xms1g -Xmx1g -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75\
     \ -XX:+UseCMSInitiatingOccupancyOnly -XX:+AlwaysPreTouch -client -Xss1m -Djava.awt.headless=true\
     \ -Dfile.encoding=UTF-8 -Djna.nosys=true -XX:-OmitStackTraceInFastThrow -Dio.netty.noUnsafe=true\
@@ -45,17 +45,6 @@ security:
   keystorePath: "config/keystore.jceks"
   algorithm: "HS256"
   enableAnonymousAccess: true
-  oauth2:
-    enabled: true
-    config:
-      realm: "reference"
-      authServerUrl: "http://keycloak:8080/auth"
-      sslRequired: "external"
-      resource: "reference"
-      publicClient: true
-      credentials:
-        secret: "genticsp-orta-lphp-auth-referencexxx"
-      confidentialPort: 0
 image:
   imageCacheDirectory: "data/binaryImageCache"
   maxWidth: 2048

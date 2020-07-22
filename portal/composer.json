@@ -7,7 +7,7 @@
 	"require": {
 		"php": "^7.2.0",
 		"fideloper/proxy": "^4.0",
-		"gentics/portal-php": "^1.2.0",
+		"gentics/portal-php": "dev-f-caching-improvements-2020",
 		"laravel/framework": "^6.0",
 		"laravel/tinker": "^1.0",
 		"proai/laravel-handlebars": "^1.6",

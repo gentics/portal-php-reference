@@ -6,12 +6,17 @@ services:
     build:
       dockerfile: ./portal-files/Dockerfile
       context: .
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 100000
+        hard: 200000
     environment:
       XDEBUG_ENABLED: "false"
 
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
   elasticsearch:
-    image: docker.apa-it.at/elasticsearch/elasticsearch-oss:6.8.8
+    image: docker.apa-it.at/elasticsearch/elasticsearch-oss:6.8.10
     command: >
       bash -c "[ ! -d /usr/share/elasticsearch/plugins/ingest-attachment ] \
         && bin/elasticsearch-plugin install -b ingest-attachment
@@ -33,7 +38,7 @@ services:
   # https://hub.docker.com/r/gentics/mesh/
   mesh:
     # https://getmesh.io/docs/beta/administration-guide.html#_environment_variables
-    image: gentics/mesh:1.5.1
+    image: gentics/mesh:1.5.2
     volumes:
       - mesh-data:/mesh/data
       - mesh-config:/config
@@ -55,7 +60,7 @@ services:
 
   # https://hub.docker.com/r/gentics/cms/
   cms:
-    image: docker.apa-it.at/gentics/cms:5.36
+    image: docker.apa-it.at/gentics/cms:5.37
     restart: on-failure
     volumes:
       - cms-node:/Node/node
@@ -91,7 +96,7 @@ services:
   # Optional: Keycloak
   # Docs: https://hub.docker.com/r/jboss/keycloak/
   keycloak:
-    image: jboss/keycloak:4.6.0.Final
+    image: jboss/keycloak:10.0.2
     restart: "no"
     environment:
       DB_VENDOR: MARIADB

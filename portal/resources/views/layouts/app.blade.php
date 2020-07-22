@@ -47,7 +47,7 @@
 
         {{-- The Portal Mode is only displayed in debug mode! --}}
         <footer class="container">
-            <a href="https://www.gentics.com" class="footerLink">www.gentics.com</a>|<a href="https://getmesh.io/docs/beta/" class="footerLink">Documentation</a>@if(config('app.debug') === true)
+            <a href="https://www.gentics.com" class="footerLink">www.gentics.com</a>|<a href="https://getmesh.io/docs/" class="footerLink">Documentation</a>@if(config('app.debug') === true)
 |<span class="footerLink">Portal Mode:
 @renderMode('publish')
 Publish
