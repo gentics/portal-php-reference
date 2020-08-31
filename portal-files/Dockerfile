@@ -23,7 +23,9 @@ RUN docker-php-ext-install \
 	zip \
 	opcache \
 	gmp \
-	intl
+	intl \
+	sysvsem \
+	sysvshm
 
 RUN docker-php-ext-enable \
 	opcache

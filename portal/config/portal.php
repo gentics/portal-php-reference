@@ -62,12 +62,19 @@ return [
         'implementationVersion' => null,
     ],
 
-     /*
+    /*
     |--------------------------------------------------------------------------
-    | Mesh Data Cache options
+    | Cache options
     |--------------------------------------------------------------------------
     |
-    | Set Mesh GraphQL request options, like cacheTime.
+    | Feature specific cache options (see option descriptions).
+    |
+    | etag:
+    |   cacheTime:          Etag Response headers cache time in seconds
+    |
+    | binary:
+    |   cacheControl:
+    |       maxAge:         Forced max-age header for binaries
     |
     | errorPage:
     |   cacheTime:          Error Pages cache time in seconds
@@ -78,8 +85,28 @@ return [
     | user:
     |   cacheTime:          User data cache time in seconds
     |
+    | http:
+    |   enabled:            Enable HTTP Full Reponse Cache
+    |   cacheTime:          Default response cache time
+    |   options:            Configure Symfony HttpCache options, see:
+    |                       * https://symfony.com/doc/current/book/http_cache.html#symfony2-reverse-proxy
+    |   context:            User context to match the cached content, if not set or empty, defaults will be used:
+    |                           * roleshash (default) - Role hash
+    |                           * language (default) - User language
+    |                           * branch (default) - Branch
+    |                           * claim_* - Any claim from the JWT token
+    |                           * cookie_* - Any cookie
+    |
     */
     'cache' => [
+        'etag'  => [
+            'cacheTime' => 300
+        ],
+        'binary' => [
+            'cacheControl' => [
+                'maxAge' => 3600
+            ],
+        ],
         'errorPage' => [
             'cacheTime' => 300
         ],
@@ -89,6 +116,12 @@ return [
         'user' => [
             'cacheTime' => 15
         ],
+        'http' => [
+            'enabled'   => false,
+            'cacheTime' => 60,
+            'options'   => [],
+            'context'   => [],
+        ]
     ],
 
     /*
@@ -233,6 +266,10 @@ return [
     |
     | In this case, the general API key will be used for all Mesh request.
     |
+    | By default, if the original Authenticate middleware not loaded, Portal | php
+    | tries to load its own Middleware. If you do not want this behavior, please
+    | disable it by setting disableMiddlewareAutoload to true.
+    |
     */
     /*'authentication' => [
         'keycloak' => [
@@ -243,7 +280,8 @@ return [
             'redirect' => 'http://localhost:8080/auth/callback',
             'logoutEndpoint' => '/auth/logout',
             'loginEndpoint' => '/auth/redirect',
-            'registerEndpoint' => '/auth/register'
+            'registerEndpoint' => '/auth/register',
+            'disableMiddlewareAutoload' => false,
         ],
     ],*/
 
