@@ -34,6 +34,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Global Router prefix
+    |--------------------------------------------------------------------------
+    |
+    | It is possible to specify a Global Router prefix which prepends all
+    | portal routes with this string.
+    |
+    */
+    //'routerPrefix' => '',
+
+    /*
+    |--------------------------------------------------------------------------
     | Use Mesh Content branches
     |--------------------------------------------------------------------------
     |
@@ -96,6 +107,8 @@ return [
     |                           * branch (default) - Branch
     |                           * claim_* - Any claim from the JWT token
     |                           * cookie_* - Any cookie
+    |   mimeTypes:          Allowed MIME-types for full response cache
+    |                       (compares against the beginning of the MIME-type)
     |
     */
     'cache' => [
@@ -121,6 +134,9 @@ return [
             'cacheTime' => 60,
             'options'   => [],
             'context'   => [],
+            'mimeTypes' => [
+                'text/',
+            ],
         ]
     ],
 
@@ -178,6 +194,68 @@ return [
         ],
         'default' => 'errors/',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Development Logging Channel
+    |--------------------------------------------------------------------------
+    |
+    | This option is used by the PortalPhp::devLog() method, to determinate
+    | the correct log channel to use. devLog() is used in various internal,
+    | but important debugging paths.
+    |
+    | The following values are accepted:
+    | debug, info, notice, warning, error, critical, alert, emergency
+    |
+    | Invalid values are falls back to debug.
+    |
+    */
+    'devLogChannel' => 'debug',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Mesh Client Timeout
+    |--------------------------------------------------------------------------
+    |
+    | After the specified time interval in seconds (float), when Mesh does not
+    | respond, an exception will be raised.
+    |
+    | The default value is 0 (unlimited).
+    |
+    */
+    'meshClientTimeout' => 0,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Mesh Client Health Check Timeout
+    |--------------------------------------------------------------------------
+    |
+    | After the specified time interval in seconds (float), when Mesh does not
+    | respond to the readiness check, the Portal will be in an unready state.
+    |
+    | The default value is 2.5 seconds.
+    |
+    */
+    'meshClientHealthCheckTimeout' => 2.5,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Debugger
+    |--------------------------------------------------------------------------
+    |
+    | A specialized key to enable the debug-view (Whoops handler).
+    | The key has to be provided as a query-parameter in a request.
+    | It's a per-request "APP_DEBUG" alternative, to enable debugging on a
+    | system where debugging is generally turned off (ie. Production Systems).
+    | If no key is provided (type is not string or the string is empty),
+    | then the entire functionality is being ignored.
+    | It is adviced to use a seperate key for each stage, which is at least 16
+    | chars long (treat it as another password basically).
+    |
+    | This key also let the debugger to clear caches.
+    |
+    */
+    'debuggerKey' => env('DEBUGGER_KEY', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -367,4 +445,53 @@ return [
             'fieldName' => 'addredirecttag',
         ],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Search
+    |--------------------------------------------------------------------------
+    |
+    | Generic configuration for the Mesh Search Handler
+    |
+    | useAdminToken:    Uses the admin token instead of a user token or null
+    |
+    */
+    'search' => [
+        'useAdminToken' => false,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Compatibility
+    |--------------------------------------------------------------------------
+    |
+    | Compatibility options
+    |
+    | mapNodeResponse:    Whether the NodeResponse to GraphQL response mapper
+    |                     should be applied for previews.
+    |
+    | useWebrootField:    WebrootField API Endpoint is available since
+    |                     Gentics Mesh 1.6.9 and enabled by default. This option
+    |                     is for backwards compatibility as a fallback.
+    |
+    */
+    'compatibility' => [
+        'mapNodeResponse' => true,
+        'useWebrootField' => true,
+    ],
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Sitemap
+    |--------------------------------------------------------------------------
+    |
+    | Generic configuration for the Sitemap Handler
+    |
+    | disable:    Disables the sitemap feature and its routes
+    |
+    */
+    'sitemap' => [
+        'disable' => false,
+    ],
+
 ];
