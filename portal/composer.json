@@ -22,7 +22,7 @@
 		"beyondcode/laravel-dump-server": "^1.0",
 		"brainmaestro/composer-git-hooks": "^v2.8.5",
 		"friendsofphp/php-cs-fixer": "^2.13@dev",
-		"overtrue/phplint": "dev-master",
+		"overtrue/phplint": "^2.0",
 		"phpunit/phpunit": "^8.4",
 		"squizlabs/php_codesniffer": "^3.0@dev",
 		"wikimedia/composer-merge-plugin": "^2.0"
