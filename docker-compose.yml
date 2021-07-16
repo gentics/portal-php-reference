@@ -38,7 +38,7 @@ services:
   # https://hub.docker.com/r/gentics/mesh/
   mesh:
     # https://getmesh.io/docs/beta/administration-guide.html#_environment_variables
-    image: docker.apa-it.at/gentics/mesh:1.6.9
+    image: docker.apa-it.at/gentics/mesh:1.6.15
     volumes:
       - mesh-data:/mesh/data
       - mesh-config:/config
@@ -60,7 +60,7 @@ services:
 
   # https://hub.docker.com/r/gentics/cms/
   cms:
-    image: docker.apa-it.at/gentics/cms:5.38
+    image: docker.apa-it.at/gentics/cms:5.39
     restart: on-failure
     volumes:
       - cms-node:/Node/node
