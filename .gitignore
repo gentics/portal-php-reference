@@ -1,5 +1,8 @@
 /.idea
 /.vscode
 /.vagrant
+.DS_Store
 docker-compose.override.yml
-/portal
+/mesh/plugins/*.jar
+!/mesh/plugins/mesh-reference-preseed-plugin*.jar
+portal_old/*

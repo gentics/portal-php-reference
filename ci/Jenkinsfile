@@ -1,0 +1,81 @@
+@Library('jenkins-pipeline-library') import com.gentics.*
+JobContext.set(this)
+
+
+
+pipeline {
+	agent {
+		kubernetes {
+			label env.BUILD_TAG
+			defaultContainer 'build'
+			yaml """
+apiVersion: v1
+kind: Pod
+spec:
+  volumes:
+  - name: cache
+    hostPath:
+      path: /opt/kubernetes/cache
+
+  containers:
+  - name: build
+    image: """ + buildEnvironmentDockerImage("ci/Dockerfile.build") + """
+    imagePullPolicy: Always
+    command:
+    - cat
+    tty: true
+    resources:
+      requests:
+        cpu: 2
+        memory: 1Gi
+    volumeMounts:
+    - mountPath: /home/jenkins/.composer/cache
+      name: cache
+      subPath: composer/cache
+  imagePullSecrets:
+  - name: docker-jenkinsbuilds-apa-it
+"""
+		}
+	}
+
+	options {
+		withCredentials([usernamePassword(credentialsId: 'repo.gentics.com', usernameVariable: 'repoUsername', passwordVariable: 'repoPassword')])
+		timestamps()
+		timeout(time: 1, unit: 'HOURS')
+		ansiColor('xterm')
+	}
+
+	environment { 
+		GITLAB_WEBHOOK_SECRETTOKEN      = credentials('gitlab-webhook-secrettoken')
+	}
+
+	triggers {
+          githubPush()
+	}
+
+	stages {
+		stage("Build") {
+			steps {
+				githubBuildStarted()
+
+				script {
+					currentBuild.description = env.GIT_COMMIT + "\n" + GitHelper.getLastCommitMessage().readLines()[0]
+				}
+
+				updateGitlabCommitStatus name: 'Jenkins build', state: "running"
+
+				sh "composer --no-ansi --working-dir=portal config --auth http-basic.repo.apa-it.at -- $repoUsername $repoPassword"
+				sh "composer --no-ansi --working-dir=portal build"
+
+				// Add deployment and image generation here...
+			}
+		}
+	}
+
+	post {
+		always {
+			githubBuildEnded()
+			notifyMattermostUsers()
+		}
+	}
+}

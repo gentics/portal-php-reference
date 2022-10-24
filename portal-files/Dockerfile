@@ -1,4 +1,4 @@
-FROM php:7.4-apache-buster
+FROM php:8.1-apache-bullseye
 
 # Install Debian packagess
 RUN apt-get update -y \
@@ -23,7 +23,10 @@ RUN docker-php-ext-install \
 	zip \
 	opcache \
 	gmp \
-	intl
+	intl \
+	exif \
+	sysvsem \
+	sysvshm
 
 RUN docker-php-ext-enable \
 	opcache
@@ -34,7 +37,7 @@ RUN echo yes | pecl install xdebug
 # Add opcache configuration
 ADD portal-files/php-opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
-RUN a2enmod rewrite headers
+RUN a2enmod rewrite headers proxy proxy_http
 
 # Update certificates 
 RUN update-ca-certificates
@@ -51,6 +54,7 @@ RUN chmod +x /usr/local/bin/*.sh
 # Apache
 RUN rm /etc/apache2/sites-enabled/000-default.conf
 COPY portal-files/apache2/vhost.conf /etc/apache2/sites-enabled/000-default.conf
+COPY portal-files/apache2/keycloak-proxy.conf /etc/apache2/sites-enabled/001-keycloak.conf
 COPY portal-files/apache2/portal.conf /etc/apache2/
 COPY portal-files/apache2/portal.conf.d/*.conf /etc/apache2/portal.conf.d/
 

@@ -1,0 +1,79 @@
+FROM php:8.1-bullseye
+LABEL maintainer="p.nyari@gentics.com"
+
+ARG USER_NAME="jenkins"
+ARG GIT_USER_NAME="Jenkins"
+ARG GIT_USER_EMAIL="entwicklung@gentics.com"
+
+# Install Debian packages
+RUN echo 'deb http://ftp.at.debian.org/debian bullseye main contrib non-free' > /etc/apt/sources.list \
+ && echo 'deb http://ftp.at.debian.org/debian bullseye-backports main' >> /etc/apt/sources.list \
+ && echo 'deb http://security.debian.org/debian-security bullseye-security main contrib' >> /etc/apt/sources.list \
+ && echo 'deb http://ftp.at.debian.org/debian bullseye-updates main contrib' >> /etc/apt/sources.list \
+ && apt-get update -y \
+ && apt-get install --assume-yes lsb-release wget curl apt-transport-https ca-certificates \
+		gnupg2 software-properties-common dirmngr sudo rsync \
+ && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
+ && add-apt-repository "deb https://download.docker.com/linux/debian bullseye stable" \
+ && apt-get update -y \
+ && apt-get install -y \
+		docker-ce=5:20* \
+		docker-ce-cli=5:20* \
+		g++ \
+		git \
+		jq \
+		libcurl4-openssl-dev \
+		libgmp-dev \
+		libicu-dev \
+		libpcre3-dev \
+		libssl-dev \
+		libzip-dev \
+		openssl \
+		pkg-config \
+		unzip \
+		zip \
+		zlib1g-dev \
+        g++ \
+ && rm -rf /var/lib/apt/lists/*
+
+# Install docker-compose v2 and compatibility for v1
+RUN mkdir -p /usr/local/lib/docker/cli-plugins/ \
+ && sudo curl -L "https://github.com/docker/compose/releases/download/v2.6.1/docker-compose-$(uname -s)-$(uname -m)" \
+		-o /usr/local/lib/docker/cli-plugins/docker-compose \
+ && sudo curl -L "https://github.com/docker/compose-switch/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" \
+ 		-o /usr/local/bin/compose-switch \
+ && sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose \
+ && sudo chmod +x /usr/local/bin/compose-switch \
+ && update-alternatives --install /usr/local/bin/docker-compose docker-compose /usr/local/bin/compose-switch 99 \
+ && sudo chmod +x /usr/local/bin/docker-compose
+
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Install PHP extensions
+RUN docker-php-ext-install \
+	zip \
+	opcache \
+	gmp \
+	intl \
+	sysvsem \
+	sysvshm \
+	exif
+
+# Update certificates
+RUN update-ca-certificates
+
+ENV PATH="/root/.composer/vendor/bin:${PATH}"
+
+RUN git config --system user.name "${GIT_USER_NAME}"
+RUN git config --system user.email "${GIT_USER_EMAIL}"
+
+RUN echo "StrictHostKeyChecking no" > /etc/ssh/ssh_config
+RUN echo "UserKnownHostsFile=/dev/null" >> /etc/ssh/ssh_config
+RUN echo "BatchMode yes" >> /etc/ssh/ssh_config
+
+# Add user
+# The ID / GID 10000 is used by the jenkinsci/slave Dockerfile and has to match here, because Jenkins
+# does the SCM checkout in the jnlp container for some reasons.
+RUN groupadd --system --gid 10000 ${USER_NAME} && useradd --create-home --no-log-init --uid 10000 --gid ${USER_NAME} ${USER_NAME}
+USER ${USER_NAME}
