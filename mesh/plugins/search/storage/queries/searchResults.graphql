@@ -1,0 +1,22 @@
+query ($uuids: [String], $lang: String) {
+  nodes(uuids: $uuids, lang: [ $lang ]) {
+    elements {
+      languages {
+        uuid
+        language
+        path
+        fields {
+          ... on {{{ contentSchema }}} {
+            name
+            templateName
+            weight
+            price
+            stock
+            image
+            vehicle_description
+          }
+        }
+      }
+    }
+  }
+}

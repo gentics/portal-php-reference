@@ -1,0 +1,51 @@
+---
+defaultMaxDepth: 10
+defaultLanguage: "en"
+updateCheck: true
+vertxOptions:
+  workerPoolSize: 20
+  eventPoolSize: 6
+tempDirectory: "data/tmp"
+pluginDirectory: "plugins"
+nodeName: "PortalPHP Reference"
+httpServer:
+  port: 8080
+  host: "0.0.0.0"
+  corsAllowedOriginPattern: ""
+  corsAllowCredentials: false
+  enableCors: false
+cluster:
+  enabled: false
+  vertxPort: 0
+storage:
+  directory: "data/graphdb"
+  backupDirectory: "data/backup"
+  exportDirectory: "data/export"
+  startServer: false
+  parameters: {}
+search:
+  url: "http://localhost:9200"
+  timeout: 8000
+  startupTimeout: 300
+  startEmbedded: false
+  embeddedArguments: "-Xms1g -Xmx1g -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75\
+    \ -XX:+UseCMSInitiatingOccupancyOnly -XX:+AlwaysPreTouch -client -Xss1m -Djava.awt.headless=true\
+    \ -Dfile.encoding=UTF-8 -Djna.nosys=true -XX:-OmitStackTraceInFastThrow -Dio.netty.noUnsafe=true\
+    \ -Dio.netty.noKeySetOptimization=true -Dio.netty.recycler.maxCapacityPerThread=0\
+    \ -Dlog4j.shutdownHookEnabled=false -Dlog4j2.disable.jmx=true -XX:+HeapDumpOnOutOfMemoryError"
+  bulkLimit: 2000
+  prefix: "mesh-"
+upload:
+  byteLimit: 262144000
+  directory: "data/binaryFiles"
+  tempDirectory: "data/tmp/file-uploads"
+security:
+  tokenExpirationTime: 3600
+  keystorePassword: "352d10a51b68473ead10a51b68873e36"
+  keystorePath: "config/keystore.jceks"
+  algorithm: "HS256"
+  enableAnonymousAccess: true
+image:
+  imageCacheDirectory: "data/binaryImageCache"
+  maxWidth: 2048
+  maxHeight: 2048

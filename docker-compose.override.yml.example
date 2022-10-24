@@ -1,4 +1,3 @@
-version: "3"
 services:
 
   portal:
@@ -18,14 +17,19 @@ services:
     ports:
       - '8081:8080'
     environment:
+      MESH_INITIAL_ADMIN_PASSWORD_FORCE_RESET: "false"
       MESH_AUTH_KEYSTORE_PASS: "changemeplease"
+      MESH_INITIAL_ADMIN_PASSWORD: "admin"
 
   cms:
     ports:
       - '8082:80'
     environment:
       LICENSEKEY: TH1S-15N0-T4V4-L1DK-3YKT-HXBY-D34D-B33F
-
+    volumes:
+      - ./cms/dumps:/Node/etc/dumps
+      - ./portal/public/static/demo-assets/files:/Node/node/content/packages/demo-assets/files:ro
+  
   # Optional: Language Tool
   # To enable, please comment out the entrypoint line!
   languagetool:
@@ -37,5 +41,11 @@ services:
     ports:
       - '8083:8080'
     environment:
+      DB_USER: keycloak
+      DB_PASSWORD: L3FAuMMKiNUsCEjS92SjMcQy
+      KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: "changemeplease"
+      KEYCLOAK_IMPORT: /tmp/reference_realm-export.json
+    volumes:
+      - ./keycloak/reference_realm-export.json:/tmp/reference_realm-export.json:ro
     entrypoint: /bin/true # Disable service startup

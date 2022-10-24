@@ -1,0 +1,3 @@
+CREATE USER IF NOT EXISTS 'keycloak'@'%' IDENTIFIED BY 'L3FAuMMKiNUsCEjS92SjMcQy';
+GRANT ALL ON `keycloak`.* TO 'keycloak'@'%';
+FLUSH PRIVILEGES;
