@@ -36,7 +36,7 @@ RUN docker-php-ext-install \
 	opcache \
 	gmp \
 	intl \
-    curl \
+	curl \
 	exif \
 	sysvsem \
 	sysvshm
