@@ -15,17 +15,17 @@ RUN apt-get update -y \
 		pkg-config \
 		zlib1g-dev \
 		jq \
-        libcurl4-openssl-dev \
+		libcurl4-openssl-dev \
 		libpcre3-dev \
 		libgmp-dev \
 		libicu-dev \
 		libzip-dev \
-        g++ \
-        php8.1-readline/bullseye \
-        php8.1-cli/bullseye \
-        php8.1-common/bullseye \
-        php8.1-opcache/bullseye \
-        php8.1-fpm/bullseye \
+		g++ \
+		php8.1-readline/bullseye \
+		php8.1-cli/bullseye \
+		php8.1-common/bullseye \
+		php8.1-opcache/bullseye \
+		php8.1-fpm/bullseye \
 	&& rm -rf /var/lib/apt/lists/*
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -80,6 +80,7 @@ RUN rm -f /portal/storage/logs/laravel.log && \
 
 RUN rm -f /etc/php/8.1/fpm/pool.d/www.conf
 COPY portal-files/portal-fpm.conf /etc/php/8.1/fpm/pool.d/www.conf 
+CMD ["service", "php8.1-fpm", "restart"]
 
 ENTRYPOINT ["entrypoint.sh"]
 
