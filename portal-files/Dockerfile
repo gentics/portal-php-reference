@@ -9,7 +9,6 @@ RUN apt-get update -y \
     && wget -qO - https://packages.sury.org/php/apt.gpg | apt-key add - \
     && apt-get update -y \
     && apt-get install -y \
-        lsof \
 		zip \
 		unzip \
 		git \
@@ -78,6 +77,9 @@ COPY portal-files/apache2/portal.conf.d/*.conf /etc/apache2/portal.conf.d/
 # Create stdout pipe for Laravel log file
 RUN rm -f /portal/storage/logs/laravel.log && \
 	ln -s /dev/stderr /portal/storage/logs/laravel.log
+
+RUN rm -f /etc/php/8.1/fpm/pool.d/www.conf
+COPY portal-files/portal-fpm.conf /etc/php/8.1/fpm/pool.d/www.conf 
 
 ENTRYPOINT ["entrypoint.sh"]
 
