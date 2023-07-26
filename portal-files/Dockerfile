@@ -69,7 +69,7 @@ RUN rm -f /portal/storage/logs/laravel.log && \
 
 RUN rm -f /usr/local/etc/php-fpm.d/www.conf
 COPY portal-files/portal-fpm.conf /usr/local/etc/php-fpm.d/www.conf
-COPY portal-files/supervisord-portal-php.conf /etc/supervisor/conf.d/contentnode.conf
+COPY portal-files/supervisord-portal-php.conf /etc/supervisor/conf.d/portal-php.conf
 
 ENTRYPOINT ["entrypoint.sh"]
 
