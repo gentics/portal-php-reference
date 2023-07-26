@@ -69,6 +69,4 @@ if [[ $XDEBUG_ENABLED == "true" ]]; then
 	echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/load-xdebug.ini
 fi
 
-service php8.1-fpm restart
-
 docker-php-entrypoint $@
