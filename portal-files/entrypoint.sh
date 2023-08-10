@@ -69,4 +69,7 @@ if [[ $XDEBUG_ENABLED == "true" ]]; then
 	echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/load-xdebug.ini
 fi
 
+# Restrict apache2 from running as a service
+update-rc.d apache2 disable
+
 docker-php-entrypoint $@
