@@ -44,6 +44,9 @@ ADD portal-files/php-opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 RUN a2dismod mpm_prefork mpm_worker
 RUN a2enmod mpm_event rewrite headers proxy proxy_http proxy_fcgi setenvif http2
 
+# Cleanup default supervisor config
+RUN printf "[include]\nfiles = /etc/supervisor/conf.d/*.conf\n" > /etc/supervisor/supervisord.conf
+
 # Update certificates 
 RUN update-ca-certificates
 
@@ -57,10 +60,15 @@ COPY portal-files/*.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/*.sh
 
 # Apache
+RUN mkdir -p /var/run/apache2 /var/lock/apache2 /var/log/apache2 && \
+    chgrp -R 0 /var/run/apache2 /var/lock/apache2 /var/log/apache2 && \
+    chmod -R g=u /var/run/apache2 /var/lock/apache2 /var/log/apache2
+
 RUN rm /etc/apache2/sites-enabled/000-default.conf
 COPY portal-files/apache2/vhost.conf /etc/apache2/sites-enabled/000-default.conf
 COPY portal-files/apache2/keycloak-proxy.conf /etc/apache2/sites-enabled/001-keycloak.conf
 COPY portal-files/apache2/portal.conf /etc/apache2/
+COPY portal-files/apache2/ports.conf /etc/apache2/
 COPY portal-files/apache2/portal.conf.d/*.conf /etc/apache2/portal.conf.d/
 
 # Create stdout pipe for Laravel log file
@@ -73,5 +81,6 @@ COPY portal-files/supervisord-portal-php.conf /etc/supervisor/conf.d/portal-php.
 
 ENTRYPOINT ["entrypoint.sh"]
 
-EXPOSE 80
+EXPOSE 8080
+ENV APACHE_PORT=8080
 CMD ["supervisord"]
