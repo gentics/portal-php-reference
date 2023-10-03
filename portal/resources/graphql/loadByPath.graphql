@@ -1,66 +1,66 @@
-query ($path: String, $folderpath: String) {
-	project {
-		uuid
-		rootNode {
-			children(lang: ["en", "de"] perPage:2147483647) {
-				elements {
-					uuid
-					...navigation
-					children(lang: ["en", "de"] perPage:2147483647) {
-						elements {
-							uuid
-							...navigation
-							children(lang: ["en", "de"] perPage:2147483647) {
-								elements {
-									uuid
-									...navigation
-									children(lang: ["en", "de"] perPage:2147483647) {
-										elements {
-											uuid
-											...navigation
-											children(lang: ["en", "de"] perPage:2147483647) {
-												elements {
-													uuid
-													...navigation
-													children(lang: ["en", "de"] perPage:2147483647) {
-														elements {
-															uuid
-															...navigation
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	node(path: $path) {
-		uuid
-		language
-		schema {
-			name
-		}
-		breadcrumb {
-			uuid
-			...navigation_breadcrumb
-		}
-		...navigation_breadcrumb
-		...contentInfo
-		...pages
-	}
-	folder: node(path: $folderpath) {
-		uuid
-		breadcrumb {
-			uuid
-			...navigation_breadcrumb
-		}
-		...navigation_breadcrumb
-		...pages
-	}
+query ($path: String, $folderpath: String, $lang: [String]) {
+    project {
+        uuid
+        rootNode {
+            children(lang: [$lang, "en"] perPage:2147483647) {
+                elements {
+                    uuid
+                    ...navigation
+                    children(lang: [$lang, "en"] perPage:2147483647) {
+                        elements {
+                            uuid
+                            ...navigation
+                            children(lang: [$lang, "en"] perPage:2147483647) {
+                                elements {
+                                    uuid
+                                    ...navigation
+                                    children(lang: [$lang, "en"] perPage:2147483647) {
+                                        elements {
+                                            uuid
+                                            ...navigation
+                                            children(lang: [$lang, "en"] perPage:2147483647) {
+                                                elements {
+                                                    uuid
+                                                    ...navigation
+                                                    children(lang: [$lang, "en"] perPage:2147483647) {
+                                                        elements {
+                                                            uuid
+                                                            ...navigation
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    node(path: $path) {
+        uuid
+        language
+        schema {
+            name
+        }
+        breadcrumb (lang: [$lang, "en"]) {
+            uuid
+            ...navigation_breadcrumb
+        }
+        ...navigation_breadcrumb
+        ...contentInfo
+        ...pages
+    }
+    folder: node(path: $folderpath) {
+        uuid
+        breadcrumb (lang: [$lang, "en"]) {
+            uuid
+            ...navigation_breadcrumb
+        }
+        ...navigation_breadcrumb
+        ...pages
+    }
 }

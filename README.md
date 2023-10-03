@@ -1,21 +1,21 @@
-# GENTICS PORTAL | php - Reference
+# Gentics Portal | php - Reference
 
-This repository contains both, an example docker compose stack for creating a new project with GENTICS PORTAL | php, Gentics Mesh and Gentics CMS and an easy to start demo application showing the most important features of GENTICS PORTAL | php
+This repository contains both, an example docker compose stack for creating a new project with Gentics Portal | php, Gentics Mesh and Gentics CMS and an easy to start demo application showing the most important features of Gentics Portal | php
 
 ## Branches
 
 | Branch     | Description       |  Documentation |
 |------------|-------------------| ---------------|
-| newproject | For creating a fresh new project with GENTICS PORTAL  php | [Link](#creating-a-new-laravel-project-with-gentics-portal--php) |
+| newproject | For creating a fresh new project with Gentics Portal php | [Link](#creating-a-new-laravel-project-with-gentics-portal--php) |
 | demo       | Demo reference application | [Link](README.demo.md) |
 
 ## Requirements
 
-* [GIT](https://git-scm.com/download/linux)
+* [GIT](https://git-scm.com/download/win)
 * [Docker](https://docs.docker.com/install/) - Latest version
-* [Docker-compose](https://docs.docker.com/compose/install/) - Latest version
-* [PHP](http://php.net/downloads.php) - Any version >= 7.1.3
-* [Composer](https://getcomposer.org/doc/00-intro.md)
+* [Docker Compose](https://docs.docker.com/compose/install/) - Latest version
+* [PHP](http://php.net/downloads.php) - 8.1 (>=8.1.7)
+* [Composer v2](https://getcomposer.org/doc/00-intro.md)
 
 **Important: When using Windows, you must configure your GIT client to not convert line endings to windows line endings BEFORE cloning this GIT repository.**
 
@@ -61,29 +61,14 @@ docker login repo.apa-it.at
 
 See: https://github.com/gentics/portal-php-reference/blob/demo/README.demo.md
 
-## Creating a new Laravel project with GENTICS PORTAL | php
+## Creating a new Laravel project with Gentics Portal | php
 
 This explains how to setup a basic Laravel project with the portal-php package.
 
-### Create a new Laravel project
-
-More information can be found on the Laravel documentation for the Installation.
-
-Clone this GIT repository and change into the directory.
+### Create a new Laravel project with Gentics Portal | php
 
 ```bash
-composer create-project --prefer-dist laravel/laravel:^6 portal
-```
-
-This will create a new directory called "portal". You can also name it differently, but then you have to change the path in the docker-compose configuration, entrypoint.sh and the apache2 vhost.
-
-### Install Gentics Portal | PHP
-
-```bash
-cd portal
-composer config repositories.gentics composer "https://repo.apa-it.at/api/composer/php"
-composer require gentics/portal-php:^1.2.0 --ignore-platform-reqs
-php artisan vendor:publish --provider="Gentics\PortalPhp\Providers\ServiceProvider"
+composer create-project gentics/portal-php-laravel-project portal --repository-url "https://repo.apa-it.at/api/composer/php"
 ```
 
 This adds the repository "gentics" to your projects composer.json, pulls the dependencies and copies some default files from the portal-php package.
@@ -104,7 +89,6 @@ Add this after:
 ```apache
 RewriteCond %{REQUEST_METHOD} =GET
 ```
-
 
 ### Docker service configuration
 
@@ -176,16 +160,21 @@ Install the package "git" with the packet manager.
 
 #### Docker
 
+Minimum Hardware Requirements:
+- CPU: x86, 2 cores
+- Memory: 8 GB RAM
+- Disk: 15 GB free space
+
 #### Windows / Mac ####
 
-* Use Docker with HyperV if avilable
-* We recommend to increase the memory to at least 4 GB or better 6GB and set the available CPU to all CPU cores in the Docker settings
+* Use Docker with WSL2 if available
+* We recommend to increase the memory to at least 6 GB and set the available CPU at least 2 cores in the Docker settings
 
 #### PHP
 
-Check if PHP 7.1.3 or higher is already installed by running `php -version`
+Check if PHP 8.1.7 or higher is already installed by running `php -version`
 
-If your operating system has a packet manager with PHP 7.1.3 or higher, install the package, otherwise download PHP from http://at2.php.net/downloads.php (PHP 7.3 "VC15 x64 Non Thread Safe" for Windows).
+If your operating system has a packet manager with PHP 8.1.7 or higher, install the package, otherwise download PHP from https://windows.php.net/download#php-8.1 (PHP 8.1 "VS16 x64 Non Thread Safe" for Windows).
 
 ### Building the Dockerfile
 

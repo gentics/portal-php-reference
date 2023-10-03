@@ -19,6 +19,7 @@ mix.options({
 });
 
 mix.ts(resourcesRoot + '/js/app.ts', publicAssetsRoot + '/js')
+	.vue({ version: 2 })
 	.sass(resourcesRoot + '/scss/styles.scss', publicAssetsRoot + '/css');
 
 mix.copyDirectory(resourcesRoot + '/img', publicAssetsRoot + '/img');

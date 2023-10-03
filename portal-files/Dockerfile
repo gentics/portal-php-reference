@@ -1,4 +1,4 @@
-FROM php:7.4-apache-buster
+FROM php:8.1-apache-bullseye
 
 # Install Debian packagess
 RUN apt-get update -y \
@@ -24,6 +24,7 @@ RUN docker-php-ext-install \
 	opcache \
 	gmp \
 	intl \
+	exif \
 	sysvsem \
 	sysvshm
 

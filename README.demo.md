@@ -1,6 +1,6 @@
-# GENTICS PORTAL | php - Demo
+# Gentics Portal | php - Reference Demo
 
-## Run the GENTICS PORTAL | php demo
+## Run the Gentics Portal | php - Reference Demo
 
 Read the section "[Installing requirements](README.md#requirements)" first and make sure you have installed and configured everything correctly.
 
@@ -8,7 +8,7 @@ Read the section "[Installing requirements](README.md#requirements)" first and m
 
 ```bash
 cd portal
-composer install --ignore-platform-reqs
+composer install
 cd ..
 ```
 
@@ -33,16 +33,16 @@ This plugin is required to show-case the likes feature on the vehicle page.
 
 ### Changing the assets
 
-We are using CSS and JavaScript pre-processor to generate the GENTICS PORTAL | php reference assets, and its already
+We are using CSS and JavaScript pre-processor to generate the Gentics Portal | php reference assets, and its already
 ships with pre-built assets, but changes in these files will be lost on next build.
 
 Laravel Mix is used to generate the assets inside the **./portal/public/static/demo-assets/files/** folder, and the
 source files are in the **./portal/resources/assets/** folder. See [webpack.mix.js](portal/webpack.mix.js) for more.
 
-If you would like to change the assets, please check the [Laravel Mix documentations](https://laravel.com/docs/5.8/mix):
+If you would like to change the assets, please check the [Laravel Mix documentations](https://laravel-mix.com/docs/6.0/installation):
 
-* [Prerequisite steps](https://laravel.com/docs/5.8/mix#installation)
-* [Build steps](https://laravel.com/docs/5.8/mix#running-mix)
+* [Prerequisite steps](https://laravel-mix.com/docs/6.0/workflow)
+* [Build steps](https://laravel-mix.com/docs/6.0/cli)
 
 ### Commercial Mesh Plugins
 

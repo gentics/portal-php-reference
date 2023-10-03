@@ -1,21 +1,21 @@
-{
+query ($lang: [String]) {
   rootNode {
-    children(lang: ["de", "en"], filter: {schema: {or: [{is: %folderSchema%}, {is: %contentSchema%}]}}) {
+    children(lang: $lang, filter: {schema: {or: [{is: %folderSchema%}, {is: %contentSchema%}]}}) {
       elements {
         ...navigation
-        children(lang: ["de", "en"], filter: {schema: {or: [{is: %folderSchema%}, {is: %contentSchema%}]}}) {
+        children(lang: $lang, filter: {schema: {or: [{is: %folderSchema%}, {is: %contentSchema%}]}}) {
           elements {
             ...navigation
-            children(lang: ["de", "en"], filter: {schema: {or: [{is: %folderSchema%}, {is: %contentSchema%}]}}) {
+            children(lang: $lang, filter: {schema: {or: [{is: %folderSchema%}, {is: %contentSchema%}]}}) {
               elements {
                 ...navigation
-                children(lang: ["de", "en"], filter: {schema: {or: [{is: %folderSchema%}, {is: %contentSchema%}]}}) {
+                children(lang: $lang, filter: {schema: {or: [{is: %folderSchema%}, {is: %contentSchema%}]}}) {
                   elements {
                     ...navigation
-                    children(lang: ["de", "en"], filter: {schema: {or: [{is: %folderSchema%}, {is: %contentSchema%}]}}) {
+                    children(lang: $lang, filter: {schema: {or: [{is: %folderSchema%}, {is: %contentSchema%}]}}) {
                       elements {
                         ...navigation
-                        children(lang: ["de", "en"], filter: {schema: {or: [{is: %folderSchema%}, {is: %contentSchema%}]}}) {
+                        children(lang: $lang, filter: {schema: {or: [{is: %folderSchema%}, {is: %contentSchema%}]}}) {
                           elements {
                             ...navigation
                           }

@@ -26,6 +26,14 @@ fi
 
 . $envFile
 
+# Generate app key if not existing
+if [[ $AUTOGENERATE_APP_KEY != "false" ]]; then
+	if [[ $APP_KEY == "" ]]; then
+		php artisan key:generate
+	fi
+fi
+
+# Generate Mesh API key if not existing
 if [[ $AUTOGENERATE_MESH_API_KEY != "false" ]]; then
 
 	if [[ $MESH_URL == "" ]]; then

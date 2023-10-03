@@ -1,35 +1,41 @@
 {
-	project {
-		uuid
-		rootNode {
-			children(lang: ["en", "de"]) {
-				elements {
-					...navigation
-					children(lang: ["en", "de"]) {
-						elements {
-							...navigation
-							children(lang: ["en", "de"]) {
-								elements {
-									...navigation
-									children(lang: ["en", "de"]) {
-										elements {
-											...navigation
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+    project {
+        uuid
+        rootNode {
+            children(lang: ["en", "de"]) {
+                elements {
+                    ...navigation
+                    children(lang: ["en", "de"]) {
+                        elements {
+                            ...navigation
+                            children(lang: ["en", "de"]) {
+                                elements {
+                                    ...navigation
+                                    children(lang: ["en", "de"]) {
+                                        elements {
+                                            ...navigation
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 fragment navigation on Node {
-	schema {
-		name
-	}
-	uuid
-	path
+    schema {
+        name
+    }
+    uuid
+    path
+    fields {
+        ... on %contentSchema% {
+            noindex
+            editdate
+        }
+    }
 }

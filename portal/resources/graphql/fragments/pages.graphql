@@ -1,5 +1,5 @@
 fragment pages on Node {
-    pages: children(lang: ["en", "de"]) {
+    pages: children(lang: $lang) {
         elements {
             path
             uuid

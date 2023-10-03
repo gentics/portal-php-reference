@@ -1,85 +1,67 @@
 {
-	"name": "gentics/portal-php-reference",
-	"description": "Gentics Portal | php Reference Implementation",
-	"keywords": ["framework", "laravel"],
-	"license": "MIT",
-	"type": "project",
-	"require": {
-		"php": ">=7.4",
-		"fideloper/proxy": "^4.0",
-		"gentics/portal-php": "~1.4.0",
-		"laravel/framework": "^6.18.0",
-		"laravel/tinker": "^1.0",
-		"proai/laravel-handlebars": "^1.6",
-		"zordius/lightncandy": "1.2.2"
-	},
-	"require-dev": {
-		"composer/composer": "^2.0",
-		"enlightn/security-checker": "^1.7",
-		"filp/whoops": "^2.0",
-		"fzaninotto/faker": "^1.4",
-		"mockery/mockery": "^1.0",
-		"beyondcode/laravel-dump-server": "^1.0",
-		"brainmaestro/composer-git-hooks": "^v2.8.5",
-		"friendsofphp/php-cs-fixer": "^2.13@dev",
-		"overtrue/phplint": "^2.0",
-		"phpunit/phpunit": "^8.4",
-		"squizlabs/php_codesniffer": "^3.0@dev",
-		"wikimedia/composer-merge-plugin": "^2.0"
-	},
-	"autoload": {
-		"psr-4": {
-			"App\\": "app/"
-		},
-		"files": [
-			"app/helpers.php"
-		]
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"Tests\\": "tests/"
-		}
-	},
-	"extra": {
-		"laravel": {
-			"dont-discover": [
-			]
-		},
-		"merge-plugin": {
-			"include": [
-				"composer.override.json"
-			],
-			"replace": true
-		}
-	},
-	"scripts": {
-		"post-root-package-install": [
-			"@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-		],
-		"post-create-project-cmd": [
-			"@php artisan key:generate"
-		],
-		"post-autoload-dump": [
-			"Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-			"@php artisan package:discover"
-		],
-		"post-install-cmd": "\"./vendor/bin/cghooks\" add --ignore-lock",
-		"post-update-cmd": "\"./vendor/bin/cghooks\" update",
-		"pre-commit": [
+    "name": "gentics/portal-php-laravel-project",
+    "type": "project",
+    "description": "Portal | php base project for Laravel",
+    "require": {
+        "php": "^8.1",
+        "gentics/portal-php-laravel": "^2.0.2"
+    },
+    "require-dev": {
+        "composer/composer": "^2.3.7",
+        "isaac/composer-git-hooks": "^2.0.0",
+        "enlightn/security-checker": "~1.10.0",
+        "fakerphp/faker": "^1.9.1",
+        "mockery/mockery": "^1.4.4",
+        "friendsofphp/php-cs-fixer": "~3.8.0",
+        "overtrue/phplint": "~5.2.2",
+        "phpunit/phpunit": "^9.5.21",
+        "squizlabs/php_codesniffer": "~3.7.1",
+        "wikimedia/composer-merge-plugin": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "app/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi",
+            "@install-portal-php-config-files",
+            "@install-portal-php-graphql-files"
+        ],
+        "pre-commit": [
 			"composer --working-dir=portal test"
 		],
-		"lint": [
+        "lint": [
 			"phplint app/",
 			"php-cs-fixer fix --dry-run --verbose",
 			"phpcs app/"
 		],
-		"securitycheck": [
+        "securitycheck": [
 			"security-checker security:check composer.lock"
 		],
-		"phpunit": [
+        "phpunit": [
 			"phpunit tests/"
 		],
-		"test": [
+        "test": [
 			"@composer validate",
 			"@lint",
 			"@phpunit",
@@ -88,27 +70,47 @@
 		"fixcode": [
 			"php-cs-fixer fix"
 		],
-		"build": [
+        "install-portal-php-config-files": [
+            "@php artisan vendor:publish --tag=gpphp-config --ansi --force"
+        ],
+        "install-portal-php-graphql-files": [
+            "@php artisan vendor:publish --tag=gpphp-graphql --ansi --force"
+        ],
+        "build": [
 			"@composer install",
 			"mkdir -p .reports",
 			"./vendor/bin/phplint app/",
 			"./vendor/bin/php-cs-fixer fix --dry-run --format=junit > .reports/php-cs-fixer.xml || true",
 			"./vendor/bin/phpcs --warning-severity=6 --report=junit --report-file=.reports/phpcs.xml app/ || true",
-			"./vendor/bin/phpunit --log-junit=.reports/phpunit.xml tests/ || true",
-			"./vendor/bin/security-checker security:check composer.lock"
+			"./vendor/bin/phpunit --log-junit=.reports/phpunit.xml tests/ || true"
 		]
-	},
-	"config": {
-		"preferred-install": "dist",
-		"sort-packages": true,
-		"optimize-autoloader": true
-	},
-	"minimum-stability": "dev",
-	"prefer-stable": true,
-	"repositories": [
-		{
-			"type": "composer",
-			"url": "https://repo.apa-it.at/api/composer/php"
-		}
-	]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        },
+        "merge-plugin": {
+            "include": [
+                "composer.override.json"
+             ],
+             "replace": true
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "isaac/composer-git-hooks": false,
+            "wikimedia/composer-merge-plugin": true
+         }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.apa-it.at/api/composer/php"
+        }
+    ]
 }

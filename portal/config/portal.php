@@ -109,6 +109,11 @@ return [
     |                           * cookie_* - Any cookie
     |   mimeTypes:          Allowed MIME-types for full response cache
     |                       (compares against the beginning of the MIME-type)
+    |   exceptions:         Exceptional cases, when caching is disabled.
+    |                           Valid options:
+    |                               - renderForm
+    |                               - response3xx
+    |                               - binary
     |
     */
     'cache' => [
@@ -137,6 +142,11 @@ return [
             'mimeTypes' => [
                 'text/',
             ],
+            'exceptions' => [
+                'renderForm',       // Disable content caching on pages with form elements
+                'response3xx',      // Disable content caching for HTTP 3xx header responses
+                'binary'            // Disable content caching for binary response headers
+            ]
         ]
     ],
 
@@ -214,6 +224,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Debug log options
+    |--------------------------------------------------------------------------
+    |
+    | Debug log options can control specific details that the log should contain
+    | or not in debug mode.
+    |
+    | Some debug details can be too long and you can disable them via these
+    | options.
+    |
+    */
+    'debugLogOptions' => [
+        'meshResponse' => false,
+        'meshRequest' => false,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Mesh Client Timeout
     |--------------------------------------------------------------------------
     |
@@ -237,6 +264,32 @@ return [
     |
     */
     'meshClientHealthCheckTimeout' => 2.5,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Mesh Client SSL Verification
+    |--------------------------------------------------------------------------
+    |
+    | When Mesh is connected via https, the certificate must be trusted by
+    | default. This flag allows to disable the certificate verification.
+    |
+    | The default value is true.
+    |
+    */
+    'meshVerifySsl' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Mesh Wait For Idle ElasticSearch flag
+    |--------------------------------------------------------------------------
+    |
+    | If true, search endpoints will not wait for Elasticsearch to be idle
+    | before sending a response. Otherwise it will stick to the Mesh defaults.
+    |
+    | The default value is true.
+    |
+    */
+    'meshNoWaitForIdle' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -270,10 +323,24 @@ return [
     */
     'binaryFilesGuesser' => [
         'mimeTypes' => [
+            'application/zip',
+            'application/pdf',
             'application/octet-stream',
+            'application/javascript',
+            'application/json',
             'audio/',
             'image/',
             'video/',
+            'font/woff',
+            'font/woff2',
+            'font/eot',
+            'font/otf',
+            'font/ttf',
+            'text/css',
+            'text/js',
+            'text/csv',
+            'text/javascript',
+            'text/json',
         ],
     ],
 
@@ -349,19 +416,20 @@ return [
     | disable it by setting disableMiddlewareAutoload to true.
     |
     */
-    /*'authentication' => [
+    'authentication' => [
         'keycloak' => [
             'authUrl' => 'http://localhost:8083/auth',
             'realm' => 'reference',
             'client_id' => 'reference',
             'client_secret' => 'genticsp-orta-lphp-auth-referencexxx',
+            'algorithm' => 'RS256',
             'redirect' => 'http://localhost:8080/auth/callback',
             'logoutEndpoint' => '/auth/logout',
             'loginEndpoint' => '/auth/redirect',
             'registerEndpoint' => '/auth/register',
             'disableMiddlewareAutoload' => false,
         ],
-    ],*/
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -378,6 +446,7 @@ return [
     | be expanded as arrays automatically.
     |
     */
+
     'dataProvider' => [
         // Fetched data to be cached in seconds
         'cacheTime' => 60,
@@ -467,19 +536,32 @@ return [
     |
     | Compatibility options
     |
-    | mapNodeResponse:    Whether the NodeResponse to GraphQL response mapper
-    |                     should be applied for previews.
+    | mapNodeResponse:
+    |       Whether the NodeResponse to GraphQL response mapper
+    |       should be applied for previews.
     |
-    | useWebrootField:    WebrootField API Endpoint is available since
-    |                     Gentics Mesh 1.6.9 and enabled by default. This option
-    |                     is for backwards compatibility as a fallback.
+    | useWebrootField:
+    |       WebrootField API Endpoint is available since
+    |       Gentics Mesh 1.6.9 and enabled by default. This option
+    |       is for backwards compatibility as a fallback.
+    |
+    | useDynamicGraphqlLanguage:
+    |       Whether the current language filter
+    |       should be provided as a query variable
+    |       (so it can be used in .graphql files for filtering)
+    |
+    | keycloakV18LogoutRedirectParams:
+    |       Keycloak 18.0.0+ uses a new method when Logout URL called
+    |       to make redirect back work. Disable, if you use older Keycloak.
     |
     */
     'compatibility' => [
         'mapNodeResponse' => true,
         'useWebrootField' => true,
+        'useDynamicGraphqlLanguage' => true,
+        'keycloakV18LogoutRedirectParams' => true,
     ],
-    
+
     /*
     |--------------------------------------------------------------------------
     | Sitemap

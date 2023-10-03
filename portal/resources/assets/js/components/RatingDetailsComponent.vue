@@ -35,7 +35,7 @@
 	import { Vue, Component, Prop, Watch, Model } from 'vue-property-decorator';
 	import { mixins } from 'vue-class-component'
 	import { mixin as clickaway } from 'vue-clickaway';
-	import VueFilterPluralize from 'vue-filter-pluralize';
+	import VueFilterPluralize from '@vuejs-community/vue-filter-pluralize';
 
 	Vue.use(VueFilterPluralize);
 

@@ -5,3 +5,4 @@
 docker-compose.override.yml
 /mesh/plugins/*.jar
 !/mesh/plugins/mesh-reference-preseed-plugin*.jar
+portal_old/*

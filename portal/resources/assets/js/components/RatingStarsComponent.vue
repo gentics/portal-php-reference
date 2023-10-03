@@ -9,7 +9,7 @@
 
 <script lang="ts">
 	import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
-	import VueFilterPluralize from 'vue-filter-pluralize';
+	import VueFilterPluralize from '@vuejs-community/vue-filter-pluralize';
 	Vue.use(VueFilterPluralize);
 
 	@Component

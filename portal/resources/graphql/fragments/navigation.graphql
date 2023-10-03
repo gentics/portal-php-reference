@@ -1,17 +1,17 @@
 fragment navigation on Node {
-	schema {
-		name
-	}
-	path
-	fields {
-		... on %folderSchema% {
-			name
-			navhidden
-			navsortorder
-			startpage(lang: ["en", "de"]) {
-				uuid
-				path
-			}
-		}
-	}
+    schema {
+        name
+    }
+    path
+    fields {
+        ... on %folderSchema% {
+            name
+            navhidden
+            navsortorder
+            startpage(lang: $lang) {
+                uuid
+                path
+            }
+        }
+    }
 }

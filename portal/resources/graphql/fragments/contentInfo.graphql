@@ -1,18 +1,18 @@
 fragment contentInfo on Node {
-	fields {
-		...content
-		... on %folderSchema% {
-			name
-			description(linkType: SHORT)
-			startpage(lang: ["en", "de"]) {
-				languages {
-					path
-					language
-				}
-				fields {
-					...content
-				}
-			}
-		}
-	}
+    fields {
+        ...content
+        ... on %folderSchema% {
+            name
+            description(linkType: SHORT)
+            startpage(lang: $lang) {
+                languages {
+                    path
+                    language
+                }
+                fields {
+                    ...content
+                }
+            }
+        }
+    }
 }
