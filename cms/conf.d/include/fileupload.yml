@@ -1,0 +1,5 @@
+max_filesize: "4G"
+no_max_filesize:
+  - "Node Super Admin"
+  - "Editor"
+  - "Node Admin"

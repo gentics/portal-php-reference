@@ -1,4 +1,4 @@
-FROM php:8.1-fpm-bullseye
+FROM php:8.2-fpm-bullseye
 
 # Install Debian packages
 RUN apt-get update -y \
