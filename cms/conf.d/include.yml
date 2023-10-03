@@ -1,0 +1,6 @@
+include_conf_files:
+  directory: "include"
+  files:
+    - devtools.yml
+    - features.yml
+    - fileupdload.yml

@@ -23,12 +23,12 @@ services:
 
   cms:
     ports:
-      - '8082:80'
+      - '8082:8080'
     environment:
       LICENSEKEY: TH1S-15N0-T4V4-L1DK-3YKT-HXBY-D34D-B33F
     volumes:
-      - ./cms/dumps:/Node/etc/dumps
-      - ./portal/public/static/demo-assets/files:/Node/node/content/packages/demo-assets/files:ro
+      - ./portal/public/static/demo-assets/files:/cms/packages/demo-assets/files:ro
+      - ./cms/content-packages:/cms/content-packages
   
   # Optional: Language Tool
   # To enable, please comment out the entrypoint line!

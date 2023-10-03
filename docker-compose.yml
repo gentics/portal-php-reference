@@ -1,5 +1,4 @@
 services:
-
   portal:
     image: gentics-portal-php
     build:
@@ -16,7 +15,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1'
+          cpus: "1"
           memory: 768M
 
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
@@ -43,13 +42,13 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 1G
 
   # https://hub.docker.com/r/gentics/mesh/
   mesh:
     # https://getmesh.io/docs/administration-guide.html#_environment_variables
-    image: docker.apa-it.at/gentics/mesh:1.8.11
+    image: docker.apa-it.at/gentics/mesh:2.0.5
     volumes:
       - mesh-data:/mesh/data
       - mesh-config:/config
@@ -72,19 +71,17 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 1G
 
   # https://hub.docker.com/r/gentics/cms/
   cms:
-    image: docker.apa-it.at/gentics/cms:5.44.5
+    image: docker.apa-it.at/gentics/cms:6.0.6
     restart: on-failure
     volumes:
-      - cms-node:/Node/node
-      - cms-dbfiles:/Node/node/content/dbfiles
-      - cms-bundles:/Node/node/system/bundles
-      - ./cms/conf.d/include.conf:/Node/etc/conf.d/include.conf
-      - ./cms/conf.d/include:/Node/etc/conf.d/include
+      - cms-bundles:/cms/system/bundles
+      - cms-dbfiles:/cms/data/dbfiles
+      - ./cms/conf.d/include:/cms/conf/include
     environment:
       JAVA_XMS: 512m
       JAVA_XMX: 512m
@@ -92,11 +89,12 @@ services:
       NODE_DB_PASSWORD: ""
       NODE_DB_HOST: db
       NODE_USER_PASSWORD: node
+      CONF_FILES: include
 
     deploy:
       resources:
         limits:
-          cpus: '1'
+          cpus: "1"
           memory: 1G
 
   # https://hub.docker.com/_/mariadb/
@@ -110,11 +108,11 @@ services:
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "true"
       MYSQL_ROOT_PASSWORD: ""
-    
+
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
 
   # Optional: Language tool
@@ -127,7 +125,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.25'
+          cpus: "0.25"
           memory: 192M
 
   # Optional: Keycloak
@@ -147,7 +145,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 768M
 
 volumes:

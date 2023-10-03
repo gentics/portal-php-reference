@@ -1,0 +1,19 @@
+feature:
+  mesh_contentrepository: true
+  pub_dir_segment: true
+  devtools: true
+  activiti_integration: true
+  aloha_annotate_editables: true
+  live_urls: true
+  resumable_publish_process: true
+  customform_resolve_nodetags: true
+  force_javaparser_post: true
+  copy_tags: true
+  nice_urls: true
+  contentgroup3_pagefilename: true
+  contentfile_auto_offline: true
+  publish_cache: true
+  content_staging: true
+  packages: true
+  file_fetch: true
+  objtag_sync: true
