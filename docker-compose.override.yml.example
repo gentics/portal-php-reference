@@ -1,8 +1,12 @@
 services:
 
   portal:
+    build:
+      args:
+        REPO_USERNAME: ADD-YOUR-GTX-REPO-USERNAME
+        REPO_PASSWORD: ADD-YOUR-GTX-REPO-PASSWORD
     ports:
-      - '8080:80'
+      - '8080:8080'
     volumes:
       - ./portal:/portal:cached
       # Uncomment these volumes when you would like to override these paths
@@ -23,9 +27,12 @@ services:
 
   cms:
     ports:
-      - '8082:80'
+      - '8082:8080'
     environment:
       LICENSEKEY: TH1S-15N0-T4V4-L1DK-3YKT-HXBY-D34D-B33F
+      CONF_FILES: cms,local
+      ELASTICSEARCH_ENABLED: "true"
+      ELASTICSEARCH_URL: "http://elasticsearch:9200/"
     volumes:
       - ./cms/dumps:/Node/etc/dumps
       - ./portal/public/static/demo-assets/files:/Node/node/content/packages/demo-assets/files:ro
@@ -41,11 +48,12 @@ services:
     ports:
       - '8083:8080'
     environment:
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloak
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
       DB_USER: keycloak
       DB_PASSWORD: L3FAuMMKiNUsCEjS92SjMcQy
-      KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: "changemeplease"
-      KEYCLOAK_IMPORT: /tmp/reference_realm-export.json
     volumes:
-      - ./keycloak/reference_realm-export.json:/tmp/reference_realm-export.json:ro
+      - ./keycloak:/opt/keycloak/data/import
     entrypoint: /bin/true # Disable service startup

@@ -1,10 +1,12 @@
 services:
-
   portal:
     image: gentics-portal-php
     build:
       dockerfile: ./portal-files/Dockerfile
       context: .
+      args:
+        REPO_USERNAME: SEE-OVERRIDE-FILE
+        REPO_PASSWORD: SEE-OVERRIDE-FILE
     ulimits:
       nproc: 65535
       nofile:
@@ -12,16 +14,17 @@ services:
         hard: 200000
     environment:
       XDEBUG_ENABLED: "false"
+      PORTAL_HTTP_PORT: 8080
 
     deploy:
       resources:
         limits:
-          cpus: '1'
+          cpus: "1"
           memory: 768M
 
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
   elasticsearch:
-    image: docker.apa-it.at/elasticsearch/elasticsearch-oss:6.8.23
+    image: docker.gentics.com/elasticsearch/elasticsearch-oss:6.8.23
     command: >
       bash -c "[ ! -d /usr/share/elasticsearch/plugins/ingest-attachment ] \
       && bin/elasticsearch-plugin install -b ingest-attachment \
@@ -43,13 +46,13 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 1G
 
   # https://hub.docker.com/r/gentics/mesh/
   mesh:
     # https://getmesh.io/docs/administration-guide.html#_environment_variables
-    image: docker.apa-it.at/gentics/mesh:1.8.11
+    image: docker.gentics.com/gentics/mesh:2.0.18
     volumes:
       - mesh-data:/mesh/data
       - mesh-config:/config
@@ -72,19 +75,21 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 1G
 
   # https://hub.docker.com/r/gentics/cms/
   cms:
-    image: docker.apa-it.at/gentics/cms:5.44.5
+    image: docker.gentics.com/gentics/cms:6.0.20
     restart: on-failure
     volumes:
-      - cms-node:/Node/node
-      - cms-dbfiles:/Node/node/content/dbfiles
-      - cms-bundles:/Node/node/system/bundles
-      - ./cms/conf.d/include.conf:/Node/etc/conf.d/include.conf
-      - ./cms/conf.d/include:/Node/etc/conf.d/include
+      - cms-dbfiles:/cms/data/dbfiles
+      - ./cms/conf:/cms/conf
+      - ./cms/custom-aloha-plugins:/cms/public/customplugins:ro
+      - ./cms/packages:/cms/packages
+      - ./cms/content-packages:/cms/content-packages
+      - ./cms/ui-conf:/cms/ui-conf/
+      - ./cms/commands:/cms/scheduler-commands/
     environment:
       JAVA_XMS: 512m
       JAVA_XMX: 512m
@@ -92,16 +97,14 @@ services:
       NODE_DB_PASSWORD: ""
       NODE_DB_HOST: db
       NODE_USER_PASSWORD: node
-
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 1G
+      STATIC_SERVE_LIST: /cms/public/customplugins
+      CONF_FILES: cms
+      ELASTICSEARCH_ENABLED: "false"
+      ELASTICSEARCH_URL: ""
 
   # https://hub.docker.com/_/mariadb/
   db:
-    image: docker.apa-it.at/mariadb:10.3
+    image: mariadb:10.3
     command: --sql-mode=""
     volumes:
       - db-data:/var/lib/mysql
@@ -110,44 +113,43 @@ services:
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "true"
       MYSQL_ROOT_PASSWORD: ""
-    
+
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
 
   # Optional: Language tool
   # Docs: https://hub.docker.com/r/gentics/languagetool/
   languagetool:
-    image: docker.apa-it.at/gentics/languagetool
+    image: gentics/languagetool
     environment:
       JAVA_TOOL_OPTIONS: "-Xms128m -Xmx128m"
 
     deploy:
       resources:
         limits:
-          cpus: '0.25'
+          cpus: "0.25"
           memory: 192M
 
   # Optional: Keycloak
   # Docs: https://hub.docker.com/r/keycloak/keycloak/
   keycloak:
-    image: quay.io/keycloak/keycloak:19.0.1-legacy
+    image: quay.io/keycloak/keycloak:19.0
+    command: start-dev --import-realm
     restart: "no"
     environment:
       JBOSS_JAVA_SIZING: "-Xms256m -Xmx256m"
-      DB_VENDOR: MARIADB
-      DB_ADDR: db
-      DB_DATABASE: keycloak
-      DB_USER: root
+      KC_DB: mariadb
+      KC_DB_URL: jdbc:mariadb://db/keycloak
     depends_on:
       - db
 
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 768M
 
 volumes:

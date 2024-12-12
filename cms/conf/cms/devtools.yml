@@ -1,0 +1,4 @@
+devtools:
+  synchronizer:
+    class: "com.gentics.contentnode.devtools.FileMonitorWatcher"
+    interval: 100
