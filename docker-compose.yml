@@ -1,10 +1,92 @@
 services:
+  db:
+    image: mariadb:10.7
+    restart: "no"
+    command: mariadbd --innodb-flush-method=fsync --sql-mode=""
+    volumes:
+      - ./.docker/db/dumps:/docker-entrypoint-initdb.d
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+      MYSQL_ROOT_PASSWORD: ""
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 5s
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  mesh:
+    image: docker.gentics.com/gentics/mesh-mariadb:3.2.15
+    restart: "no"
+    volumes:
+      - mesh-uploads:/uploads
+      - mesh-keystore:/keystore
+      - ./.docker/mesh/driver/mariadb-java-client-3.5.9.jar:/mesh/database/mariadb-java-client-3.5.9.jar
+    ulimits:
+      nofile:
+        soft: 20000
+        hard: 40000
+    ports:
+      - '8100:8080'
+      - '5005:5005'
+    environment:
+      MESH_ELASTICSEARCH_URL: "null"
+      MESH_ELASTICSEARCH_START_EMBEDDED: "false"
+      MESH_UPDATECHECK: "false"
+      MESH_INITIAL_ADMIN_PASSWORD: "admin"
+      MESH_INITIAL_ADMIN_PASSWORD_FORCE_RESET: "false"
+      JAVA_TOOL_OPTIONS: "-Xms256m -Xmx768m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+      MESH_JDBC_DATABASE_NAME: "mesh"
+      MESH_JDBC_CONNECTION_USERNAME: "root"
+      MESH_JDBC_CONNECTION_PASSWORD: ""
+      MESH_DATABASE_ADDRESS: "db:3306"
+      MESH_JDBC_CONNECTION_URL_EXTRA_PARAMS: ""
+
+    depends_on:
+      db:
+        condition: service_healthy
+  
+  cms:
+    image: docker.gentics.com/gentics/cms-oss:hotfix-6.4.x
+    restart: "no"
+    ports:
+      - '8080:8080'
+    volumes:
+      - cms-data:/cms/data
+      - ./cms/conf/extraconfig:/cms/conf/extraconfig
+      - ./cms/packages:/cms/packages
+      - ./cms/content-packages:/cms/content-packages
+      
+    environment:
+      NODE_USER_PASSWORD: node
+      NODE_DB_USER: root
+      NODE_DB_PASSWORD: ""
+      NODE_DB_HOST: db
+      NODE_DB_NAME: node_utf8
+      JAVA_TOOL_OPTIONS: "-Xms256m -Xmx1g"
+      CONF_FILES: /cms/conf/extraconfig
+
+      # Default Mesh connection
+      CR_URL_EXAMPLE: "mesh:8080/example"
+      CR_USERNAME_EXAMPLE: "admin"
+      CR_PASSWORD_EXAMPLE: "admin"
+    depends_on:
+      db:
+        condition: service_healthy
+      mesh:
+        condition: service_started
 
   portal:
     image: gentics-portal-php
     build:
       dockerfile: ./portal-files/Dockerfile
       context: .
+      secrets:
+        - repo-user
+        - repo-pass
+    ports:
+      - 8000:8080
     ulimits:
       nproc: 65535
       nofile:
@@ -13,159 +95,22 @@ services:
     environment:
       XDEBUG_ENABLED: "false"
 
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 768M
-
-  # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
-  elasticsearch:
-    image: docker.apa-it.at/elasticsearch/elasticsearch-oss:6.8.23
-    command: >
-      bash -c "[ ! -d /usr/share/elasticsearch/plugins/ingest-attachment ] \
-      && bin/elasticsearch-plugin install -b ingest-attachment \
-      && /usr/local/bin/docker-entrypoint.sh eswrapper"
-    environment:
-      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
-      - discovery.type=single-node
-      - bootstrap.memory_lock=true
-    volumes:
-      - elasticsearch-data:/usr/share/elasticsearch/data
-    ulimits:
-      nofile:
-        soft: 65536
-        hard: 65536
-      memlock:
-        soft: -1
-        hard: -1
-
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 1G
-
-  # https://hub.docker.com/r/gentics/mesh/
-  mesh:
-    # https://getmesh.io/docs/administration-guide.html#_environment_variables
-    image: docker.apa-it.at/gentics/mesh:1.8.11
-    volumes:
-      - mesh-data:/mesh/data
-      - mesh-config:/config
-      - ./mesh/plugins/:/plugins/
-      - ./mesh/mesh.yml:/config/mesh.yml
-    ulimits:
-      nofile:
-        soft: 262144
-        hard: 262144
-    environment:
-      JAVA_TOOL_OPTIONS: "-Xms384m -Xmx384m -XX:MaxDirectMemorySize=128m -Dstorage.diskCache.bufferSize=128"
-      MESH_BINARY_DIR: "/mesh/data/uploads"
-      MESH_GRAPH_DB_DIRECTORY: "/mesh/data/graphdb"
-      MESH_AUTH_KEYSTORE_PATH: "/config/keystore.jceks"
-      MESH_GRAPH_BACKUP_DIRECTORY: "/mesh/data/backups"
-      MESH_ELASTICSEARCH_URL: "http://elasticsearch:9200"
-      MESH_ELASTICSEARCH_START_EMBEDDED: "false"
-      MESH_UPDATECHECK: "false"
-
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 1G
-
-  # https://hub.docker.com/r/gentics/cms/
-  cms:
-    image: docker.apa-it.at/gentics/cms:5.44.5
-    restart: on-failure
-    volumes:
-      - cms-node:/Node/node
-      - cms-dbfiles:/Node/node/content/dbfiles
-      - cms-bundles:/Node/node/system/bundles
-      - ./cms/conf.d/include.conf:/Node/etc/conf.d/include.conf
-      - ./cms/conf.d/include:/Node/etc/conf.d/include
-    environment:
-      JAVA_XMS: 512m
-      JAVA_XMX: 512m
-      NODE_DB_USER: root
-      NODE_DB_PASSWORD: ""
-      NODE_DB_HOST: db
-      NODE_USER_PASSWORD: node
-
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 1G
-
-  # https://hub.docker.com/_/mariadb/
-  db:
-    image: docker.apa-it.at/mariadb:10.3
-    command: --sql-mode=""
-    volumes:
-      - db-data:/var/lib/mysql
-      - ./db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
-      - ./db/custom.cnf:/etc/mysql/conf.d/custom.cnf
-    environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
-      MYSQL_ROOT_PASSWORD: ""
-    
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 512M
-
-  # Optional: Language tool
-  # Docs: https://hub.docker.com/r/gentics/languagetool/
-  languagetool:
-    image: docker.apa-it.at/gentics/languagetool
-    environment:
-      JAVA_TOOL_OPTIONS: "-Xms128m -Xmx128m"
-
-    deploy:
-      resources:
-        limits:
-          cpus: '0.25'
-          memory: 192M
-
-  # Optional: Keycloak
-  # Docs: https://hub.docker.com/r/keycloak/keycloak/
-  keycloak:
-    image: quay.io/keycloak/keycloak:19.0.1-legacy
-    restart: "no"
-    environment:
-      JBOSS_JAVA_SIZING: "-Xms256m -Xmx256m"
-      DB_VENDOR: MARIADB
-      DB_ADDR: db
-      DB_DATABASE: keycloak
-      DB_USER: root
     depends_on:
-      - db
-
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 768M
+      mesh:
+        condition: service_healthy
 
 volumes:
-  portal-storage:
-    driver: local
-  portal-bootstrap-cache:
-    driver: local
-  mesh-config:
-    driver: local
-  mesh-data:
-    driver: local
-  elasticsearch-data:
-    driver: local
-  cms-node:
-    driver: local
-  cms-dbfiles:
-    driver: local
-  cms-bundles:
-    driver: local
   db-data:
     driver: local
+  cms-data:
+    driver: local
+  mesh-uploads:
+    driver: local
+  mesh-keystore:
+    driver: local
+
+secrets:
+  repo-user:
+    file: .docker/secrets/repo-user
+  repo-pass:
+    file: .docker/secrets/repo-pass

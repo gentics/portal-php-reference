@@ -1,0 +1,31 @@
+services:
+
+  cms: 
+    environment:
+      LICENSEKEY: ""
+
+  mesh:
+    environment:
+      LICENSEKEY: ""
+
+  portal:
+    volumes:
+      # Mounts the whole portal - Careful, you need to have the dependencies installed locally as well for this to work correctly
+      # - ./portal:/portal:cached
+      # Mounting the required portal folders specifically, avoids the issue above
+      - ./portal/app:/portal/app
+      - ./portal/bootstrap/:/portal/bootstrap
+      - ./portal/config:/portal/config
+      - ./portal/public:/portal/public
+      - ./portal/resources:/portal/resources
+      - ./portal/routes:/portal/routes
+      - ./portal/storage:/portal/storage
+      # Files for the docker image
+      - ./portal-files/scripts:/scripts
+      - ./portal-files/apache2/sites-enabled:/etc/apache2/sites-enabled/
+    env_file: ./portal/.env
+    environment:
+      # Login to Mesh and create your API key, then use it in here
+      MESH_APIKEY: ""
+      # Enables debugger
+      XDEBUG_ENABLED: "true"

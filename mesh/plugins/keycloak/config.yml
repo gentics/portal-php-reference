@@ -1,4 +1,0 @@
----
-url: http://keycloak:8080/auth
-realmName: reference
-loadPublicKeys: true

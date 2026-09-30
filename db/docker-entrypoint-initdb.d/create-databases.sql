@@ -1,1 +1,0 @@
-CREATE DATABASE node_utf8;

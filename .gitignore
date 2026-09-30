@@ -1,8 +1,26 @@
-/.idea
-/.vscode
-/.vagrant
+# IDE/Config files
+.classpath
+.project
+.idea
+.vscode
+.metadata
+
+# System files
 .DS_Store
+.bash_history
+
+# Local override files
 docker-compose.override.yml
-/mesh/plugins/*.jar
-!/mesh/plugins/mesh-reference-preseed-plugin*.jar
-portal_old/*
+
+# License key files
+**/license.key
+
+# Local CMS files
+cms/conf/cache.ccf
+cms/conf/nodelog.yml
+cms/conf/local/*
+cms/packages/*
+
+# Build secrets
+.docker/secrets/*
+!.docker/secrets/.gitkeep

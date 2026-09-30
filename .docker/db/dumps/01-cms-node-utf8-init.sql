@@ -1,0 +1,1 @@
+CREATE DATABASE IF NOT EXISTS `node_utf8`;
