@@ -88,7 +88,7 @@ Any changes to the files which are required for the image will invalidate the ca
 
 For local setups, you should copy the example configurations:
 
-- `docker-compose.override.yml` -> `docker-compose.override.yml`
+- `docker-compose.override.example.yml` -> `docker-compose.override.yml`
 - `portal/.env.example` -> `portal/.env`
   and adopt any changes you might need.
 
