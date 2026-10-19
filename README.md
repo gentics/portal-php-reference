@@ -21,7 +21,7 @@ If you encounter any errors, you maybe find a solution on [this page here](https
 
 ### Authentication for repo.gentics.com
 
-Contact Gentics if you haven't received your credentials for repo.gentics,com yet.
+Contact Gentics if you haven't received your credentials for `repo.gentics,com` yet.
 
 Create the following files, with their respective content, to make the credentials available when building the container:
 
@@ -86,15 +86,26 @@ Any changes to the files which are required for the image will invalidate the ca
 
 ## Running
 
-For local setups, you should copy the example configurations:
+For local setups, you need to first copy the example configurations:
 
 - `docker-compose.override.example.yml` -> `docker-compose.override.yml`
 - `portal/.env.example` -> `portal/.env`
-  and adopt any changes you might need.
 
-You will need to [create an API Token](https://www.gentics.com/mesh/docs/authentication/#_api_token) in Mesh in order for the portal to authenticate with it. After creating it, either add it to the `docker-compose.override.yml` or the `.env` file as `MESH_APIKEY` ENV-Variable.
+Unless you have mounted `.env` file (not the default), you'll need to create a random `APP_KEY` value and store it as environment variable in either the `docker-compose.override.yml` or the `.env` file.
 
-Then simply run the whole stack with
+The key can be created with tools like `openssl`, or when you have [composer dependencies installed locally](#local-composer) - you can use `php portal/artisan key:generate --show`.
+
+---
+
+Start the mesh container, to [create an API Token](https://www.gentics.com/mesh/docs/authentication/#_api_token), so the portal can authenticate with it:
+
+```sh
+docker compose up -d mesh
+```
+
+After creating it, either add as `MESH_APIKEY` environment variable.
+
+Now you can start the rest of the stack:
 
 ```sh
 docker compose up -d

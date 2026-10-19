@@ -98,7 +98,8 @@ COPY --chown=portal:www-data portal-files/scripts /scripts
 
 # Copy portal + installed dependencies
 COPY --chown=portal:www-data --from=build /portal /portal
-
+# Make sure to delete the .env file
+RUN rm -f /portal/.env
 
 # Drop all permissions
 USER portal

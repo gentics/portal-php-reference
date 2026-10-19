@@ -22,7 +22,8 @@ services:
     volumes:
       - mesh-uploads:/uploads
       - mesh-keystore:/keystore
-      - ./.docker/mesh/driver/mariadb-java-client-3.5.9.jar:/mesh/database/mariadb-java-client-3.5.9.jar
+      - .docker/mesh/config:/config
+      - .docker/mesh/driver/mariadb-java-client-3.5.9.jar:/mesh/database/mariadb-java-client-3.5.9.jar
     ulimits:
       nofile:
         soft: 20000
@@ -48,7 +49,7 @@ services:
         condition: service_healthy
   
   cms:
-    image: docker.gentics.com/gentics/cms-oss:hotfix-6.4.x
+    image: docker.gentics.com/gentics/cms-oss:hotfix-6.6.x
     restart: "no"
     ports:
       - '8080:8080'

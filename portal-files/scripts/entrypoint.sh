@@ -17,20 +17,15 @@ if [[ $SKIP_ENTRYPOINT_CHMOD != "true" ]]; then
 
 fi
 
-# Generate API key for Mesh
+# Source the .env file if it is mounted/exists
 envFile="/portal/.env"
-
-if [ ! -f "$envFile" ] && [ -f "${envFile}.example" ]; then
-	cp -a "${envFile}.example" "${envFile}"
+if [ -f "$envFile" ] && [ -f "${envFile}.example" ]; then
+	. $envFile
 fi 
 
-. $envFile
-
-# Generate app key if not existing
-if [[ $AUTOGENERATE_APP_KEY != "false" ]]; then
-	if [[ $APP_KEY == "" ]]; then
-		php artisan key:generate
-	fi
+# Generate app key if it doesn't exist, and if the env file exists
+if [[ $AUTOGENERATE_APP_KEY != "false" && $APP_KEY == "" && -f "$envFile" ]]; then
+	php artisan key:generate
 fi
 
 if [[ $XDEBUG_ENABLED == "true" ]]; then

@@ -25,7 +25,13 @@ services:
       - ./portal-files/apache2/sites-enabled:/etc/apache2/sites-enabled/
     env_file: ./portal/.env
     environment:
-      # Login to Mesh and create your API key, then use it in here
-      MESH_APIKEY: ""
       # Enables debugger
       XDEBUG_ENABLED: "true"
+
+      # If you use the .env file instead of putting them here,
+      # then make sure to comment out the settings below
+
+      # The secret key for encrypting laravel content (cookies, ...etc)
+      APP_KEY: ""
+      # Login to Mesh and create your API key, then use it in here
+      MESH_APIKEY: ""

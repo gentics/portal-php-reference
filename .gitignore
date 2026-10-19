@@ -24,3 +24,8 @@ cms/packages/*
 # Build secrets
 .docker/secrets/*
 !.docker/secrets/.gitkeep
+
+# Local mesh config
+.docker/mesh/config
+
+!.gitkeep
