@@ -119,6 +119,31 @@ The following Services are then available here:
 - Mesh: http://localhost:8100 - Default login: `admin:admin`
 - Portal: http://localhost:8000
 
+## OpenTelemetry
+
+The image already contains the PHP extensions `opentelemetry` and `protobuf`. Tracing stays off until you
+add the OpenTelemetry packages to the portal and enable it.
+
+Add the packages to the portal:
+
+```sh
+composer config -d portal allow-plugins.tbachert/spi true
+composer require -d portal \
+    open-telemetry/sdk \
+    open-telemetry/exporter-otlp \
+    open-telemetry/opentelemetry-auto-laravel \
+    open-telemetry/opentelemetry-auto-guzzle
+```
+
+The extension must be loaded wherever `composer` runs, because `open-telemetry/opentelemetry-auto-guzzle` requires it.
+On a machine without the extension, add `--ignore-platform-req=ext-opentelemetry`.
+
+Then rebuild the image and enable tracing with the `OTEL_*` variables in `docker-compose.override.yml`
+(see `docker-compose.override.example.yml`). `OTEL_EXPORTER_OTLP_ENDPOINT` must point to your OpenTelemetry collector.
+
+The [Portal | php documentation](https://www.gentics.com/guides/latest/portal-php/development/opentelemetry.html)
+describes what gets traced and all configuration options.
+
 ## Further Reading
 
 - [mesh](https://getmesh.io/docs/beta/administration-guide.html#_environment_variables)

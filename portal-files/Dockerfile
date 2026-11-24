@@ -39,6 +39,11 @@ RUN docker-php-ext-enable \
 # Install xdebug, but don't enable it by default
 RUN echo yes | pecl install xdebug
 
+# Install and enable the OpenTelemetry extensions.
+# Tracing stays off until OTEL_PHP_AUTOLOAD_ENABLED=true is set.
+RUN pecl install opentelemetry protobuf \
+	&& docker-php-ext-enable opentelemetry protobuf
+
 # Add required conf files to global conf dir
 ADD --chown=portal:www-data portal-files/php-conf/*.ini /usr/local/etc/php/conf.d/
 

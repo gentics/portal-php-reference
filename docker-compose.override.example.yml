@@ -28,6 +28,16 @@ services:
       # Enables debugger
       XDEBUG_ENABLED: "true"
 
+      # Enables OpenTelemetry tracing (see "OpenTelemetry" in the README)
+      # OTEL_PHP_AUTOLOAD_ENABLED: "true"
+      # OTEL_SERVICE_NAME: "Gentics Portal PHP"
+      # OTEL_TRACES_EXPORTER: "otlp"
+      # OTEL_METRICS_EXPORTER: "none"
+      # OTEL_LOGS_EXPORTER: "none"
+      # OTEL_EXPORTER_OTLP_PROTOCOL: "http/protobuf"
+      # OTEL_EXPORTER_OTLP_ENDPOINT: "http://otel-collector:4318"
+      # OTEL_PROPAGATORS: "tracecontext,baggage"
+
       # If you use the .env file instead of putting them here,
       # then make sure to comment out the settings below
 
